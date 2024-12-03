@@ -1,0 +1,83 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244438517322101,
+                    53.26812281401784
+                ]
+            },
+            "properties": {
+                "type": "pole"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244589083054423,
+                    53.26817562924051
+                ]
+            },
+            "properties": {
+                "type": "pole"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5246014208648978,
+                    53.26811023126063
+                ]
+            },
+            "properties": {
+                "type": "pole"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5246158460957007,
+                    53.268162976226165
+                ]
+            },
+            "properties": {
+                "type": "pole"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5245342518226971,
+                    53.268170359240024
+                ]
+            },
+            "properties": {
+                "type": "pole"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244832675408048,
+                    53.268119064542915
+                ]
+            },
+            "properties": {
+                "type": "pole"
+            }
+        }
+    ]
+}

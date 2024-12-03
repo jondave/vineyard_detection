@@ -66,7 +66,7 @@ def extract_exif(image_path):
 # Function to calculate real-world distances based on pixel distances
 def calculate_real_world_distance(pixel_distance, focal_length, fov_deg, image_width, sensor_width_mm=None):
     if sensor_width_mm is None:
-        sensor_width_mm = 36  # Assuming full-frame sensor (36mm)
+        sensor_width_mm = 11.04 # 36  # Assuming full-frame sensor (36mm)
     
     fov_rad = math.radians(fov_deg)
     image_width_mm = sensor_width_mm * (image_width / 4056)  # Scale sensor width to match image width
