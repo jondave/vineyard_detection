@@ -19,10 +19,10 @@ def extract_exif(image_path):
             metadata_dict = metadata[0]  # Assuming the first item contains the metadata
             
             # Extract required fields
-            flight_yaw_degree = metadata_dict.get('FlightYawDegree', None)
+            flight_yaw_degree = metadata_dict.get('FlightYawDegree', None) # DO NOT USE FlightYawDegree use GimbalYawDegree, GimbalYawDegree is the compass heading of the camera and image in degrees.
             flight_pitch_degree = metadata_dict.get('FlightPitchDegree', None)
             flight_roll_degree = metadata_dict.get('FlightRollDegree', None)
-            gimbal_yaw_degree = metadata_dict.get('GimbalYawDegree', None)
+            gimbal_yaw_degree = metadata_dict.get('GimbalYawDegree', None) # GimbalYawDegree is the compass heading of the camera and image in degrees.
             gimbal_pitch_degree = metadata_dict.get('GimbalPitchDegree', None)
             gimbal_roll_degree = metadata_dict.get('GimbalRollDegree', None)
             gps_latitude_dms = metadata_dict.get('GPSLatitude', None)
@@ -128,12 +128,12 @@ def get_gps_from_pixel(pixel_x, pixel_y, image_width, image_height, flight_degre
     corrected_lon_change = corrected_pixel_x * real_world_distance_per_pixel
     corrected_lat_change = corrected_pixel_y * real_world_distance_per_pixel
     
-    # Convert flight orientation to radians
-    flight_radians = math.radians(flight_degree)
+    # Convert gimbal orientation to radians
+    gimbal_radians = math.radians(gimbal_degree)
     
-    # Reverse the displacement adjustments for flight orientation
-    lon_change = corrected_lon_change * math.cos(flight_radians) + corrected_lat_change * math.sin(flight_radians)
-    lat_change = -corrected_lon_change * math.sin(flight_radians) + corrected_lat_change * math.cos(flight_radians)
+    # Reverse the displacement adjustments for gimbal orientation
+    lon_change = corrected_lon_change * math.cos(gimbal_radians) + corrected_lat_change * math.sin(gimbal_radians)
+    lat_change = -corrected_lon_change * math.sin(gimbal_radians) + corrected_lat_change * math.cos(gimbal_radians)
     
     # Convert the real-world displacements back to degrees
     latitude = gps_lat_decimal + (lat_change / 111320)  # Convert meters to degrees for latitude
@@ -146,12 +146,12 @@ def get_pixel_from_gps(latitude, longitude, flight_degree, gimbal_degree, image_
     lat_change = (latitude - gps_lat_decimal) * 111320  # Approximate conversion to meters for latitude
     lon_change = (longitude - gps_lon_decimal) * (40008000 * math.cos(math.radians(latitude)) / 360)  # Conversion to meters for longitude
 
-    # Convert flight orientation to radians
-    flight_radians = math.radians(flight_degree)
+    # Convert gimbal orientation to radians
+    gimbal_radians = math.radians(gimbal_degree)
 
-    # Adjust the displacement for flight orientation
-    corrected_lon_change = lon_change * math.cos(flight_radians) - lat_change * math.sin(flight_radians)
-    corrected_lat_change = lon_change * math.sin(flight_radians) + lat_change * math.cos(flight_radians)
+    # Adjust the displacement for gimbal orientation
+    corrected_lon_change = lon_change * math.cos(gimbal_radians) - lat_change * math.sin(gimbal_radians)
+    corrected_lat_change = lon_change * math.sin(gimbal_radians) + lat_change * math.cos(gimbal_radians)
 
     # Adjust pixel distance using real-world distance per pixel
     corrected_pixel_x = corrected_lon_change / real_world_distance_per_pixel
@@ -236,7 +236,8 @@ def process_image(image_path, gps_points):
 
     # Draw cirels on image where the poles are
     pole_pixels = draw_circles_on_image(image_path, gps_points, flight_yaw_num, gimbal_yaw_num, gps_latitude, gps_longitude, gps_altitude_num, fov_degrees_num, focal_length_mm, sensor_width_mm)
-        
+    # TODO fix gps to pixel in some rotations.
+
     # Initialize GeoJSON FeatureCollection structure
     geojson_data = {
         "type": "FeatureCollection",
@@ -279,7 +280,7 @@ def process_image(image_path, gps_points):
         json.dump(geojson_data, json_file, indent=4)
 
 if __name__ == "__main__":
-    image_path = "../images/39_feet/DJI_20240802142831_0001_W.JPG"
+    image_path = "../images/39_feet/DJI_20240802143112_0076_W.JPG"
     gps_points = [
             (53.26818842,-0.52427737),
             (53.26813837,-0.52426541),

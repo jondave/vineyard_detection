@@ -1,0 +1,551 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5245387836447862,
+                    53.26816960412399
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 0
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243380095916079,
+                    53.26813169717199
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 1
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5242749779640439,
+                    53.2680333337048
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 2
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5246139883298697,
+                    53.26816114802675
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 3
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244368787230561,
+                    53.268072080607965
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 4
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244487719878878,
+                    53.268123264162554
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 5
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243872879420846,
+                    53.26802455165421
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 6
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244942687071121,
+                    53.26801597932537
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 7
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5245698683528113,
+                    53.268009359542205
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 8
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244234153035977,
+                    53.26802116322038
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 9
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244595665063928,
+                    53.26801832263227
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 10
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243013663143173,
+                    53.26813407428527
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 11
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5242626679075021,
+                    53.26813746310078
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 12
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244120946011832,
+                    53.26812651509521
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 13
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.524235940473322,
+                    53.2680389856237
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 14
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5242517499265215,
+                    53.26808804590514
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 15
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5242755001794648,
+                    53.26819100602856
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 16
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243133644597311,
+                    53.26818925116762
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 17
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243139689922093,
+                    53.26803059835857
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 18
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244860001159021,
+                    53.268118681097015
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 19
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243237741527857,
+                    53.26808254426124
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 20
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243734020263202,
+                    53.26812986582672
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 21
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243985129450136,
+                    53.26807629464897
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 22
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243490606696893,
+                    53.26802793724968
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 23
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5242872723502525,
+                    53.26808495020926
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 24
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243528473441442,
+                    53.268184169469485
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 25
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244649849312745,
+                    53.268175420073334
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 26
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5245052492796055,
+                    53.268172728068045
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 27
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244271990806998,
+                    53.26817862344271
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 28
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243608376608695,
+                    53.2680793248592
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 29
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243894009970038,
+                    53.26818220544357
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 30
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.524531345554683,
+                    53.268011374045756
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 31
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244706045903053,
+                    53.26807033750391
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 32
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5245587329759137,
+                    53.26811102884085
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 33
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5245089101959141,
+                    53.26806570362567
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 34
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5245218698838949,
+                    53.26811516817943
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 35
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5246002307458385,
+                    53.2681062623145
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 36
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5245735413818948,
+                    53.26816267604559
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 37
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5245417518351069,
+                    53.268054643234684
+                ]
+            },
+            "properties": {
+                "type": "pole_cluster",
+                "cluster_id": 38
+            }
+        }
+    ]
+}

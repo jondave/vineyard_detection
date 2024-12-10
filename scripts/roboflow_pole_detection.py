@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw
 import image_gps_pixel_show_poles
 
 # Define the image URL to use for inference
-image_file = "../images/39_feet/DJI_20240802142835_0003_W.JPG"
+image_file = "../images/39_feet/DJI_20240802142844_0007_W.JPG"
 image = cv2.imread(image_file)
 
 # Load the API key
