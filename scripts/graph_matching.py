@@ -1,84 +1,142 @@
-import json
-import numpy as np
-from scipy.spatial import distance
+import geojson
+import networkx as nx
+import matplotlib.pyplot as plt
+from matplotlib.patches import ConnectionPatch  # for plotting matching result
+
 import math
 
-# Load the GeoJSON file
-with open('../data/clustered_poles.geojson', 'r') as f:
-    geojson_data = json.load(f)
+import numpy as np  # numpy backend
+import pygmtools as pygm
 
-# Extract coordinates
-coordinates = np.array([feature['geometry']['coordinates'] for feature in geojson_data['features']])
+def haversine_distance(coord1, coord2):
+    """
+    Calculates the Haversine distance between two geographic coordinates.
 
-# Define prior knowledge
-poles_per_row = [3, 4, 4, 4, 4, 4, 4, 4, 4, 4]  # poles per row
-compass_heading = 350 # compass heading of rows
+    Args:
+        coord1: A tuple of (latitude1, longitude1) in decimal degrees.
+        coord2: A tuple of (latitude2, longitude2) in decimal degrees.
 
-# Convert to mathematical heading (counter-clockwise from 0 deg North)
-math_heading = (360 - compass_heading) % 360
+    Returns:
+        The distance between the two points in kilometers.
+    """
 
-# Convert heading to radians
-heading_radians = math.radians(math_heading)
+    R = 6371  # Earth radius in kilometers
 
-# Unit vector for the heading direction
-direction_vector = np.array([math.cos(heading_radians), math.sin(heading_radians)])
+    lat1, lon1 = coord1
+    lat2, lon2 = coord2
 
-# Project coordinates onto the heading direction
-# coordinates: array of [longitude, latitude]
-projections = np.dot(coordinates, direction_vector)
+    lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
 
-# Sort coordinates by their projections
-coordinates_sorted = coordinates[np.argsort(projections)]
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
 
-# Sort poles by latitude to get an initial rough alignment (or longitude, depending on orientation)
-# coordinates_sorted = coordinates[coordinates[:, 1].argsort()]  # Sort by latitude
-# coordinates_sorted = coordinates[coordinates[:, 0].argsort()]  # Sort by longitude
+    a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
 
-# Divide sorted coordinates into rows
-row_assignments = []
-start_idx = 0
+    distance = R * c
+    return distance
 
-for row_idx, count in enumerate(poles_per_row):
-    end_idx = start_idx + count
-    row_assignments.append({
-        "row_id": row_idx + 1,
-        "coordinates": coordinates_sorted[start_idx:end_idx]
-    })
-    start_idx = end_idx
+# Suggested distance threshold (adjust as needed based on your specific use case)
+distance_threshold = 50  # meters
 
-# Create GeoJSON features for rows as LineStrings
-row_features = []
-for row in row_assignments:
-    # Sort within each row to ensure consistent LineString geometry
-    row['coordinates'] = sorted(row['coordinates'].tolist(), key=lambda x: x[0])  # Sort by longitude
-    row_features.append({
-        "type": "Feature",
-        "geometry": {
-            "type": "LineString",
-            "coordinates": row['coordinates']
-        },
-        "properties": {
-            "row_id": row['row_id']
-        }
-    })
+def create_detection_graph(geojson_file):
+    """Creates a graph from detected pole locations in a GeoJSON file."""
+    with open(geojson_file) as f:
+        data = geojson.load(f)
 
-# Add row_id to individual poles
-pole_features = []
-for feature, coord in zip(geojson_data['features'], coordinates_sorted):
-    for row in row_assignments:
-        if coord.tolist() in row['coordinates']:
-            feature['properties']['row_id'] = row['row_id']
-            pole_features.append(feature)
-            break
+    G = nx.Graph()
+    for feature in data['features']:
+        coords = tuple(feature['geometry']['coordinates'])
+        G.add_node(coords, pos=coords)  # Assign coordinates as node attribute
 
-# Combine both poles and rows into a single GeoJSON
-updated_geojson = {
-    "type": "FeatureCollection",
-    "features": pole_features + row_features
-}
+    # # Add edges based on proximity (adjust distance threshold as needed)
+    # for u, data1 in G.nodes(data=True):
+    #     for v, data2 in G.nodes(data=True):
+    #         if u != v and haversine_distance(u, v) < distance_threshold:
+    #             G.add_edge(u, v)
 
-# Save the updated GeoJSON
-with open('../data/updated_poles_and_rows.geojson', 'w') as f:
-    json.dump(updated_geojson, f, indent=2)
+    return G
 
-print("GeoJSON with prior knowledge saved as 'updated_poles_and_rows.geojson'")
+def create_grid_graph(num_rows, num_cols, row_spacing, col_spacing):
+    """
+    Creates a grid graph where nodes are placed in a regular grid layout
+    with specified spacing between rows and columns.
+
+    Args:
+        num_rows (int): Number of rows in the grid.
+        num_cols (int): Number of columns in the grid.
+        row_spacing (float): Spacing between rows (y-axis).
+        col_spacing (float): Spacing between columns (x-axis).
+
+    Returns:
+        G (networkx.Graph): A grid graph.
+    """
+    G = nx.Graph()
+
+    for row in range(num_rows):
+        for col in range(num_cols):
+            x = col * col_spacing
+            y = row * row_spacing
+            node = (x, y)
+            G.add_node(node, pos=(x, y))
+
+            # Connect nodes within the grid
+            if row > 0:  # Connect to the node above
+                G.add_edge((col * col_spacing, (row - 1) * row_spacing), node)
+            if col > 0:  # Connect to the node to the left
+                G.add_edge(((col - 1) * col_spacing, row * row_spacing), node)
+
+    return G
+
+
+# Suggested distance threshold (adjust as needed based on your specific use case)
+distance_threshold = 1  # meters
+
+def visualize_graph(G):
+    """Visualizes the graph, preserving spatial relationships."""
+    pos = nx.spring_layout(G, pos=nx.get_node_attributes(G, 'pos'))
+    nx.draw_networkx(G, pos=pos, node_color='blue', node_size=100, with_labels=False)
+    plt.axis('off')
+    plt.savefig('../images/pole_graph.png')
+
+    num_nodes = G.number_of_nodes()
+    num_edges = G.number_of_edges()
+    print("Number of nodes:", num_nodes)
+    print("Number of edges:", num_edges)
+
+# Example usage:
+geojson_file = '../data/clustered_poles.geojson'
+
+# Create the graph
+G = create_detection_graph(geojson_file)
+
+# Visualize and save the graph
+# visualize_graph(G)
+
+# Create the prior knowledge graph
+num_rows = 10
+num_cols = 4 # number of poles per row
+row_spacing = 2.75
+col_spacing = 5.65 # pole spacing
+
+G_prior = create_grid_graph(num_rows, num_cols, row_spacing, col_spacing)
+
+K = pygm.utils.build_aff_mat_from_networkx(G, G_prior)
+
+X = pygm.rrwm(K, G.number_of_nodes(), G_prior.number_of_nodes())
+
+X = pygm.hungarian(X)
+
+# Visualize both graphs
+plt.figure(figsize=(12, 6))
+
+plt.subplot(1, 2, 1)
+pos1 = nx.get_node_attributes(G, 'pos')
+nx.draw_networkx(G, pos=pos1, node_color='blue', node_size=100, with_labels=False)
+plt.title("Detected Pole Graph")
+
+plt.subplot(1, 2, 2)
+pos2 = nx.get_node_attributes(G_prior, 'pos')
+nx.draw_networkx(G_prior, pos=pos2, node_color='green', node_size=100, with_labels=False)
+plt.title("Prior Knowledge Graph")
+plt.savefig('../images/pole_graph.png')

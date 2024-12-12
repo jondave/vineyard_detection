@@ -11,9 +11,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 0,
-        "row_id": 1
+        "type": "pole",
+        "pole_id": 0,
+        "row_id": 8
       }
     },
     {
@@ -26,9 +26,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 1,
-        "row_id": 1
+        "type": "pole",
+        "pole_id": 1,
+        "row_id": 3
       }
     },
     {
@@ -41,9 +41,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 2,
-        "row_id": 1
+        "type": "pole",
+        "pole_id": 2,
+        "row_id": 2
       }
     },
     {
@@ -56,9 +56,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 3,
-        "row_id": 2
+        "type": "pole",
+        "pole_id": 3,
+        "row_id": 10
       }
     },
     {
@@ -71,9 +71,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 4,
-        "row_id": 2
+        "type": "pole",
+        "pole_id": 4,
+        "row_id": 6
       }
     },
     {
@@ -86,9 +86,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 5,
-        "row_id": 2
+        "type": "pole",
+        "pole_id": 5,
+        "row_id": 6
       }
     },
     {
@@ -101,9 +101,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 6,
-        "row_id": 2
+        "type": "pole",
+        "pole_id": 6,
+        "row_id": 5
       }
     },
     {
@@ -116,9 +116,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 7,
-        "row_id": 3
+        "type": "pole",
+        "pole_id": 7,
+        "row_id": 8
       }
     },
     {
@@ -131,9 +131,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 8,
-        "row_id": 3
+        "type": "pole",
+        "pole_id": 8,
+        "row_id": 10
       }
     },
     {
@@ -146,9 +146,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 9,
-        "row_id": 3
+        "type": "pole",
+        "pole_id": 9,
+        "row_id": 6
       }
     },
     {
@@ -161,9 +161,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 10,
-        "row_id": 3
+        "type": "pole",
+        "pole_id": 10,
+        "row_id": 7
       }
     },
     {
@@ -176,9 +176,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 11,
-        "row_id": 4
+        "type": "pole",
+        "pole_id": 11,
+        "row_id": 2
       }
     },
     {
@@ -191,9 +191,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 12,
-        "row_id": 4
+        "type": "pole",
+        "pole_id": 12,
+        "row_id": 1
       }
     },
     {
@@ -206,9 +206,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 13,
-        "row_id": 4
+        "type": "pole",
+        "pole_id": 13,
+        "row_id": 5
       }
     },
     {
@@ -221,9 +221,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 14,
-        "row_id": 4
+        "type": "pole",
+        "pole_id": 14,
+        "row_id": 1
       }
     },
     {
@@ -236,9 +236,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 15,
-        "row_id": 5
+        "type": "pole",
+        "pole_id": 15,
+        "row_id": 1
       }
     },
     {
@@ -251,9 +251,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 16,
-        "row_id": 5
+        "type": "pole",
+        "pole_id": 16,
+        "row_id": 1
       }
     },
     {
@@ -266,9 +266,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 17,
-        "row_id": 5
+        "type": "pole",
+        "pole_id": 17,
+        "row_id": 2
       }
     },
     {
@@ -281,9 +281,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 18,
-        "row_id": 5
+        "type": "pole",
+        "pole_id": 18,
+        "row_id": 3
       }
     },
     {
@@ -296,9 +296,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 19,
-        "row_id": 6
+        "type": "pole",
+        "pole_id": 19,
+        "row_id": 7
       }
     },
     {
@@ -311,9 +311,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 20,
-        "row_id": 6
+        "type": "pole",
+        "pole_id": 20,
+        "row_id": 3
       }
     },
     {
@@ -326,9 +326,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 21,
-        "row_id": 6
+        "type": "pole",
+        "pole_id": 21,
+        "row_id": 4
       }
     },
     {
@@ -341,9 +341,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 22,
-        "row_id": 6
+        "type": "pole",
+        "pole_id": 22,
+        "row_id": 5
       }
     },
     {
@@ -356,9 +356,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 23,
-        "row_id": 7
+        "type": "pole",
+        "pole_id": 23,
+        "row_id": 4
       }
     },
     {
@@ -371,9 +371,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 24,
-        "row_id": 7
+        "type": "pole",
+        "pole_id": 24,
+        "row_id": 2
       }
     },
     {
@@ -386,9 +386,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 25,
-        "row_id": 7
+        "type": "pole",
+        "pole_id": 25,
+        "row_id": 3
       }
     },
     {
@@ -401,9 +401,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 26,
-        "row_id": 7
+        "type": "pole",
+        "pole_id": 26,
+        "row_id": 6
       }
     },
     {
@@ -416,9 +416,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 27,
-        "row_id": 8
+        "type": "pole",
+        "pole_id": 27,
+        "row_id": 7
       }
     },
     {
@@ -431,9 +431,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 28,
-        "row_id": 8
+        "type": "pole",
+        "pole_id": 28,
+        "row_id": 5
       }
     },
     {
@@ -446,9 +446,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 29,
-        "row_id": 8
+        "type": "pole",
+        "pole_id": 29,
+        "row_id": 4
       }
     },
     {
@@ -461,9 +461,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 30,
-        "row_id": 8
+        "type": "pole",
+        "pole_id": 30,
+        "row_id": 4
       }
     },
     {
@@ -476,8 +476,8 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 31,
+        "type": "pole",
+        "pole_id": 31,
         "row_id": 9
       }
     },
@@ -491,9 +491,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 32,
-        "row_id": 9
+        "type": "pole",
+        "pole_id": 32,
+        "row_id": 7
       }
     },
     {
@@ -506,8 +506,8 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 33,
+        "type": "pole",
+        "pole_id": 33,
         "row_id": 9
       }
     },
@@ -521,9 +521,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 34,
-        "row_id": 9
+        "type": "pole",
+        "pole_id": 34,
+        "row_id": 8
       }
     },
     {
@@ -536,9 +536,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 35,
-        "row_id": 10
+        "type": "pole",
+        "pole_id": 35,
+        "row_id": 8
       }
     },
     {
@@ -551,8 +551,8 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 36,
+        "type": "pole",
+        "pole_id": 36,
         "row_id": 10
       }
     },
@@ -566,9 +566,9 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 37,
-        "row_id": 10
+        "type": "pole",
+        "pole_id": 37,
+        "row_id": 9
       }
     },
     {
@@ -581,9 +581,25 @@
         ]
       },
       "properties": {
-        "type": "pole_cluster",
-        "cluster_id": 38,
-        "row_id": 10
+        "type": "pole",
+        "pole_id": 38,
+        "row_id": 9
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245850495493249,
+          53.268057810928354
+        ]
+      },
+      "properties": {
+        "type": "pole",
+        "pole_id": 39,
+        "row_id": 10,
+        "status": "interpolated"
       }
     },
     {
@@ -592,20 +608,25 @@
         "type": "LineString",
         "coordinates": [
           [
-            -0.5246139883298697,
-            53.26816114802675
+            -0.524235940473322,
+            53.2680389856237
           ],
           [
-            -0.5246002307458385,
-            53.2681062623145
+            -0.5242517499265215,
+            53.26808804590514
           ],
           [
-            -0.5245698683528113,
-            53.268009359542205
+            -0.5242626679075021,
+            53.26813746310078
+          ],
+          [
+            -0.5242755001794648,
+            53.26819100602856
           ]
         ]
       },
       "properties": {
+        "type": "row",
         "row_id": 1
       }
     },
@@ -615,24 +636,25 @@
         "type": "LineString",
         "coordinates": [
           [
-            -0.5245735413818948,
-            53.26816267604559
+            -0.5242749779640439,
+            53.2680333337048
           ],
           [
-            -0.5245587329759137,
-            53.26811102884085
+            -0.5242872723502525,
+            53.26808495020926
           ],
           [
-            -0.5245417518351069,
-            53.268054643234684
+            -0.5243013663143173,
+            53.26813407428527
           ],
           [
-            -0.524531345554683,
-            53.268011374045756
+            -0.5243133644597311,
+            53.26818925116762
           ]
         ]
       },
       "properties": {
+        "type": "row",
         "row_id": 2
       }
     },
@@ -642,24 +664,25 @@
         "type": "LineString",
         "coordinates": [
           [
-            -0.5245387836447862,
-            53.26816960412399
+            -0.5243139689922093,
+            53.26803059835857
           ],
           [
-            -0.5245218698838949,
-            53.26811516817943
+            -0.5243237741527857,
+            53.26808254426124
           ],
           [
-            -0.5245089101959141,
-            53.26806570362567
+            -0.5243380095916079,
+            53.26813169717199
           ],
           [
-            -0.5244942687071121,
-            53.26801597932537
+            -0.5243528473441442,
+            53.268184169469485
           ]
         ]
       },
       "properties": {
+        "type": "row",
         "row_id": 3
       }
     },
@@ -669,24 +692,25 @@
         "type": "LineString",
         "coordinates": [
           [
-            -0.5245052492796055,
-            53.268172728068045
+            -0.5243490606696893,
+            53.26802793724968
           ],
           [
-            -0.5244860001159021,
-            53.268118681097015
+            -0.5243608376608695,
+            53.2680793248592
           ],
           [
-            -0.5244706045903053,
-            53.26807033750391
+            -0.5243734020263202,
+            53.26812986582672
           ],
           [
-            -0.5244595665063928,
-            53.26801832263227
+            -0.5243894009970038,
+            53.26818220544357
           ]
         ]
       },
       "properties": {
+        "type": "row",
         "row_id": 4
       }
     },
@@ -696,24 +720,25 @@
         "type": "LineString",
         "coordinates": [
           [
-            -0.5244649849312745,
-            53.268175420073334
+            -0.5243872879420846,
+            53.26802455165421
           ],
           [
-            -0.5244487719878878,
-            53.268123264162554
+            -0.5243985129450136,
+            53.26807629464897
           ],
           [
-            -0.5244368787230561,
-            53.268072080607965
+            -0.5244120946011832,
+            53.26812651509521
           ],
           [
-            -0.5244234153035977,
-            53.26802116322038
+            -0.5244271990806998,
+            53.26817862344271
           ]
         ]
       },
       "properties": {
+        "type": "row",
         "row_id": 5
       }
     },
@@ -723,24 +748,25 @@
         "type": "LineString",
         "coordinates": [
           [
-            -0.5244271990806998,
-            53.26817862344271
+            -0.5244234153035977,
+            53.26802116322038
           ],
           [
-            -0.5244120946011832,
-            53.26812651509521
+            -0.5244368787230561,
+            53.268072080607965
           ],
           [
-            -0.5243985129450136,
-            53.26807629464897
+            -0.5244487719878878,
+            53.268123264162554
           ],
           [
-            -0.5243872879420846,
-            53.26802455165421
+            -0.5244649849312745,
+            53.268175420073334
           ]
         ]
       },
       "properties": {
+        "type": "row",
         "row_id": 6
       }
     },
@@ -750,24 +776,25 @@
         "type": "LineString",
         "coordinates": [
           [
-            -0.5243894009970038,
-            53.26818220544357
+            -0.5244595665063928,
+            53.26801832263227
           ],
           [
-            -0.5243734020263202,
-            53.26812986582672
+            -0.5244706045903053,
+            53.26807033750391
           ],
           [
-            -0.5243608376608695,
-            53.2680793248592
+            -0.5244860001159021,
+            53.268118681097015
           ],
           [
-            -0.5243490606696893,
-            53.26802793724968
+            -0.5245052492796055,
+            53.268172728068045
           ]
         ]
       },
       "properties": {
+        "type": "row",
         "row_id": 7
       }
     },
@@ -777,24 +804,25 @@
         "type": "LineString",
         "coordinates": [
           [
-            -0.5243528473441442,
-            53.268184169469485
+            -0.5244942687071121,
+            53.26801597932537
           ],
           [
-            -0.5243380095916079,
-            53.26813169717199
+            -0.5245089101959141,
+            53.26806570362567
           ],
           [
-            -0.5243237741527857,
-            53.26808254426124
+            -0.5245218698838949,
+            53.26811516817943
           ],
           [
-            -0.5243139689922093,
-            53.26803059835857
+            -0.5245387836447862,
+            53.26816960412399
           ]
         ]
       },
       "properties": {
+        "type": "row",
         "row_id": 8
       }
     },
@@ -804,24 +832,25 @@
         "type": "LineString",
         "coordinates": [
           [
-            -0.5243133644597311,
-            53.26818925116762
+            -0.524531345554683,
+            53.268011374045756
           ],
           [
-            -0.5243013663143173,
-            53.26813407428527
+            -0.5245417518351069,
+            53.268054643234684
           ],
           [
-            -0.5242872723502525,
-            53.26808495020926
+            -0.5245587329759137,
+            53.26811102884085
           ],
           [
-            -0.5242749779640439,
-            53.2680333337048
+            -0.5245735413818948,
+            53.26816267604559
           ]
         ]
       },
       "properties": {
+        "type": "row",
         "row_id": 9
       }
     },
@@ -831,24 +860,25 @@
         "type": "LineString",
         "coordinates": [
           [
-            -0.5242755001794648,
-            53.26819100602856
+            -0.5245698683528113,
+            53.268009359542205
           ],
           [
-            -0.5242626679075021,
-            53.26813746310078
+            -0.5245850495493249,
+            53.268057810928354
           ],
           [
-            -0.5242517499265215,
-            53.26808804590514
+            -0.5246002307458385,
+            53.2681062623145
           ],
           [
-            -0.524235940473322,
-            53.2680389856237
+            -0.5246139883298697,
+            53.26816114802675
           ]
         ]
       },
       "properties": {
+        "type": "row",
         "row_id": 10
       }
     }

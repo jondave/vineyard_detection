@@ -54,8 +54,8 @@ for cluster_id in unique_labels:
             "coordinates": [cluster_centroid.x, cluster_centroid.y]
         },
         "properties": {
-            "type": "pole_cluster",
-            "cluster_id": int(cluster_id)  # Optional: Include the cluster ID
+            "type": "pole",
+            "pole_id": int(cluster_id)  # Optional: Include the pole / cluster ID
         }
     }
     clustered_geojson["features"].append(feature)

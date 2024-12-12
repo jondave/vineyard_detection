@@ -11,8 +11,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 0
+                "type": "pole",
+                "pole_id": 0
             }
         },
         {
@@ -25,8 +25,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 1
+                "type": "pole",
+                "pole_id": 1
             }
         },
         {
@@ -39,8 +39,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 2
+                "type": "pole",
+                "pole_id": 2
             }
         },
         {
@@ -53,8 +53,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 3
+                "type": "pole",
+                "pole_id": 3
             }
         },
         {
@@ -67,8 +67,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 4
+                "type": "pole",
+                "pole_id": 4
             }
         },
         {
@@ -81,8 +81,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 5
+                "type": "pole",
+                "pole_id": 5
             }
         },
         {
@@ -95,8 +95,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 6
+                "type": "pole",
+                "pole_id": 6
             }
         },
         {
@@ -109,8 +109,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 7
+                "type": "pole",
+                "pole_id": 7
             }
         },
         {
@@ -123,8 +123,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 8
+                "type": "pole",
+                "pole_id": 8
             }
         },
         {
@@ -137,8 +137,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 9
+                "type": "pole",
+                "pole_id": 9
             }
         },
         {
@@ -151,8 +151,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 10
+                "type": "pole",
+                "pole_id": 10
             }
         },
         {
@@ -165,8 +165,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 11
+                "type": "pole",
+                "pole_id": 11
             }
         },
         {
@@ -179,8 +179,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 12
+                "type": "pole",
+                "pole_id": 12
             }
         },
         {
@@ -193,8 +193,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 13
+                "type": "pole",
+                "pole_id": 13
             }
         },
         {
@@ -207,8 +207,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 14
+                "type": "pole",
+                "pole_id": 14
             }
         },
         {
@@ -221,8 +221,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 15
+                "type": "pole",
+                "pole_id": 15
             }
         },
         {
@@ -235,8 +235,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 16
+                "type": "pole",
+                "pole_id": 16
             }
         },
         {
@@ -249,8 +249,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 17
+                "type": "pole",
+                "pole_id": 17
             }
         },
         {
@@ -263,8 +263,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 18
+                "type": "pole",
+                "pole_id": 18
             }
         },
         {
@@ -277,8 +277,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 19
+                "type": "pole",
+                "pole_id": 19
             }
         },
         {
@@ -291,8 +291,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 20
+                "type": "pole",
+                "pole_id": 20
             }
         },
         {
@@ -305,8 +305,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 21
+                "type": "pole",
+                "pole_id": 21
             }
         },
         {
@@ -319,8 +319,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 22
+                "type": "pole",
+                "pole_id": 22
             }
         },
         {
@@ -333,8 +333,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 23
+                "type": "pole",
+                "pole_id": 23
             }
         },
         {
@@ -347,8 +347,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 24
+                "type": "pole",
+                "pole_id": 24
             }
         },
         {
@@ -361,8 +361,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 25
+                "type": "pole",
+                "pole_id": 25
             }
         },
         {
@@ -375,8 +375,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 26
+                "type": "pole",
+                "pole_id": 26
             }
         },
         {
@@ -389,8 +389,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 27
+                "type": "pole",
+                "pole_id": 27
             }
         },
         {
@@ -403,8 +403,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 28
+                "type": "pole",
+                "pole_id": 28
             }
         },
         {
@@ -417,8 +417,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 29
+                "type": "pole",
+                "pole_id": 29
             }
         },
         {
@@ -431,8 +431,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 30
+                "type": "pole",
+                "pole_id": 30
             }
         },
         {
@@ -445,8 +445,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 31
+                "type": "pole",
+                "pole_id": 31
             }
         },
         {
@@ -459,8 +459,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 32
+                "type": "pole",
+                "pole_id": 32
             }
         },
         {
@@ -473,8 +473,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 33
+                "type": "pole",
+                "pole_id": 33
             }
         },
         {
@@ -487,8 +487,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 34
+                "type": "pole",
+                "pole_id": 34
             }
         },
         {
@@ -501,8 +501,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 35
+                "type": "pole",
+                "pole_id": 35
             }
         },
         {
@@ -515,8 +515,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 36
+                "type": "pole",
+                "pole_id": 36
             }
         },
         {
@@ -529,8 +529,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 37
+                "type": "pole",
+                "pole_id": 37
             }
         },
         {
@@ -543,8 +543,8 @@
                 ]
             },
             "properties": {
-                "type": "pole_cluster",
-                "cluster_id": 38
+                "type": "pole",
+                "pole_id": 38
             }
         }
     ]
