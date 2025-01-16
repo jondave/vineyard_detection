@@ -7,7 +7,7 @@ import networkx as nx  # for plotting graphs
 pygm.set_backend('numpy')  # set default backend for pygmtools
 np.random.seed(1)  # fix random seed
 
-output_folder = "../images/"
+output_folder = "../../images/"
 image_counter = 1  # Counter for filenames
 
 def save_figure(description):
