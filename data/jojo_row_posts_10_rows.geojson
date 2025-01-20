@@ -1,0 +1,1733 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978437024,
+          51.597282185
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v1_post_0",
+        "feature_name": "pn-v1_post_0",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784880603145913,
+          51.59725826885995
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v1_post_1",
+        "feature_name": "pn-v1_post_1",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785390969567529,
+          51.59723435340957
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v1_post_2",
+        "feature_name": "pn-v1_post_2",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978590133599079,
+          51.597210437959106
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v1_post_3",
+        "feature_name": "pn-v1_post_3",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.97864117,
+          51.597186522
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v1_post_4",
+        "feature_name": "pn-v1_post_4",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978386738,
+          51.59727875
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v2_post_0",
+        "feature_name": "pn-v2_post_0",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784296361696454,
+          51.59725864748912
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v2_post_1",
+        "feature_name": "pn-v2_post_1",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784725344649726,
+          51.59723854524273
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v2_post_2",
+        "feature_name": "pn-v2_post_2",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978515432905731,
+          51.597218443302474
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v2_post_3",
+        "feature_name": "pn-v2_post_3",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978558331346616,
+          51.597198341362166
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v2_post_4",
+        "feature_name": "pn-v2_post_4",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9786012297470174,
+          51.59717823933646
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v2_post_5",
+        "feature_name": "pn-v2_post_5",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978644128,
+          51.597158137
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v2_post_6",
+        "feature_name": "pn-v2_post_6",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978336182,
+          51.597275441
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v3_post_0",
+        "feature_name": "pn-v3_post_0",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9783796702890694,
+          51.597255062880095
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v3_post_1",
+        "feature_name": "pn-v3_post_1",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784231584929527,
+          51.59723468458054
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v3_post_2",
+        "feature_name": "pn-v3_post_2",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784666466969538,
+          51.597214306280925
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v3_post_3",
+        "feature_name": "pn-v3_post_3",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785101348472289,
+          51.597193927868005
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v3_post_4",
+        "feature_name": "pn-v3_post_4",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978553622807293,
+          51.59717354905417
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v3_post_5",
+        "feature_name": "pn-v3_post_5",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978597110978919,
+          51.5971531706857
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v3_post_6",
+        "feature_name": "pn-v3_post_6",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978640599,
+          51.597132792
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v3_post_7",
+        "feature_name": "pn-v3_post_7",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978285896,
+          51.597272006
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v4_post_0",
+        "feature_name": "pn-v4_post_0",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9783298267581556,
+          51.59725142053133
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v4_post_1",
+        "feature_name": "pn-v4_post_1",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9783737573504816,
+          51.59723083471306
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v4_post_2",
+        "feature_name": "pn-v4_post_2",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784176880276342,
+          51.597210249073306
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v4_post_3",
+        "feature_name": "pn-v4_post_3",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.97846161870491,
+          51.5971896634335
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v4_post_4",
+        "feature_name": "pn-v4_post_4",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785055493822743,
+          51.59716907779364
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v4_post_5",
+        "feature_name": "pn-v4_post_5",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785494800571682,
+          51.59714849214842
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v4_post_6",
+        "feature_name": "pn-v4_post_6",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785934105370165,
+          51.597127906092005
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v4_post_7",
+        "feature_name": "pn-v4_post_7",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978637341,
+          51.59710732
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v4_post_8",
+        "feature_name": "pn-v4_post_8",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.97823534,
+          51.597268698
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v5_post_0",
+        "feature_name": "pn-v5_post_0",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782796145697863,
+          51.597247950796856
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v5_post_1",
+        "feature_name": "pn-v5_post_1",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978323889185133,
+          51.59722720368958
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v5_post_2",
+        "feature_name": "pn-v5_post_2",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9783681639172325,
+          51.59720645682783
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v5_post_3",
+        "feature_name": "pn-v5_post_3",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784124386494096,
+          51.59718570996605
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v5_post_4",
+        "feature_name": "pn-v5_post_4",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784567133816605,
+          51.597164963104234
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v5_post_5",
+        "feature_name": "pn-v5_post_5",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785009881140526,
+          51.59714421624235
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v5_post_6",
+        "feature_name": "pn-v5_post_6",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785452628013425,
+          51.5971234692853
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v5_post_7",
+        "feature_name": "pn-v5_post_7",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785895374174339,
+          51.597102722178064
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v5_post_8",
+        "feature_name": "pn-v5_post_8",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978633812,
+          51.597081975
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v5_post_9",
+        "feature_name": "pn-v5_post_9",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978184784,
+          51.59726539
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v6_post_0",
+        "feature_name": "pn-v6_post_0",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782293609139467,
+          51.59724450111988
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v6_post_1",
+        "feature_name": "pn-v6_post_1",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782739379870689,
+          51.597223612574695
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v6_post_2",
+        "feature_name": "pn-v6_post_2",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9783185149578514,
+          51.597202723813794
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v6_post_3",
+        "feature_name": "pn-v6_post_3",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9783630917841386,
+          51.59718183474834
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v6_post_4",
+        "feature_name": "pn-v6_post_4",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784076688282638,
+          51.59716094614135
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v6_post_5",
+        "feature_name": "pn-v6_post_5",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784522459049754,
+          51.59714005760282
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v6_post_6",
+        "feature_name": "pn-v6_post_6",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784968229817887,
+          51.597119169064236
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v6_post_7",
+        "feature_name": "pn-v6_post_7",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785413999689307,
+          51.59709828033649
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v6_post_8",
+        "feature_name": "pn-v6_post_8",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785859769622128,
+          51.59707739162152
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v6_post_9",
+        "feature_name": "pn-v6_post_9",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978630554,
+          51.597056503
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v6_post_10",
+        "feature_name": "pn-v6_post_10",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978134498,
+          51.597261955
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_0",
+        "feature_name": "pn-v7_post_0",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9781755418240893,
+          51.597242721722786
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_1",
+        "feature_name": "pn-v7_post_1",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782165857035326,
+          51.597223488562044
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_2",
+        "feature_name": "pn-v7_post_2",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782576296826252,
+          51.5972042556109
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_3",
+        "feature_name": "pn-v7_post_3",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978298673661784,
+          51.597185022659716
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_4",
+        "feature_name": "pn-v7_post_4",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9783397176410137,
+          51.5971657897085
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_5",
+        "feature_name": "pn-v7_post_5",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9783807616203557,
+          51.59714655675723
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_6",
+        "feature_name": "pn-v7_post_6",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784218055741639,
+          51.597127323752076
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_7",
+        "feature_name": "pn-v7_post_7",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784628493232803,
+          51.59710809031549
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_8",
+        "feature_name": "pn-v7_post_8",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785038931245198,
+          51.59708885698852
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_9",
+        "feature_name": "pn-v7_post_9",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785449369962052,
+          51.59706962380972
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_10",
+        "feature_name": "pn-v7_post_10",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785859809147636,
+          51.5970503907294
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_11",
+        "feature_name": "pn-v7_post_11",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978627025,
+          51.597031158
+        ]
+      },
+      "properties": {
+        "row_post_id": "pn-v7_post_12",
+        "feature_name": "pn-v7_post_12",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978083942,
+          51.597258646
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_0",
+        "feature_name": "fr8_post_0",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9781254672556833,
+          51.597239188078305
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_1",
+        "feature_name": "fr8_post_1",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9781669920637472,
+          51.597219729213556
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_2",
+        "feature_name": "fr8_post_2",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782085169822574,
+          51.597200270581254
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_3",
+        "feature_name": "fr8_post_3",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782500420235538,
+          51.59718081220737
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_4",
+        "feature_name": "fr8_post_4",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782915670649652,
+          51.597161353833435
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_5",
+        "feature_name": "fr8_post_5",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978333092106424,
+          51.59714189545948
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_6",
+        "feature_name": "fr8_post_6",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9783746171480038,
+          51.59712243708547
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_7",
+        "feature_name": "fr8_post_7",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784161421896496,
+          51.59710297871142
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_8",
+        "feature_name": "fr8_post_8",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784576672313683,
+          51.59708352033734
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_9",
+        "feature_name": "fr8_post_9",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.97849919199638,
+          51.59706406138018
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_10",
+        "feature_name": "fr8_post_10",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785407167472684,
+          51.597044602393154
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_11",
+        "feature_name": "fr8_post_11",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785822418073332,
+          51.597025144056964
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_12",
+        "feature_name": "fr8_post_12",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978623767,
+          51.597005686
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr8_post_13",
+        "feature_name": "fr8_post_13",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978033656,
+          51.597255212
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_0",
+        "feature_name": "fr9_post_0",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9780755739763933,
+          51.59723556908695
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_1",
+        "feature_name": "fr9_post_1",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9781174920430636,
+          51.59721592636384
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_2",
+        "feature_name": "fr9_post_2",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978159410179713,
+          51.59719628378794
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_3",
+        "feature_name": "fr9_post_3",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782013281295451,
+          51.597176640818276
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_4",
+        "feature_name": "fr9_post_4",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782432460649011,
+          51.597156997818004
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_5",
+        "feature_name": "fr9_post_5",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782851642018359,
+          51.597137355241976
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_6",
+        "feature_name": "fr9_post_6",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.97832708233884,
+          51.597117712665906
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_7",
+        "feature_name": "fr9_post_7",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9783690004759152,
+          51.59709807008981
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_8",
+        "feature_name": "fr9_post_8",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784109185202022,
+          51.59707842731797
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_9",
+        "feature_name": "fr9_post_9",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784528365683636,
+          51.597058784554164
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_10",
+        "feature_name": "fr9_post_10",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784947547057229,
+          51.59703914197793
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_11",
+        "feature_name": "fr9_post_11",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785366727157555,
+          51.597019499133324
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_12",
+        "feature_name": "fr9_post_12",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785785906179588,
+          51.59699985606145
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_13",
+        "feature_name": "fr9_post_13",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978620509,
+          51.596980214
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr9_post_14",
+        "feature_name": "fr9_post_14",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9779831,
+          51.597251903
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_0",
+        "feature_name": "fr10_post_0",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9780253586219817,
+          51.597232100574075
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_1",
+        "feature_name": "fr10_post_1",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9780676173608245,
+          51.59721229839412
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_2",
+        "feature_name": "fr10_post_2",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9781098760997764,
+          51.59719249621412
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_3",
+        "feature_name": "fr10_post_3",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9781521348387806,
+          51.59717269403409
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_4",
+        "feature_name": "fr10_post_4",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9781943935779099,
+          51.59715289185401
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_5",
+        "feature_name": "fr10_post_5",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782366523171087,
+          51.59713308967389
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_6",
+        "feature_name": "fr10_post_6",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9782789110563828,
+          51.59711328749374
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_7",
+        "feature_name": "fr10_post_7",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9783211695960058,
+          51.59709348489278
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_8",
+        "feature_name": "fr10_post_8",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.978363428124064,
+          51.597073682267336
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_9",
+        "feature_name": "fr10_post_9",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784056867524675,
+          51.597053879852936
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_10",
+        "feature_name": "fr10_post_10",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784479454440426,
+          51.59703407757137
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_11",
+        "feature_name": "fr10_post_11",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9784902041837448,
+          51.59701427539102
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_12",
+        "feature_name": "fr10_post_12",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785324629235818,
+          51.59699447321061
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_13",
+        "feature_name": "fr10_post_13",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.9785747216196222,
+          51.59697467093783
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_14",
+        "feature_name": "fr10_post_14",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.97861698,
+          51.596954868
+        ]
+      },
+      "properties": {
+        "row_post_id": "fr10_post_15",
+        "feature_name": "fr10_post_15",
+        "measured_or_calulated": "calulated",
+        "feature_type": "row_post"
+      }
+    }
+  ]
+}

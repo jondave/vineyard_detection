@@ -1,3 +1,15 @@
+'''
+Graph based approach to match a set of detected vineyard poles (represented by a graph) to a prior knowledge graph of expected pole locations. 
+NetworkX optimal_edit_paths function finds the optimal sequence of edit operations (insertion, deletion, substitution) that transform one graph into another. 
+This minimises the "edit distance" between the graphs, which is a measure of their dissimilarity.
+The cost of substituting one node for another is based on the Euclidean distance between their positions.
+Iteratively refines the matching by;
+Finding the best node mapping using the current graph positions.
+Estimating a transformation (rotation and translation) based on the matched node pairs.
+Applying the transformation to the prior knowledge graph.
+Repeating until convergence or a maximum number of iterations is reached.
+'''
+
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,19 +24,32 @@ import math
 
 # Prior knowledge of vineyard pole locations
 # Create the prior knowledge graph
+
+# Riseholeme
 # num_rows = 10
 # num_cols = 4 # number of poles per row
 # row_spacing = 2.75 # meters between rows
 # col_spacing = 5.65 # pole spacing meters along the row
 
-num_rows = 4 # number of poles per row
-num_cols = 10 # number of rows
-row_spacing = 5.65 # pole spacing meters along the row
-col_spacing = 2.75 # meters between rows
+# Riseholeme
+# num_rows = 4 # number of poles per row
+# num_cols = 10 # number of rows
+# row_spacing = 5.65 # pole spacing meters along the row
+# col_spacing = 2.75 # meters between rows
 
-# Distance threshold
-distance_threshold_max = 6.5 # m
-distance_threshold_min = 5.0 # m
+# num_poles_per_col = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] # Riseholeme
+
+# JoJos first 10 rows from the west end
+row_spacing = 5.00 # pole spacing meters along the row
+col_spacing = 3.00 # meters between rows
+num_poles_per_col = [5, 7, 8, 9, 10, 11, 13, 14, 15, 16]
+
+# Distance threshold for geojson grpah edge distances
+# distance_threshold_max = 6.5 # m
+# distance_threshold_min = 5.0 # m
+
+# geojson_file = '../../data/clustered_poles.geojson'
+geojson_file = '../../data/jojo_row_posts_10_rows.geojson'
 
 def create_prior_knowledge_graph(num_rows, num_cols, row_spacing, col_spacing):
     """
@@ -58,6 +83,43 @@ def create_prior_knowledge_graph(num_rows, num_cols, row_spacing, col_spacing):
             # Connect nodes only within the same column
             if row > 0:  # Connect to the node above (same column)
                 G.add_edge(((col) * col_spacing, (row - 1) * row_spacing), node)
+
+    return G
+
+def create_prior_knowledge_graph_with_variable_poles(num_poles_per_col, row_spacing, col_spacing):
+    """
+    Creates a graph where each column can have a different number of poles (nodes).
+
+    Args:
+        num_poles_per_col (list or int): A list specifying the number of poles in each column,
+                                         or a single integer for a uniform number of poles per column.
+        row_spacing (float): Spacing between rows (y-axis).
+        col_spacing (float): Spacing between columns (x-axis).
+
+    Returns:
+        G (networkx.Graph): A graph with nodes placed in a layout with varying poles per column.
+    """
+    G = nx.Graph()
+
+    # Ensure num_poles_per_col is a list
+    if isinstance(num_poles_per_col, int):
+        num_poles_per_col = [num_poles_per_col] * int(col_spacing / row_spacing)
+
+    for col, num_rows in enumerate(num_poles_per_col):
+        for row in range(num_rows):
+            x = col * col_spacing
+            y = row * row_spacing
+            name = f"Node_{row}_{col}"  # Assign a name based on the row and column
+            node = (x, y)
+            G.add_node(node, pos=(x, y), name=name)
+
+            # Connect nodes within the same column
+            if row > 0:  # Connect to the node above (same column)
+                G.add_edge(((col) * col_spacing, (row - 1) * row_spacing), node)
+
+            # # Connect nodes within the same row (if a node exists to the left in this row)
+            # if col > 0 and row < num_poles_per_col[col - 1]:  # Ensure row exists in the previous column
+            #     G.add_edge(((col - 1) * col_spacing, row * row_spacing), node)
 
     return G
 
@@ -188,10 +250,9 @@ def create_sample_topological_graphs() -> Tuple[nx.Graph, nx.Graph, Dict, Dict]:
     Returns: (graph1, graph2, pos1, pos2)
     """
     
-    geojson_file = '../../data/clustered_poles.geojson'
-
     # First graph - a simple connected structure (prior knowledge)
-    G1 = create_prior_knowledge_graph(num_rows, num_cols, row_spacing, col_spacing) # in long, lat coordinates
+    # G1 = create_prior_knowledge_graph(num_rows, num_cols, row_spacing, col_spacing) # in long, lat coordinates
+    G1 = create_prior_knowledge_graph_with_variable_poles(num_poles_per_col, row_spacing, col_spacing) # in long, lat coordinates with variable poles per row
 
     positions1 = nx.get_node_attributes(G1, 'pos')
 
@@ -543,16 +604,15 @@ def main():
     # Create sample graphs
     G1, G2, pos1, pos2 = create_sample_topological_graphs()
 
-    # # Visualize the graphs
+    # Visualize the graphs
     # visualize_graphs('../../images/graph_matching/gmatch4py/1_gmatch4py_graphs.png', G2, G1, pos2, pos1)
 
-    # # Compare the graphs
-    # node_mapping = compare_topological_graphs(G2, G1)
+    # Compare the graphs
+    node_mapping = compare_topological_graphs(G2, G1)
 
-    # print(f"Mapping: {node_mapping}")
+    print(f"Mapping: {node_mapping}")
 
-    # # Analyze and print differences
-    # analyze_differences(G2, G1, node_mapping[0])
+    analyze_differences(G2, G1, node_mapping[0])
 
     transformed_G2, best_mapping, final_distance, R, t = iterative_graph_matching(G2, G1)
 

@@ -1,3 +1,9 @@
+'''
+This script extracts metadata from an image file using ExifTool. 
+It retrieves specific fields such as flight yaw degree, gimbal yaw degree, GPS latitude, longitude, and altitude. 
+The code parses the ExifTool's JSON output to display the relevant metadata.
+'''
+
 import subprocess
 import json
 
@@ -49,6 +55,6 @@ def extract_flight_gimbal_degrees(image_path):
     except Exception as e:
         print(f"Error: {e}")
 
-# Replace with the path to your image
+# Path to image
 image_path = "../images/39_feet/DJI_20240802142835_0003_W.JPG"
 extract_flight_gimbal_degrees(image_path)

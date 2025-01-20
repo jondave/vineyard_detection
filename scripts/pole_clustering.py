@@ -1,3 +1,15 @@
+'''
+This script processes GeoJSON data to cluster pole coordinates using the DBSCAN algorithm. The steps include:
+
+1. Load Input Data: Reads a GeoJSON file containing pole coordinates as Point features.
+2. Extract and Prepare Data: Extracts coordinates and converts them into a NumPy array for clustering.
+3. DBSCAN Clustering: Applies the DBSCAN algorithm with haversine distance, identifying clusters of poles based on spatial proximity.
+4. Calculate Centroids: For each cluster, calculates the centroid using the Shapely library.
+5. Generate Clustered GeoJSON: Creates a new GeoJSON file containing the centroids of identified clusters as Point features, with properties like cluster_id.
+6. Save Output: Writes the resulting clustered GeoJSON to a specified file.
+7. The output file, clustered_poles.geojson, contains clustered pole centroids with metadata.
+'''
+
 import json
 from sklearn.cluster import DBSCAN
 import numpy as np

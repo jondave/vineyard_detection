@@ -1,6 +1,35 @@
+'''
+This script processes GeoJSON data of vineyard pole locaions and connect them to form rows.
+
+1. Loads GeoJSON Data: Reads existing pole data.
+2. Defines Row Structures: Uses prior knowledge; compass heading and poles per row.
+3. Handles Missing Poles: Identifies gaps in rows and interpolates missing poles.
+4. Assigns Row IDs: Maps poles to the nearest row using perpendicular distance.
+5. Creates Rows as LineStrings: Represents rows as GeoJSON LineString features.
+6. Updates GeoJSON: Combines pole and row features into a single updated GeoJSON file.
+7. The final result is saved as updated_poles_and_rows.geojson, including interpolated poles and row assignments.
+'''
+
 import json
 import numpy as np
 import math
+
+# Define prior knowledge
+# Riseholme
+poles_per_row = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] # poles per row
+compass_heading = 170  # compass heading of rows (degrees clockwise from north, north == 0, east == 90, south == 180, west == 270)
+
+# JoJos first 10 rows from the west end
+# poles_per_row = [5, 7, 8, 9, 10, 11, 13, 14, 15, 16] # poles per row
+# compass_heading = 65  # compass heading of rows (degrees clockwise from north, north == 0, east == 90, south == 180, west == 270)
+
+# # Load the GeoJSON file (Riseholme)
+with open('../data/clustered_poles.geojson', 'r') as f:
+    geojson_data = json.load(f)
+
+# Load the GeoJSON file (JoJo)
+# with open('../data/jojo_row_posts_10_rows.geojson', 'r') as f:
+#     geojson_data = json.load(f)
 
 # Function to calculate the perpendicular distance from a point to a line segment
 def perpendicular_distance(point, line_start, line_end):
@@ -19,16 +48,8 @@ def perpendicular_distance(point, line_start, line_end):
     # Calculate the distance from the point to the closest point on the line
     return np.linalg.norm(np.array(point) - closest_point)
 
-# Load the GeoJSON file
-with open('../data/clustered_poles.geojson', 'r') as f:
-    geojson_data = json.load(f)
-
 # Extract coordinates
 coordinates = np.array([feature['geometry']['coordinates'] for feature in geojson_data['features']])
-
-# Define prior knowledge
-poles_per_row = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]  # poles per row
-compass_heading = 170  # compass heading of rows
 
 # Convert to mathematical heading (counter-clockwise from 0 deg North)
 math_heading = (360 - compass_heading) % 360
@@ -169,7 +190,7 @@ updated_geojson = {
 }
 
 # Save the updated GeoJSON
-with open('../data/updated_poles_and_rows.geojson', 'w') as f:
+with open('../data/spatial_interpolation_poles_and_rows.geojson', 'w') as f:
     json.dump(updated_geojson, f, indent=2)
 
-print("GeoJSON with missing poles interpolated saved as 'updated_poles_and_rows.geojson'")
+print("GeoJSON with missing poles interpolated saved as 'spatial_interpolation_poles_and_rows.geojson'")

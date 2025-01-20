@@ -1,3 +1,8 @@
+'''
+The code calculates the error between detected pole coordinates (from YOLO) and RTK GPS pole coordinates 
+by finding the closest RTK pole for each detected pole and calculating the distance error in meters.
+'''
+
 import json
 from geopy.distance import geodesic
 

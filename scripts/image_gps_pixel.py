@@ -1,3 +1,9 @@
+'''
+The code extracts flight and gimbal orientation data, GPS coordinates, and altitude from an image's EXIF metadata, 
+and then uses the pixel coordinates to calculate real-world distances and update GPS coordinates based on 
+flight and gimbal angles. It also converts GPS coordinates from DMS (Degrees, Minutes, Seconds) format to decimal degrees.
+'''
+
 import subprocess
 import json
 from PIL import Image

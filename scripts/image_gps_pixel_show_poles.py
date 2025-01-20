@@ -1,3 +1,22 @@
+'''
+This script extracts metadata from an image, GPS coordinates, altitude, and camera orientation, and then uses this data to calculate pixel locations for geographical points and draw circles on the image corresponding to these locations.
+
+Key components:
+extract_exif(image_path): This function extracts metadata from an image file using ExifTool. It retrieves information such as GPS coordinates (latitude, longitude), altitude, field of view, and camera angles (yaw, pitch, roll) for both the flight and the gimbal.
+
+dms_to_decimal(dms_str): Converts GPS coordinates in Degrees, Minutes, and Seconds (DMS) format to decimal degrees.
+
+extract_number(input_string): This utility function extracts the first numeric value from a string using regular expressions.
+
+get_gps_from_pixel(...): Converts pixel coordinates from an image into GPS coordinates based on the image's field of view, altitude, and orientation of the camera.
+
+get_pixel_from_gps(...): Converts GPS coordinates back into pixel coordinates on the image. This also adjusts for the gimbal's orientation and the field of view.
+
+draw_circles_on_image(...): This function draws circles on the image based on a list of GPS coordinates. It calculates pixel positions for these coordinates and draws red circles at those positions.
+
+process_image(image_path, gps_points): The main function that uses the above utilities to process an image. It extracts metadata, computes pixel coordinates for given GPS points, and draws circles at those positions on the image. Saves locations in a GeoJSON file.
+'''
+
 import subprocess
 import json
 import re

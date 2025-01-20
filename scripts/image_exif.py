@@ -1,3 +1,8 @@
+'''
+This script utilises ExifTool to extract and display all available metadata from an image file in JSON format. 
+It parses the output to print each metadata tag and its corresponding value.
+'''
+
 import subprocess
 import json
 

@@ -1,3 +1,9 @@
+'''
+The code performs pole detection (for one folder of images) using a pre-trained YOLOv8 model, extracts GPS coordinates for detected poles, 
+converts pixel locations to geographic coordinates (latitude/longitude), and saves the results in a GeoJSON file. 
+It also generates an annotated image showing the detected poles.
+'''
+
 import os
 from inference import get_model
 import supervision as sv

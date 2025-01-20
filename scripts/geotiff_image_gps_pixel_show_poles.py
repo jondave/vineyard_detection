@@ -1,3 +1,7 @@
+'''
+The code processes a GeoTIFF image, overlays GPS points onto it, and saves the result as a PNG.
+'''
+
 import rasterio
 from rasterio.plot import reshape_as_image
 import matplotlib.pyplot as plt

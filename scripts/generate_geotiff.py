@@ -1,3 +1,14 @@
+'''
+This script processes an image by extracting metadata, flight and gimbal degrees, GPS coordinates, and altitude from the EXIF data. 
+It then calculates the ground sample distance (GSD) and creates a GeoTIFF file with georeferenced information.
+
+extract_flight_gimbal_degrees: Extracts flight yaw, gimbal yaw, GPS coordinates (latitude, longitude, and altitude) from the image's EXIF metadata.
+dms_to_decimal: Converts DMS (Degrees, Minutes, Seconds) coordinates to decimal degrees.
+parse_dms: Parses a GPS DMS string into degrees, minutes, seconds, and direction.
+create_geotiff: Creates a GeoTIFF image by using the calculated ground sample distance (GSD) and the image's EXIF data (GPS coordinates, altitude, flight degree, and gimbal degree). The image is georeferenced using the WGS 84 coordinate system (EPSG:4326).
+process_image: Main function that extracts the relevant data, calculates GPS coordinates in decimal degrees, and generates the GeoTIFF if valid data is available.
+'''
+
 import rasterio
 from rasterio.transform import from_origin
 import numpy as np
