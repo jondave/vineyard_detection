@@ -21,6 +21,7 @@ from networkx.algorithms.similarity import optimize_graph_edit_distance, optimal
 from pprint import pprint
 import geojson
 import math
+import random
 
 # Prior knowledge of vineyard pole locations
 # Create the prior knowledge graph
@@ -120,6 +121,38 @@ def create_prior_knowledge_graph_with_variable_poles(num_poles_per_col, row_spac
             # # Connect nodes within the same row (if a node exists to the left in this row)
             # if col > 0 and row < num_poles_per_col[col - 1]:  # Ensure row exists in the previous column
             #     G.add_edge(((col - 1) * col_spacing, row * row_spacing), node)
+
+    return G
+
+def create_random_graph_with_variable_starts(num_poles_per_col, row_spacing, col_spacing):
+    """
+    Creates a graph with rows starting at random offsets, while respecting the given spacing.
+
+    Args:
+        num_poles_per_col (list): A list specifying the number of poles in each column.
+        row_spacing (float): Spacing between poles in a row (y-axis).
+        col_spacing (float): Spacing between columns (x-axis).
+
+    Returns:
+        G (networkx.Graph): A graph with nodes placed in a layout with varying starts for rows.
+    """
+    G = nx.Graph()
+
+    for col, num_rows in enumerate(num_poles_per_col):
+        # Randomly determine the start offset for the rows in this column
+        start_offset = random.randint(0, num_rows - 1) * row_spacing
+
+        for row in range(num_rows):
+            x = col * col_spacing
+            y = start_offset + row * row_spacing
+            name = f"Node_{row}_{col}"  # Assign a name based on the row and column
+            node = (x, y)
+            G.add_node(node, pos=(x, y), name=name)
+
+            # Connect nodes within the same column
+            if row > 0:  # Connect to the node above (same column)
+                prev_node = (x, start_offset + (row - 1) * row_spacing)
+                G.add_edge(prev_node, node)
 
     return G
 
@@ -252,7 +285,8 @@ def create_sample_topological_graphs() -> Tuple[nx.Graph, nx.Graph, Dict, Dict]:
     
     # First graph - a simple connected structure (prior knowledge)
     # G1 = create_prior_knowledge_graph(num_rows, num_cols, row_spacing, col_spacing) # in long, lat coordinates
-    G1 = create_prior_knowledge_graph_with_variable_poles(num_poles_per_col, row_spacing, col_spacing) # in long, lat coordinates with variable poles per row
+    # G1 = create_prior_knowledge_graph_with_variable_poles(num_poles_per_col, row_spacing, col_spacing) # in long, lat coordinates with variable poles per row
+    G1 = create_random_graph_with_variable_starts(num_poles_per_col, row_spacing, col_spacing) # in long, lat coordinates with variable poles per row and random row starting locations
 
     positions1 = nx.get_node_attributes(G1, 'pos')
 
@@ -302,13 +336,27 @@ def edge_subst_cost(edge1_data: Dict, edge2_data: Dict) -> float:
     """
     return 0.5
 
-def analyze_differences(G1: nx.Graph, G2: nx.Graph, node_mapping: list) -> None:
+def analyze_differences(G1: nx.Graph, G2: nx.Graph, node_mapping: list) -> tuple:
     """
-    Analyze and print the differences between the two graphs based on the GED mapping
+    Analyze and print the differences between the two graphs based on the GED mapping.
+    Returns the number of inserted, deleted, and matched nodes.
+
+    Args:
+        G1 (nx.Graph): The prior knowledge graph.
+        G2 (nx.Graph): The new graph.
+        node_mapping (list): A list of tuples representing the mapping between nodes in G1 and G2.
+
+    Returns:
+        tuple: (num_inserted, num_deleted, num_matched)
     """
+
     if node_mapping is None:
         print("No valid mapping found")
         return
+
+    num_inserted = 0
+    num_deleted = 0
+    num_matched = 0
     
     new_graph = nx.Graph()
 
@@ -320,8 +368,10 @@ def analyze_differences(G1: nx.Graph, G2: nx.Graph, node_mapping: list) -> None:
             print(f"Node {n2} in G2 was inserted into G1")
             pos2 = G2.nodes[n2].get('pos', (0, 0))
             new_graph.add_node(n2, pos=pos2)
+            num_inserted += 1
         elif n2 is None:
             print(f"Node {n1} in G1 was deleted")
+            num_deleted += 1
         else:
             pos1 = G1.nodes[n1].get('pos', (0, 0))
             pos2 = G2.nodes[n2].get('pos', (0, 0))
@@ -329,12 +379,14 @@ def analyze_differences(G1: nx.Graph, G2: nx.Graph, node_mapping: list) -> None:
             print(f"Node {n1} in G1 mapped to {n2} in G2 (distance: {dist:.3f})")
             matched_nodes.append((pos1, pos2))  # Store both positions (from G1 and G2)
             new_graph.add_node(pos1, pos=pos1) # Add matched node to the new graph
+            num_matched += 1
 
     # Visualize the graphs
     fig, ax = plt.subplots(figsize=(12, 8))
 
     # Combine positions into a single plot
-    pos1 = nx.get_node_attributes(new_graph, 'pos')
+    pos1 = nx.get_node_attributes(new_graph, 'pos')    
+    # pos1 = nx.get_node_attributes(G1, 'pos')
     pos2 = nx.get_node_attributes(G2, 'pos')
 
     shift_x = 25  # Shift value for x-coordinate
@@ -367,6 +419,11 @@ def analyze_differences(G1: nx.Graph, G2: nx.Graph, node_mapping: list) -> None:
         new_graph, pos1, ax=ax, with_labels=False, node_color=node_colors_G1, node_size=500, label="Graph G1", font_size=4
     )
 
+    # Draw G1
+    # nx.draw(
+    #     G1, pos1, ax=ax, with_labels=False, node_color=node_colors_G1, node_size=500, label="Graph G1", font_size=4
+    # )
+
     # Draw G2 (shifted to avoid overlap)
     nx.draw(
         G2, pos2_shifted, ax=ax, with_labels=False, node_color=node_colors_G2, node_size=200, label="Graph G2", font_size=4
@@ -397,6 +454,9 @@ def analyze_differences(G1: nx.Graph, G2: nx.Graph, node_mapping: list) -> None:
 
     plt.savefig('../../images/graph_matching/gmatch4py/3_gmatch4py_graph_matching.png')
     plt.close()
+
+    # Return counts
+    return num_inserted, num_deleted, num_matched
 
 def compare_topological_graphs(G1: nx.Graph, G2: nx.Graph) -> Tuple[float, list]:
     """
@@ -601,35 +661,70 @@ def iterative_graph_matching(G1: nx.Graph, G2: nx.Graph,
     return best_transformed_G1, best_mapping, best_distance, global_R, global_t
 
 def main():
-    # Create sample graphs
-    G1, G2, pos1, pos2 = create_sample_topological_graphs()
 
-    # Visualize the graphs
-    visualize_graphs('../../images/graph_matching/gmatch4py/1_gmatch4py_graphs.png', G2, G1, pos2, pos1)
+    best_match = None
+    best_num_matched = 0
+    best_G1 = None
+    best_G2 = None
+    best_node_mapping = None
+    number_of_random_graphs = 1000
+    i = 0
 
-    # Compare the graphs
-    node_mapping = compare_topological_graphs(G2, G1)
+    while i <= number_of_random_graphs:
+        # Create sample graphs
+        G1, G2, pos1, pos2 = create_sample_topological_graphs()
 
-    print(f"Mapping: {node_mapping}")
+        # Visualize the graphs
+        visualize_graphs('../../images/graph_matching/gmatch4py/1_gmatch4py_graphs.png', G2, G1, pos2, pos1)
 
-    analyze_differences(G2, G1, node_mapping[0])
+        # Compare the graphs
+        node_mapping = compare_topological_graphs(G2, G1)
 
-    transformed_G2, best_mapping, final_distance, R, t = iterative_graph_matching(G2, G1)
+        print(f"Mapping: {node_mapping}")
 
-    print(f"final best mapping: {best_mapping} with a distance of {final_distance}")
-    print(f"the final roation was {atan2(R[0,1],R[0,0]) * 180.0 / math.pi} degrees, t was {t}")
+        num_inserted, num_deleted, num_matched = analyze_differences(G2, G1, node_mapping[0])
 
-    analyze_differences(transformed_G2, G1, best_mapping)
-    new_poses={}
-    for n in transformed_G2.nodes:
-        pos = transformed_G2.nodes[n].get('pos')
-        new_poses[n]=pos
+        print(f"Inserted: {num_inserted}, Deleted: {num_deleted}, Matched: {num_matched}")
+        
+        # Update the best match if this graph pair has more matched nodes
+        if num_matched > best_num_matched:
+            best_num_matched = num_matched
+            best_match = i
+            best_G1 = G1
+            best_G2 = G2
+            best_node_mapping = node_mapping[0]
+
+        print(f"Processed Graph {i} of {number_of_random_graphs}")
+
+        i += 1
+
+    # Summary of the best matching
+    print(f"\nBest Match is Graph {best_match} with {best_num_matched} matched nodes.")
+    # print(f"Best Node Mapping: {best_node_mapping}")
+
+    if best_G1 is not None and best_G2 is not None:
+        visualize_graphs('../../images/graph_matching/gmatch4py/4_best_match_graphs.png', best_G2, best_G1, nx.get_node_attributes(best_G2, 'pos'), nx.get_node_attributes(best_G1, 'pos'))
+
+    # transformed_G2, best_mapping, final_distance, R, t = iterative_graph_matching(G2, G1)
+
+    # print(f"final best mapping: {best_mapping} with a distance of {final_distance}")
+    # print(f"the final roation was {atan2(R[0,1],R[0,0]) * 180.0 / math.pi} degrees, t was {t}")
+
+    # num_inserted_transformed, num_deleted_transformed, num_matched_transformed = analyze_differences(transformed_G2, G1, best_mapping)    
+
+    # print(f"Inserted transformed graph: {num_inserted_transformed}, Deleted: {num_deleted_transformed}, Matched: {num_matched_transformed}")
+
+    # new_poses={}
+    # for n in transformed_G2.nodes:
+    #     pos = transformed_G2.nodes[n].get('pos')
+    #     new_poses[n]=pos
+
     #print(transformed_G2.nodes[])
 
     # print('Original problem:')
     # visualize_graphs('../../images/graph_matching/gmatch4py/1_gmatch4py_graphs.png', G2, G1, pos2, pos1)
     # print('After optimisation:')
-    visualize_graphs('../../images/graph_matching/gmatch4py/2_gmatch4py_graphs_optimised.png', transformed_G2, G1, new_poses, pos1)
+    # visualize_graphs('../../images/graph_matching/gmatch4py/2_gmatch4py_graphs_optimised.png', transformed_G2, G1, new_poses, pos1)
 
 if __name__ == "__main__":
     main()
