@@ -2,13 +2,13 @@ import torch
 import cv2
 
 # Path to your custom YOLO model
-model_path = '../yolo_models/yolo11x.pt'
+model_path = '../../yolo_models/yolo11x.pt'
 
 # Input image path
-input_image_path = '../images/39_feet/DJI_20240802142831_0001_W.JPG'
+input_image_path = '../../images/39_feet/DJI_20240802142831_0001_W.JPG'
 
 # Output image path
-output_image_path = '../images/output_image_yolo.png'
+output_image_path = '../../images/output_image_yolo.png'
 
 # Load YOLO model
 model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, force_reload=True)

@@ -5,7 +5,7 @@ import sys
 sys.path.append('/home/cabbage/Code/yolov9')
 
 # Load the API key
-with open('../config/api_key.json', 'r') as file:
+with open('../../config/api_key.json', 'r') as file:
     config = json.load(file)
 ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")    
 

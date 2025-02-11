@@ -102,7 +102,7 @@ updated_geojson = {
 }
 
 # Save the updated GeoJSON
-with open('../data/spatial_interpolation_poles_and_rows_stright.geojson', 'w') as f:
+with open('../data/spatial_interpolation_poles_stright.geojson', 'w') as f:
     json.dump(updated_geojson, f, indent=2)
 
 print("GeoJSON with interpolated poles saved as 'spatial_interpolation_poles_and_rows_stright.geojson'")

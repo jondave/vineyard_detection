@@ -13,12 +13,12 @@ from PIL import Image
 import image_gps_pixel_show_poles
 
 # Define the folder containing images for inference
-image_folder = "../images/39_feet/"
-output_folder = "../images/output/"
+image_folder = "../..//images/39_feet/"
+output_folder = "../..//images/output/"
 os.makedirs(output_folder, exist_ok=True)
 
 # Load the API key
-with open('../config/api_key.json', 'r') as file:
+with open('../..//config/api_key.json', 'r') as file:
     config = json.load(file)
 ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")
 
@@ -109,11 +109,11 @@ for image_file in os.listdir(image_folder):
     print(f"Annotated image saved to: {annotated_image_path}")
 
 # Save the GeoJSON data to files
-output_geojson_poles = "../data/detected_pole_coordinates.geojson"
+output_geojson_poles = "../..//data/detected_pole_coordinates.geojson"
 with open(output_geojson_poles, "w") as json_file:
     json.dump(geojson_poles, json_file, indent=4)
 
-output_geojson_trunks = "../data/detected_trunk_coordinates.geojson"
+output_geojson_trunks = "../..//data/detected_trunk_coordinates.geojson"
 with open(output_geojson_trunks, "w") as json_file:
     json.dump(geojson_trunks, json_file, indent=4)
 

@@ -12,11 +12,11 @@ from PIL import Image, ImageDraw
 import image_gps_pixel_show_poles
 
 # Define the image URL to use for inference
-image_file = "../images/39_feet/DJI_20240802142844_0007_W.JPG"
+image_file = "../../images/39_feet/DJI_20240802142844_0007_W.JPG"
 image = cv2.imread(image_file)
 
 # Load the API key
-with open('../config/api_key.json', 'r') as file:
+with open('../../config/api_key.json', 'r') as file:
     config = json.load(file)
 ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")    
 
@@ -110,7 +110,7 @@ if flight_yaw_degree is not None:
         print(f"Latitude: {latitude}, Longitude: {longitude}")
     
     # Save the GeoJSON data to a file
-    output_geojson_file = "../data/detected_pole_coordinates.geojson"
+    output_geojson_file = "../../data/detected_pole_coordinates.geojson"
     with open(output_geojson_file, "w") as json_file:
         json.dump(geojson_data, json_file, indent=4)
 
@@ -131,6 +131,6 @@ annotated_image = label_annotator.annotate(
     scene=annotated_image, detections=detections)
 
 # Save the annotated image instead of displaying it
-output_file = "../images/annotated_image.jpg"
+output_file = "../../images/annotated_image.jpg"
 cv2.imwrite(output_file, annotated_image)
 print(f"Annotated image saved to: {output_file}")

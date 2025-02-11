@@ -55,11 +55,11 @@ geojson_file = '../../data/clustered_poles.geojson'
 # JoJo
 # geojson_file = '../../data/jojo_row_posts_10_rows.geojson'
 
-node_ins_cost_value = 0.8
-node_del_cost_value = 0.8
+node_ins_cost_value = 1.0 # 0.8
+node_del_cost_value = 1.0 # 0.8
 
-edge_ins_cost_value = 0
-edge_del_cost_value = 1
+edge_ins_cost_value = 1.0 # 0
+edge_del_cost_value = 0.1
 
 max_iterations_value = 2
 convergence_threshold_value = 0.0001
@@ -303,7 +303,7 @@ def create_sample_topological_graphs() -> Tuple[nx.Graph, nx.Graph, Dict, Dict]:
     # G2 = create_detection_graph(geojson_file) # in long, lat coordinates
     G2 = create_detection_graph_cartesian(geojson_file) # in x, y coordinates
     
-    # G2 = create_delaunay_graph(G2) # create a delaunay triangulation graph
+    G2 = create_delaunay_graph(G2) # create a delaunay triangulation graph
 
     positions2 = nx.get_node_attributes(G2, 'pos')
 
@@ -458,8 +458,8 @@ def compare_topological_graphs(G1: nx.Graph, G2: nx.Graph) -> Tuple[float, list]
         #)
         associations = optimal_edit_paths (
             G1, G2,
-            node_subst_cost=lambda x,y: node_subst_cost(x,y)*1,
-            edge_subst_cost=lambda x,y: edge_subst_cost(x,y)*1,
+            node_subst_cost=lambda x,y: 0, # node_subst_cost(x,y)*1,
+            edge_subst_cost=lambda x,y: 0, # edge_subst_cost(x,y)*1,
             node_ins_cost=lambda x: node_ins_cost_value,
             node_del_cost=lambda x: node_del_cost_value,
             edge_ins_cost=lambda x: edge_ins_cost_value, # 0 # as we dind't have edges in the original graph, we allow additions for free
@@ -571,8 +571,8 @@ def iterative_graph_matching(G1: nx.Graph, G2: nx.Graph,
         try:
             associations = optimal_edit_paths (
                 current_G1, G2,
-                node_subst_cost=lambda x,y: node_subst_cost(x,y)*1,
-                edge_subst_cost=lambda x,y: edge_subst_cost(x,y)*1,
+                node_subst_cost=lambda x,y: 0, # node_subst_cost(x,y)*1,
+                edge_subst_cost=lambda x,y: 0, # edge_subst_cost(x,y)*1,
                 # node_ins_cost=lambda x: 1.0 + 0.5 * x.get('weight', 0),
                 # node_del_cost=lambda x: 1.0 + 0.5 * x.get('weight', 0),
                 node_ins_cost=lambda x: node_ins_cost_value,
