@@ -1,3 +1,6 @@
 /images
 /yolo_models
 /config
+/yolov5-env
+/yolov9-env
+/weights

@@ -21,6 +21,7 @@ from networkx.algorithms.similarity import optimize_graph_edit_distance, optimal
 from pprint import pprint
 import geojson
 import math
+from scipy.spatial import Delaunay
 
 # Prior knowledge of vineyard pole locations
 # Create the prior knowledge graph
@@ -34,22 +35,74 @@ import math
 # Riseholeme
 # num_rows = 4 # number of poles per row
 # num_cols = 10 # number of rows
-# row_spacing = 5.65 # pole spacing meters along the row
-# col_spacing = 2.75 # meters between rows
-
-# num_poles_per_col = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] # Riseholeme
+row_spacing = 5.65 # pole spacing meters along the row
+col_spacing = 2.75 # meters between rows
+num_poles_per_col = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] # Riseholme
 
 # JoJos first 10 rows from the west end
-row_spacing = 5.00 # pole spacing meters along the row
-col_spacing = 3.00 # meters between rows
-num_poles_per_col = [5, 7, 8, 9, 10, 11, 13, 14, 15, 16]
+# row_spacing = 5.00 # pole spacing meters along the row
+# col_spacing = 3.00 # meters between rows
+# num_poles_per_col = [5, 7, 8, 9, 10, 11, 13, 14, 15, 16]
 
 # Distance threshold for geojson grpah edge distances
 # distance_threshold_max = 6.5 # m
 # distance_threshold_min = 5.0 # m
 
-# geojson_file = '../../data/clustered_poles.geojson'
-geojson_file = '../../data/jojo_row_posts_10_rows.geojson'
+# Riseholme
+geojson_file = '../../data/clustered_poles.geojson'
+# geojson_file = '../../data/spatial_interpolation_poles_stright.geojson'
+
+# JoJo
+# geojson_file = '../../data/jojo_row_posts_10_rows.geojson'
+
+# node_ins_cost_value = 0.8
+# node_del_cost_value = 0.8
+
+# edge_ins_cost_value = 0
+# edge_del_cost_value = 1
+
+# max_iterations_value = 2
+# convergence_threshold_value = 0.0001
+
+node_ins_cost_value = 0.3
+node_del_cost_value = 0.3
+
+edge_ins_cost_value = 0
+edge_del_cost_value = 1
+
+max_iterations_value = 10
+convergence_threshold_value = 0.0001
+
+
+def create_delaunay_graph(G: nx.Graph) -> nx.Graph:
+    """
+    Create a Delaunay triangulation graph from an input graph G.
+    
+    Parameters:
+    G (nx.Graph): Input graph where nodes have 'pos' attributes (2D coordinates).
+    
+    Returns:
+    nx.Graph: A new graph with the same nodes but edges determined by Delaunay triangulation.
+    """
+    # Extract node positions
+    node_positions = {node: data['pos'] for node, data in G.nodes(data=True)}
+    points = np.array(list(node_positions.values()))
+    
+    # Compute Delaunay triangulation
+    tri = Delaunay(points)
+
+    # Create a new graph with Delaunay edges
+    G_delaunay = nx.Graph()
+    G_delaunay.add_nodes_from(G.nodes(data=True))
+
+    # Add edges based on Delaunay triangulation
+    node_list = list(node_positions.keys())  # Ensure we reference correct node IDs
+    for simplex in tri.simplices:
+        for i in range(3):  # Each triangle has 3 nodes
+            n1, n2 = node_list[simplex[i]], node_list[simplex[(i + 1) % 3]]
+            G_delaunay.add_edge(n1, n2)
+
+    return G_delaunay
 
 def create_prior_knowledge_graph(num_rows, num_cols, row_spacing, col_spacing):
     """
@@ -259,6 +312,8 @@ def create_sample_topological_graphs() -> Tuple[nx.Graph, nx.Graph, Dict, Dict]:
     # Second graph - similar but with small differences (generated from perception)
     # G2 = create_detection_graph(geojson_file) # in long, lat coordinates
     G2 = create_detection_graph_cartesian(geojson_file) # in x, y coordinates
+    
+    # G2 = create_delaunay_graph(G2) # create a delaunay triangulation graph
 
     positions2 = nx.get_node_attributes(G2, 'pos')
 
@@ -313,20 +368,21 @@ def analyze_differences(G1: nx.Graph, G2: nx.Graph, node_mapping: list) -> None:
     new_graph = nx.Graph()
 
     # Analyze node differences
-    print(f"Node mappings: {node_mapping}")
+    # print(f"Node mappings: {node_mapping}")
     matched_nodes = []  # For visualizing matched nodes
     for n1, n2 in node_mapping:
         if n1 is None:
-            print(f"Node {n2} in G2 was inserted into G1")
+            # print(f"Node {n2} in G2 was inserted into G1")
             pos2 = G2.nodes[n2].get('pos', (0, 0))
             new_graph.add_node(n2, pos=pos2)
         elif n2 is None:
-            print(f"Node {n1} in G1 was deleted")
+            # print(f"Node {n1} in G1 was deleted")
+            continue
         else:
             pos1 = G1.nodes[n1].get('pos', (0, 0))
             pos2 = G2.nodes[n2].get('pos', (0, 0))
             dist = np.sqrt((pos1[0] - pos2[0])**2 + (pos1[1] - pos2[1])**2)
-            print(f"Node {n1} in G1 mapped to {n2} in G2 (distance: {dist:.3f})")
+            # print(f"Node {n1} in G1 mapped to {n2} in G2 (distance: {dist:.3f})")
             matched_nodes.append((pos1, pos2))  # Store both positions (from G1 and G2)
             new_graph.add_node(pos1, pos=pos1) # Add matched node to the new graph
 
@@ -348,7 +404,7 @@ def analyze_differences(G1: nx.Graph, G2: nx.Graph, node_mapping: list) -> None:
     for node in new_graph.nodes:
         if any(node == pos[0] or node == pos[1] for pos in matched_nodes):  # If node is matched
             node_colors_G1.append('cyan')  # Color for matched nodes in G1
-            print(f"Node {node} is matched in G1")
+            # print(f"Node {node} is matched in G1")
         else:
             node_colors_G1.append('blue')  # Color for unmatched nodes in G1
 
@@ -358,7 +414,7 @@ def analyze_differences(G1: nx.Graph, G2: nx.Graph, node_mapping: list) -> None:
         # Check if the node's position in G2 is part of the matched_nodes
         if any(node == pos[1] for pos in matched_nodes):  # If node is matched in G2
             node_colors_G2.append('gray')  # Color for matched nodes in G2
-            print(f"Node {node} is matched in G2")
+            # print(f"Node {node} is matched in G2")
         else:
             node_colors_G2.append('green')  # Color for unmatched nodes in G2
 
@@ -414,10 +470,10 @@ def compare_topological_graphs(G1: nx.Graph, G2: nx.Graph) -> Tuple[float, list]
             G1, G2,
             node_subst_cost=lambda x,y: node_subst_cost(x,y)*1,
             edge_subst_cost=lambda x,y: edge_subst_cost(x,y)*1,
-            node_ins_cost=lambda x: 0.3,
-            node_del_cost=lambda x: 0.3,
-            edge_ins_cost=lambda x: 0, # as we dind't have edges in the original graph, we allow additions for free
-            edge_del_cost=lambda x: 1,
+            node_ins_cost=lambda x: node_ins_cost_value,
+            node_del_cost=lambda x: node_del_cost_value,
+            edge_ins_cost=lambda x: edge_ins_cost_value, # 0 # as we dind't have edges in the original graph, we allow additions for free
+            edge_del_cost=lambda x: edge_del_cost_value, # 1
         )
         pprint(list(associations))
         return associations[0][0]
@@ -527,10 +583,12 @@ def iterative_graph_matching(G1: nx.Graph, G2: nx.Graph,
                 current_G1, G2,
                 node_subst_cost=lambda x,y: node_subst_cost(x,y)*1,
                 edge_subst_cost=lambda x,y: edge_subst_cost(x,y)*1,
-                node_ins_cost=lambda x: 1.3,
-                node_del_cost=lambda x: 1.3,
-                edge_ins_cost=lambda x: 0, # as we dind't have edges in the original graph, we allow additions for free
-                edge_del_cost=lambda x: 1,
+                # node_ins_cost=lambda x: 1.0 + 0.5 * x.get('weight', 0),
+                # node_del_cost=lambda x: 1.0 + 0.5 * x.get('weight', 0),
+                node_ins_cost=lambda x: node_ins_cost_value,
+                node_del_cost=lambda x: node_del_cost_value,
+                edge_ins_cost=lambda x: edge_ins_cost_value, # 0 # as we dind't have edges in the original graph, we allow additions for free
+                edge_del_cost=lambda x: edge_del_cost_value, # 1
             )
 
             nodes_pairs = associations[0][0][0]
@@ -610,11 +668,11 @@ def main():
     # Compare the graphs
     node_mapping = compare_topological_graphs(G2, G1)
 
-    print(f"Mapping: {node_mapping}")
+    # print(f"Mapping: {node_mapping}")
 
     analyze_differences(G2, G1, node_mapping[0])
 
-    transformed_G2, best_mapping, final_distance, R, t = iterative_graph_matching(G2, G1)
+    transformed_G2, best_mapping, final_distance, R, t = iterative_graph_matching(G2, G1, max_iterations_value, convergence_threshold_value)
 
     print(f"final best mapping: {best_mapping} with a distance of {final_distance}")
     print(f"the final roation was {atan2(R[0,1],R[0,0]) * 180.0 / math.pi} degrees, t was {t}")

@@ -17,7 +17,12 @@ import image_gps_pixel_show_poles
 # output_folder = "../../images/output/"
 # os.makedirs(output_folder, exist_ok=True)
 
-def detect_poles(image_folder, output_folder, ROBOFLOW_API_KEY, model_id, sensor_width_mm):
+def detect_poles(image_folder, output_folder, api_key_path, model_id, sensor_width_mm):
+
+    # Load the API key
+    with open(api_key_path, 'r') as file:
+        config = json.load(file)
+    ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")
 
     # Load a pre-trained YOLOv model
     model = get_model(model_id=model_id, api_key=ROBOFLOW_API_KEY)
@@ -110,15 +115,10 @@ def detect_poles(image_folder, output_folder, ROBOFLOW_API_KEY, model_id, sensor
     return geojson_data
 
 if __name__ == "__main__":
-    # Load the API key
-    with open("../../config/api_key.json", 'r') as file:
-        config = json.load(file)
-    ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")
-
     geojson_data = detect_poles(
         image_folder="../../images/39_feet/",
         output_folder="../../images/output/",
-        ROBOFLOW_API_KEY=ROBOFLOW_API_KEY,
+        api_key_path="../../config/api_key.json",
         model_id="vineyard_test/4",
         sensor_width_mm=11.04
     )

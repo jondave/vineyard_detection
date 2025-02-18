@@ -1,5 +1,5 @@
 '''
-The code performs pole detection (for one folder of images) using a pre-trained YOLOv8 model, extracts GPS coordinates for detected poles, 
+The code performs vine trunk detection (for one folder of images) using a pre-trained YOLOv8 model, extracts GPS coordinates for detected poles, 
 converts pixel locations to geographic coordinates (latitude/longitude), and saves the results in a GeoJSON file. 
 It also generates an annotated image showing the detected poles.
 '''
@@ -12,26 +12,35 @@ import json
 from PIL import Image
 import image_gps_pixel_show_poles
 
-# # Define the folder containing images for inference
-# image_folder = "../../images/39_feet/"
-# output_folder = "../../images/output/"
-# os.makedirs(output_folder, exist_ok=True)
+def detect_poles(image_folder, output_folder, api_key_path, model_id, sensor_width_mm):
 
-def detect_poles(image_folder, output_folder, ROBOFLOW_API_KEY, model_id, sensor_width_mm):
+    # Define the folder containing images for inference
+    image_folder = "../images/39_feet/"
+    output_folder = "../images/output/"
+    os.makedirs(output_folder, exist_ok=True)
 
-    # Load a pre-trained YOLOv model
-    model = get_model(model_id=model_id, api_key=ROBOFLOW_API_KEY)
+    # Load the API key
+    with open('../config/api_key.json', 'r') as file:
+        config = json.load(file)
+    ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")
 
-    # Initialize GeoJSON FeatureCollection structure
-    geojson_data = {
+    # Load a pre-trained YOLOv8n model
+    model = get_model(model_id="vineyard_test/4", api_key=ROBOFLOW_API_KEY)
+
+    # Initialize GeoJSON FeatureCollection structures for poles and trunks
+    geojson_poles = {
+        "type": "FeatureCollection",
+        "features": []
+    }
+    geojson_trunks = {
         "type": "FeatureCollection",
         "features": []
     }
 
     # Camera specifications
-    # focal_length_mm = 4.5
+    focal_length_mm = 4.5
     # sensor_width_mm = 11.04  # 6.3
-    # fov_degrees = 73.7
+    fov_degrees = 73.7
 
     # Process each image in the folder
     for image_file in os.listdir(image_folder):
@@ -48,15 +57,6 @@ def detect_poles(image_folder, output_folder, ROBOFLOW_API_KEY, model_id, sensor
         # Run inference on the image
         results = model.infer(image)[0]
 
-        # Extract pole coordinates
-        coordinates = [
-            {"x": prediction.x, "y": prediction.y}
-            for prediction in results.predictions
-            if prediction.class_name == "pole"
-        ]
-
-        print(f"Pole Coordinates for {image_file}: {coordinates}")
-
         # Extract metadata from the image
         flight_yaw_degree, flight_pitch_degree, flight_roll_degree, \
         gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, \
@@ -70,7 +70,7 @@ def detect_poles(image_folder, output_folder, ROBOFLOW_API_KEY, model_id, sensor
             fov_degrees_num = image_gps_pixel_show_poles.extract_number(fov_degrees)
 
             for prediction in results.predictions:
-                if prediction.class_name != "pole":
+                if prediction.class_name not in ["pole", "trunk"]:
                     continue
 
                 latitude, longitude = image_gps_pixel_show_poles.get_gps_from_pixel(
@@ -81,7 +81,7 @@ def detect_poles(image_folder, output_folder, ROBOFLOW_API_KEY, model_id, sensor
                     fov_degrees_num, sensor_width_mm
                 )
 
-                # Append to GeoJSON
+                # Append to appropriate GeoJSON
                 feature = {
                     "type": "Feature",
                     "geometry": {
@@ -89,10 +89,13 @@ def detect_poles(image_folder, output_folder, ROBOFLOW_API_KEY, model_id, sensor
                         "coordinates": [longitude, latitude]
                     },
                     "properties": {
-                        "type": "pole"
+                        "type": prediction.class_name
                     }
                 }
-                geojson_data["features"].append(feature)
+                if prediction.class_name == "pole":
+                    geojson_poles["features"].append(feature)
+                elif prediction.class_name == "trunk":
+                    geojson_trunks["features"].append(feature)
 
         # Annotate the image
         detections = sv.Detections.from_inference(results)
@@ -107,23 +110,18 @@ def detect_poles(image_folder, output_folder, ROBOFLOW_API_KEY, model_id, sensor
         cv2.imwrite(annotated_image_path, annotated_image)
         print(f"Annotated image saved to: {annotated_image_path}")
 
-    return geojson_data
-
+        return geojson_poles, geojson_trunks
+    
 if __name__ == "__main__":
-    # Load the API key
-    with open("../../config/api_key.json", 'r') as file:
-        config = json.load(file)
-    ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")
-
-    geojson_data = detect_poles(
+    geojson_poles, geojson_trunks = detect_poles(
         image_folder="../../images/39_feet/",
         output_folder="../../images/output/",
-        ROBOFLOW_API_KEY=ROBOFLOW_API_KEY,
+        api_key_path="../../config/api_key.json",
         model_id="vineyard_test/4",
         sensor_width_mm=11.04
     )
     
     geojson_output = "../../data/detected_pole_coordinates.geojson"
     with open(geojson_output, "w") as json_file:
-        json.dump(geojson_data, json_file, indent=4)
+        json.dump(geojson_poles, json_file, indent=4)
     print(f"GeoJSON file saved to: {geojson_output}")

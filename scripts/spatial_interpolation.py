@@ -19,13 +19,13 @@ import math
 poles_per_row = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4] # poles per row
 compass_heading = 170  # compass heading of rows (degrees clockwise from north, north == 0, east == 90, south == 180, west == 270)
 
+# Load the GeoJSON file (Riseholme)
+with open('../data/clustered_poles.geojson', 'r') as f:
+    geojson_data = json.load(f)
+
 # JoJos first 10 rows from the west end
 # poles_per_row = [5, 7, 8, 9, 10, 11, 13, 14, 15, 16] # poles per row
 # compass_heading = 65  # compass heading of rows (degrees clockwise from north, north == 0, east == 90, south == 180, west == 270)
-
-# # Load the GeoJSON file (Riseholme)
-with open('../data/clustered_poles.geojson', 'r') as f:
-    geojson_data = json.load(f)
 
 # Load the GeoJSON file (JoJo)
 # with open('../data/jojo_row_posts_10_rows.geojson', 'r') as f:
