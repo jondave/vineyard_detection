@@ -23,7 +23,8 @@ with open("../config/api_key.json", 'r') as file:
     config = json.load(file)
 ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")
 
-sensor_width_mm=11.04
+sensor_width_mm=11.04 # Riseholme DJI UAV sensor width in mm
+# sensor_width_mm=35.8 # Agri Tech Centre JoJo sensor width in mm Sony DSC-RX1RM2
 
 model_path_yolo_rows = "../weights/vine_row_segmentation/best.pt"
 output_folder_rows = "../images/output/row_detection/"

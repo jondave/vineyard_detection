@@ -12,9 +12,10 @@ ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")
 rf = roboflow.Roboflow(api_key=ROBOFLOW_API_KEY)
 
 #project = rf.workspace("vista-qsopb").project("vineyard_test")
-project = rf.workspace().project("vineyard_test")
+project = rf.workspace().project("vineyard_segmentation")
 
 #can specify weights_filename, default is "weights/best.pt"
-version = project.version(6)
-#version.deploy("yolov9", "/home/cheddar/code/yolov9/runs/train/exp3", "weights/best.pt")
-version.deploy(model_type="yolov9", model_path=f"/home/cheddar/code/yolov9/runs/train/exp4")
+version = project.version(7)
+# version.deploy("yolov9", "/home/cheddar/code/yolov9/runs/train/exp3", "weights/best.pt")
+# version.deploy(model_type="yolov9", model_path=f"/home/cheddar/code/yolov9/runs/train/exp4")
+version.deploy(model_type="yolov11", model_path=f"/home/cheddar/code/vineyard_detection/data/datasets/trained/vineyard_segmentation_v7/run1")

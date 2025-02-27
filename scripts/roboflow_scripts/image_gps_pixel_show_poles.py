@@ -23,6 +23,7 @@ import re
 from PIL import Image, ImageDraw
 import math
 import piexif
+import mapbox_altitude
 
 def extract_exif(image_path):
     try:
@@ -41,15 +42,42 @@ def extract_exif(image_path):
             flight_yaw_degree = metadata_dict.get('FlightYawDegree', None) # DO NOT USE FlightYawDegree use GimbalYawDegree, GimbalYawDegree is the compass heading of the camera and image in degrees.
             flight_pitch_degree = metadata_dict.get('FlightPitchDegree', None)
             flight_roll_degree = metadata_dict.get('FlightRollDegree', None)
-            gimbal_yaw_degree = metadata_dict.get('GimbalYawDegree', None) # GimbalYawDegree is the compass heading of the camera and image in degrees.
-            gimbal_pitch_degree = metadata_dict.get('GimbalPitchDegree', None)
-            gimbal_roll_degree = metadata_dict.get('GimbalRollDegree', None)
+            gimbal_yaw_degree = metadata_dict.get('GimbalYawDegree', 0) # GimbalYawDegree is the compass heading of the camera and image in degrees.
+            gimbal_pitch_degree = metadata_dict.get('GimbalPitchDegree', 0)
+            gimbal_roll_degree = metadata_dict.get('GimbalRollDegree', 0)
             gps_latitude_dms = metadata_dict.get('GPSLatitude', None)
             gps_longitude_dms = metadata_dict.get('GPSLongitude', None)
             gps_altitude = metadata_dict.get('RelativeAltitude', None)
             fov_degrees = metadata_dict.get('FOV', None)
             image_height = metadata_dict.get('ImageHeight', None)
             image_width = metadata_dict.get('ImageWidth', None)
+            
+            # Convert DMS to Decimal Degrees
+            if gps_latitude_dms and gps_longitude_dms:
+                gps_latitude = dms_to_decimal(gps_latitude_dms)
+                gps_longitude = dms_to_decimal(gps_longitude_dms)
+            else:
+                gps_latitude = gps_longitude = None
+
+            if gps_altitude == None:
+                altitude_above_sea_level = metadata_dict.get('GPSAltitude', None)
+                # print(f"Altitude Above Sea Level: {altitude_above_sea_level}")
+                altitude_above_sea_level = extract_number(altitude_above_sea_level)
+                # print(f"Altitude Above Sea Level (Numeric): {altitude_above_sea_level}")
+                # find relitave altitude
+                ground_elevation = mapbox_altitude.get_elevation(gps_latitude, gps_longitude)
+                gps_altitude = altitude_above_sea_level - ground_elevation
+                # print(f"Ground Elevation: {ground_elevation}")
+                # print(f"Relative Altitude: {gps_altitude}")
+
+            if flight_yaw_degree == None:
+                flight_yaw_degree = metadata_dict.get('Yaw', None)
+
+            if flight_pitch_degree == None:
+                flight_pitch_degree = metadata_dict.get('Pitch', None)
+
+            if flight_roll_degree == None:
+                flight_roll_degree = metadata_dict.get('Roll', None)
 
             print(f"Flight Yaw Degree: {flight_yaw_degree}")
             print(f"Flight Pitch Degree: {flight_pitch_degree}")
@@ -63,13 +91,6 @@ def extract_exif(image_path):
             print(f"Field of View: {fov_degrees}")
             print(f"Image Height: {image_height}")
             print(f"Image Width: {image_width}")
-            
-            # Convert DMS to Decimal Degrees
-            if gps_latitude_dms and gps_longitude_dms:
-                gps_latitude = dms_to_decimal(gps_latitude_dms)
-                gps_longitude = dms_to_decimal(gps_longitude_dms)
-            else:
-                gps_latitude = gps_longitude = None
 
             return flight_yaw_degree, flight_pitch_degree, flight_roll_degree, gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, gps_latitude, gps_longitude, gps_altitude, fov_degrees, image_height, image_width
         else:
@@ -214,7 +235,7 @@ def draw_circles_on_image(image_path, gps_points, flight_degree, gimbal_degree, 
         pixels.append({"x": pixel_x, "y": pixel_y})
 
     # Save the modified image with circles
-    output_image_path = "../images/output_image_with_circles.jpg"
+    output_image_path = "../../images/output_image_with_circles.jpg"
     img.save(output_image_path)
 
     return pixels
@@ -225,14 +246,17 @@ def process_image(image_path, gps_points):
     img = Image.open(image_path)
     image_width, image_height = img.size
 
-    # Camera specifications
-    focal_length_mm = 4.5
-    fov_deg = 73.7
-    sensor_width_mm = 11.04 # 6.3
+    # Camera specifications Riseholme drone
+    # focal_length_mm = 4.5
+    # fov_deg = 73.7
+    # sensor_width_mm = 11.04 # 6.3
+
+    # Camera specifications Agri tech centre jojo drone
+    focal_length_mm = 35.0
+    fov_deg = 54.4
+    sensor_width_mm = 35.9
     
     flight_yaw_degree, flight_pitch_degree, flight_roll_degree, gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, gps_latitude, gps_longitude, gps_altitude, fov_degrees, image_height, image_width = extract_exif(image_path)
-
-    focal_length_mm = 4.5 # From camera specs
 
     flight_yaw_num = extract_number(flight_yaw_degree)
     flight_pitch_num = extract_number(flight_pitch_degree)
@@ -294,55 +318,177 @@ def process_image(image_path, gps_points):
         print(f"Pixel ({pixel['x']}, {pixel['y']}) -> Latitude: {latitude}, Longitude: {longitude}")
 
     # Save the GeoJSON data to a file
-    output_geojson_file = "../data/detected_pole_coordinates.geojson"
+    output_geojson_file = "../../data/detected_pole_coordinates.geojson"
     with open(output_geojson_file, "w") as json_file:
         json.dump(geojson_data, json_file, indent=4)
 
 if __name__ == "__main__":
-    image_path = "../images/39_feet/DJI_20240802143112_0076_W.JPG"
-    gps_points = [
-            (53.26818842,-0.52427737),
-            (53.26813837,-0.52426541),
-            (53.26808856,-0.52425335),
-            (53.26803849,-0.52424047),
-            (53.26818522,-0.52431449),
-            (53.26813509,-0.52430208),
-            (53.26808532,-0.52428968),
-            (53.26803515,-0.52427742),
-            (53.26818187,-0.52435181),
-            (53.26813158,-0.52433952),
-            (53.26808211,-0.52432693),
-            (53.26803182,-0.52431475),
-            (53.26817882,-0.52438866),
-            (53.26812848,-0.52437636),
-            (53.26807903,-0.52436409),
-            (53.26802873,-0.52435185),
-            (53.26817541,-0.52442589),
-            (53.26812517,-0.5244135),
-            (53.26807555,-0.5244011),
-            (53.2680255,-0.52438878),
-            (53.26817238,-0.52446323),
-            (53.26812194,-0.52445077),
-            (53.26807253,-0.52443819),
-            (53.26802228,-0.52442619),
-            (53.26816928,-0.52449965),
-            (53.26811864,-0.52448766),
-            (53.26806932,-0.52447579),
-            (53.26801926,-0.52446331),
-            (53.26816599,-0.52453691),
-            (53.26811528,-0.5245244),
-            (53.26806603,-0.52451219),
-            (53.26801591,-0.52449999),
-            (53.26816264,-0.52457417),
-            (53.2681122,-0.52456217),
-            (53.26806294,-0.52454963),
-            (53.26801275,-0.52453719),
-            (53.26815947,-0.52461139),
-            (53.26810906,-0.52459885),
-            (53.26805976,-0.52458653),
-            (53.26800959,-0.52457471)#,
+    # Riseholme images
+    # image_path = "../images/39_feet/DJI_20240802143112_0076_W.JPG"
+    # gps_points = [
+    #         (53.26818842,-0.52427737),
+    #         (53.26813837,-0.52426541),
+    #         (53.26808856,-0.52425335),
+    #         (53.26803849,-0.52424047),
+    #         (53.26818522,-0.52431449),
+    #         (53.26813509,-0.52430208),
+    #         (53.26808532,-0.52428968),
+    #         (53.26803515,-0.52427742),
+    #         (53.26818187,-0.52435181),
+    #         (53.26813158,-0.52433952),
+    #         (53.26808211,-0.52432693),
+    #         (53.26803182,-0.52431475),
+    #         (53.26817882,-0.52438866),
+    #         (53.26812848,-0.52437636),
+    #         (53.26807903,-0.52436409),
+    #         (53.26802873,-0.52435185),
+    #         (53.26817541,-0.52442589),
+    #         (53.26812517,-0.5244135),
+    #         (53.26807555,-0.5244011),
+    #         (53.2680255,-0.52438878),
+    #         (53.26817238,-0.52446323),
+    #         (53.26812194,-0.52445077),
+    #         (53.26807253,-0.52443819),
+    #         (53.26802228,-0.52442619),
+    #         (53.26816928,-0.52449965),
+    #         (53.26811864,-0.52448766),
+    #         (53.26806932,-0.52447579),
+    #         (53.26801926,-0.52446331),
+    #         (53.26816599,-0.52453691),
+    #         (53.26811528,-0.5245244),
+    #         (53.26806603,-0.52451219),
+    #         (53.26801591,-0.52449999),
+    #         (53.26816264,-0.52457417),
+    #         (53.2681122,-0.52456217),
+    #         (53.26806294,-0.52454963),
+    #         (53.26801275,-0.52453719),
+    #         (53.26815947,-0.52461139),
+    #         (53.26810906,-0.52459885),
+    #         (53.26805976,-0.52458653),
+    #         (53.26800959,-0.52457471)#,
 
-            #(53.26815, -0.524575), # centre of image to check if it is correct
-            #(53.268175184088804, -0.5245453595031128) # random point
+    #         #(53.26815, -0.524575), # centre of image to check if it is correct
+    #         #(53.268175184088804, -0.5245453595031128) # random point
+    # ]
+
+    # agri tech centre jojo images
+    image_path = "../../images/jojo/agri_tech_centre/RX1RII/DSC00611.JPG"
+    gps_points = [
+        (51.59582063, -0.976308092),
+        (51.5958375, -0.976328625),
+        (51.59585509, -0.976350153),
+        (51.59587208, -0.976370332),
+        (51.59596369, -0.976231233),
+        (51.59598063, -0.976251008),
+        (51.59599902, -0.976273093),
+        (51.5960155, -0.976293175),
+        (51.59603249, -0.976313357),
+        (51.59605217, -0.976333038),
+        (51.59606868, -0.976356615),
+        (51.59608582, -0.976375968),
+        (51.5961033, -0.976394997),
+        (51.59611978, -0.976416308),
+        (51.59613705, -0.976438012),
+        (51.59615408, -0.97645898),
+        (51.59617303, -0.976481707),
+        (51.59618407, -0.976511233),
+        (51.59619595, -0.976543132),
+        (51.59620683, -0.976576393),
+        (51.59621935, -0.97660774),
+        (51.59623094, -0.976641725),
+        (51.59624247, -0.976674438),
+        (51.59625389, -0.976706587),
+        (51.59626589, -0.976738952),
+        (51.59627835, -0.976772358),
+        (51.59628909, -0.976804342),
+        (51.59630126, -0.97683698),
+        (51.59631333, -0.976868902),
+        (51.59634774, -0.976910332),
+        (51.59637477, -0.976910862),
+        (51.59639978, -0.976911398),
+        (51.59642758, -0.976913208),
+        (51.596453, -0.976915407),
+        (51.59648097, -0.976916022),
+        (51.59650619, -0.97691642),
+        (51.59653253, -0.976917137),
+        (51.5965601, -0.976918102),
+        (51.59658701, -0.976919368),
+        (51.59660652, -0.976933038),
+        (51.59662551, -0.976946942),
+        (51.59664579, -0.976962568),
+        (51.59666478, -0.97698008),
+        (51.59668491, -0.976997122),
+        (51.59670547, -0.977013732),
+        (51.59672291, -0.977029587),
+        (51.59674352, -0.977043947),
+        (51.59676322, -0.977060253),
+        (51.59678315, -0.977076215),
+        (51.59680315, -0.977090823),
+        (51.59682169, -0.977107953),
+        (51.59684128, -0.977117602),
+        (51.59686089, -0.977137943),
+        (51.59688133, -0.977154178),
+        (51.59690086, -0.977169663),
+        (51.59691982, -0.977184858),
+        (51.5969396, -0.977200423),
+        (51.59696008, -0.977216982),
+        (51.59697925, -0.97723283),
+        (51.59699923, -0.977247895),
+        (51.59701783, -0.977260307),
+        (51.59703876, -0.977280702),
+        (51.59705736, -0.977297343),
+        (51.59707712, -0.977312557),
+        (51.59709645, -0.977327777),
+        (51.5971163, -0.977343405),
+        (51.59713453, -0.977352172),
+        (51.59715495, -0.977375562),
+        (51.5971753, -0.97738795),
+        (51.59719553, -0.977407828),
+        (51.59720543, -0.97744212),
+        (51.59720869, -0.977493973),
+        (51.59721199, -0.97754461),
+        (51.5972179, -0.977594317),
+        (51.59721915, -0.977645028),
+        (51.59722289, -0.977695118),
+        (51.59722648, -0.977746253),
+        (51.59723116, -0.977796637),
+        (51.59723301, -0.977848063),
+        (51.59723837, -0.97789605),
+        (51.59724069, -0.977948122),
+        (51.59724344, -0.977999907),
+        (51.59724877, -0.97804876),
+        (51.59725069, -0.978098912),
+        (51.59725368, -0.978149272),
+        (51.597257, -0.978198935),
+        (51.59726015, -0.978248705),
+        (51.59726409, -0.978298327),
+        (51.59726642, -0.978347693),
+        (51.59727075, -0.978396548),
+        (51.59727427, -0.978447578),
+        (51.59719596, -0.978614212),
+        (51.59717202, -0.978615178),
+        (51.59714519, -0.97860989),
+        (51.59711884, -0.978608298),
+        (51.59709227, -0.97860552),
+        (51.59706683, -0.978603537),
+        (51.59704076, -0.978600882),
+        (51.59701473, -0.978599157),
+        (51.59698732, -0.97859699),
+        (51.59696199, -0.978594655),
+        (51.59693639, -0.97859313),
+        (51.59690978, -0.978590523),
+        (51.59688452, -0.978587923),
+        (51.5968589, -0.978585803),
+        (51.59683282, -0.978582593),
+        (51.59680725, -0.978581185),
+        (51.59678525, -0.978582413),
+        (51.59676044, -0.978578013),
+        (51.59673221, -0.978569183),
+        (51.59670706, -0.978565863),
+        (51.59668139, -0.978562272),
+        (51.59665597, -0.978559368),
+        (51.59663087, -0.97855462),
+        (51.59660493, -0.978552143),
+        (51.59615277777778, -0.9782361111111111) # centre of image to check if it is correct
     ]
     process_image(image_path, gps_points)

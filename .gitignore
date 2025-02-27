@@ -4,3 +4,5 @@
 /yolov5-env
 /yolov9-env
 /weights
+/data/datasets
+*.pyc

@@ -10,7 +10,7 @@ python train.py --batch 4 --epochs 25 --img 640 --device 0 --min-items 0 --close
 
 python train.py --batch 4 --epochs 25 --img 640 --device 0 --min-items 0 --close-mosaic 15 --data data/vineyard/vineyard_test-6/data.yaml --weights weights/yolov9-c.pt --cfg models/detect/yolov9-c.yaml --hyp hyp.scratch-high.yaml
 
-python train.py --batch 4 --epochs 25 --img 640 --device 0 --min-items 0 --close-mosaic 15 --data data/vineyard/vineyard_test-6/data.yaml --weights weights/yolov9c-seg.pt --cfg models/segment/yolov9-c-dseg.yaml --hyp hyp.scratch-high.yaml
+python train.py --batch 4 --epochs 25 --img 640 --device 0 --min-items 0 --close-mosaic 15 --data data/vineyard/vineyard_segmentation-1/data.yaml --weights weights/yolov9c-seg.pt --cfg models/segment/yolov9-c-dseg.yaml --hyp hyp.scratch-high.yaml
 
 --device cpu
 --device 0 == use GPU
@@ -27,10 +27,10 @@ ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")
 rf = Roboflow(api_key=ROBOFLOW_API_KEY)
 # project = rf.workspace().project("vineyard_test")
 project = rf.workspace("vista-qsopb").project("vineyard_segmentation")
-version = project.version(1)
+version = project.version(7)
 
 # Download dataset in YOLO format
-dataset = version.download("yolov9")
+dataset = version.download("yolov11")
 
 # Print dataset location
 print(f"Dataset downloaded to: {dataset.location}")
