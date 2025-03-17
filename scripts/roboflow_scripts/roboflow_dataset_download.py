@@ -27,7 +27,7 @@ ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")
 rf = Roboflow(api_key=ROBOFLOW_API_KEY)
 # project = rf.workspace().project("vineyard_test")
 project = rf.workspace("vista-qsopb").project("vineyard_segmentation")
-version = project.version(7)
+version = project.version(11)
 
 # Download dataset in YOLO format
 dataset = version.download("yolov11")

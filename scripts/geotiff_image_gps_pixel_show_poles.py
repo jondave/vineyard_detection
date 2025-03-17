@@ -48,7 +48,7 @@ def process_image(image_path, gps_points, output_path="../images/output.png", ci
         plt.close()
 
 if __name__ == "__main__":
-    image_path = "../images/39_feet/odm_orthophoto.tif"
+    image_path = "../images/riseholme/august_2024/39_feet/odm_orthophoto.tif"
     gps_points_poles = [
             (53.26818842,-0.52427737),
             (53.26813837,-0.52426541),

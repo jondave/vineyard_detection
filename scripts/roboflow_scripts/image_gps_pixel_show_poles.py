@@ -49,6 +49,7 @@ def extract_exif(image_path):
             gps_longitude_dms = metadata_dict.get('GPSLongitude', None)
             gps_altitude = metadata_dict.get('RelativeAltitude', None)
             fov_degrees = metadata_dict.get('FOV', None)
+            focal_length_mm = metadata_dict.get('FocalLength', None)
             image_height = metadata_dict.get('ImageHeight', None)
             image_width = metadata_dict.get('ImageWidth', None)
             
@@ -77,7 +78,7 @@ def extract_exif(image_path):
                 flight_pitch_degree = metadata_dict.get('Pitch', None)
 
             if flight_roll_degree == None:
-                flight_roll_degree = metadata_dict.get('Roll', None)
+                flight_roll_degree = metadata_dict.get('Roll', None)           
 
             print(f"Flight Yaw Degree: {flight_yaw_degree}")
             print(f"Flight Pitch Degree: {flight_pitch_degree}")
@@ -89,16 +90,17 @@ def extract_exif(image_path):
             print(f"GPS Longitude (DMS): {gps_longitude_dms}")
             print(f"GPS Altitude: {gps_altitude}")
             print(f"Field of View: {fov_degrees}")
+            print(f"Focal Length: {focal_length_mm}")
             print(f"Image Height: {image_height}")
             print(f"Image Width: {image_width}")
 
-            return flight_yaw_degree, flight_pitch_degree, flight_roll_degree, gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, gps_latitude, gps_longitude, gps_altitude, fov_degrees, image_height, image_width
+            return flight_yaw_degree, flight_pitch_degree, flight_roll_degree, gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, gps_latitude, gps_longitude, gps_altitude, fov_degrees, focal_length_mm, image_height, image_width
         else:
             print("No metadata found.")
-            return None, None, None, None, None, None, None, None, None, None, None, None
+            return None, None, None, None, None, None, None, None, None, None, None, None, None
     except Exception as e:
         print(f"Error: {e}")
-        return None, None, None, None, None, None, None, None, None, None, None, None
+        return None, None, None, None, None, None, None, None, None, None, None, None, None
     
 def dms_to_decimal(dms_str):
     """
@@ -136,66 +138,80 @@ def extract_number(input_string):
         return float(match.group())
     return None
 
-# Function to get new latitude and longitude for a pixel
-def get_gps_from_pixel(pixel_x, pixel_y, image_width, image_height, flight_degree, gimbal_degree, gps_lat_decimal, gps_lon_decimal, altitude_meters, fov_deg, sensor_width_mm):
+# Function to get latitude and longitude for a pixel
+def get_gps_from_pixel(pixel_x, pixel_y, image_width, image_height, 
+                       flight_degree, gimbal_degree, gps_lat_decimal, gps_lon_decimal, 
+                       altitude_meters, focal_length_mm, sensor_width_mm, sensor_height_mm):
     """
     Convert pixel coordinates back to GPS latitude and longitude.
     
     Args:
     - pixel_x, pixel_y: The pixel coordinates in the image.
+    - image_width, image_height: The dimensions of the image in pixels.
     - flight_degree: The flight yaw orientation in degrees.
     - gimbal_degree: The gimbal yaw orientation in degrees.
-    - image_width, image_height: The dimensions of the image in pixels.
-    - real_world_distance_per_pixel: Real-world distance (in meters) represented by a single pixel.
     - gps_lat_decimal, gps_lon_decimal: GPS coordinates (latitude and longitude) of the image center.
+    - altitude_meters: The altitude of the drone in meters.
+    - focal_length_mm: Camera focal length in millimeters.
+    - sensor_width_mm, sensor_height_mm: Camera sensor size in millimeters.
     
     Returns:
     - (latitude, longitude): The GPS coordinates corresponding to the pixel location.
     """
+
+    # **Calculate Horizontal and Vertical FOV using Focal Length**
+    fov_rad_h = 2 * math.atan((sensor_width_mm / (2 * focal_length_mm)))  
+    fov_rad_v = 2 * math.atan((sensor_height_mm / (2 * focal_length_mm)))
+
+    # **Calculate Ground Coverage**
+    ground_width_meters = 2 * altitude_meters * math.tan(fov_rad_h / 2)
+    ground_height_meters = 2 * altitude_meters * math.tan(fov_rad_v / 2)
+
+    # **Calculate Ground Sample Distance (GSD)**
+    gsd_meters_per_pixel_x = ground_width_meters / image_width
+    gsd_meters_per_pixel_y = ground_height_meters / image_height
+
     # Offset the pixel coordinates relative to the center of the image
     corrected_pixel_x = pixel_x - (image_width / 2)
     corrected_pixel_y = (image_height / 2) - pixel_y  # Invert Y-axis for image coordinates
 
-    # Calculate the real-world distance per pixel (adjusted for altitude)
-    fov_rad = math.radians(fov_deg)
-    # Adjusted field of view based on altitude (simplified approach)
-    adjusted_fov_deg = fov_deg * (1 + altitude_meters / 1000)  # Simple correction for altitude
-    adjusted_fov_rad = math.radians(adjusted_fov_deg)
-    
-    real_world_distance_per_pixel = (math.tan(adjusted_fov_rad / 2) * 2 * sensor_width_mm) / image_width
-    
     # Convert pixel offsets to real-world distances in meters
-    corrected_lon_change = corrected_pixel_x * real_world_distance_per_pixel
-    corrected_lat_change = corrected_pixel_y * real_world_distance_per_pixel
-    
+    corrected_lon_change = corrected_pixel_x * gsd_meters_per_pixel_x
+    corrected_lat_change = corrected_pixel_y * gsd_meters_per_pixel_y
+
     # Convert gimbal orientation to radians
-    gimbal_radians = math.radians(gimbal_degree)
-    
+    gimbal_radians = math.radians(float(gimbal_degree))
+
     # Reverse the displacement adjustments for gimbal orientation
     lon_change = corrected_lon_change * math.cos(gimbal_radians) + corrected_lat_change * math.sin(gimbal_radians)
     lat_change = -corrected_lon_change * math.sin(gimbal_radians) + corrected_lat_change * math.cos(gimbal_radians)
-    
+
     # Convert the real-world displacements back to degrees
     latitude = gps_lat_decimal + (lat_change / 111320)  # Convert meters to degrees for latitude
     longitude = gps_lon_decimal + (lon_change / (40008000 * math.cos(math.radians(latitude)) / 360))  # Convert meters to degrees for longitude
-    
+
     return latitude, longitude
 
-def get_pixel_from_gps(latitude, longitude, flight_degree, gimbal_degree, image_width, image_height, real_world_distance_per_pixel, gps_lat_decimal, gps_lon_decimal):
+
+def get_pixel_from_gps(latitude, longitude, flight_degree, gimbal_degree, 
+                       image_width, image_height, 
+                       gsd_x, gsd_y,  # Separate GSD values for x and y
+                       gps_lat_decimal, gps_lon_decimal):
+    
     # Calculate the real-world displacement in meters from the given lat/lon to the center point
     lat_change = (latitude - gps_lat_decimal) * 111320  # Approximate conversion to meters for latitude
     lon_change = (longitude - gps_lon_decimal) * (40008000 * math.cos(math.radians(latitude)) / 360)  # Conversion to meters for longitude
 
     # Convert gimbal orientation to radians
-    gimbal_radians = math.radians(gimbal_degree)
+    gimbal_radians = math.radians(float(gimbal_degree))
 
     # Adjust the displacement for gimbal orientation
     corrected_lon_change = lon_change * math.cos(gimbal_radians) - lat_change * math.sin(gimbal_radians)
     corrected_lat_change = lon_change * math.sin(gimbal_radians) + lat_change * math.cos(gimbal_radians)
 
-    # Adjust pixel distance using real-world distance per pixel
-    corrected_pixel_x = corrected_lon_change / real_world_distance_per_pixel
-    corrected_pixel_y = corrected_lat_change / real_world_distance_per_pixel
+    # Adjust pixel distance using separate real-world distance per pixel values (GSD)
+    corrected_pixel_x = corrected_lon_change / gsd_x
+    corrected_pixel_y = corrected_lat_change / gsd_y
 
     # Convert to pixel coordinates (adjusting for the center of the image)
     pixel_x = (image_width / 2) + corrected_pixel_x
@@ -204,38 +220,49 @@ def get_pixel_from_gps(latitude, longitude, flight_degree, gimbal_degree, image_
     return int(pixel_x), int(pixel_y)
 
 # Function to draw circles on the image based on lat/lon coordinates
-def draw_circles_on_image(image_path, gps_points, flight_degree, gimbal_degree, gps_latitude, gps_longitude, altitude_meters, fov_deg, focal_length_mm, sensor_width_mm):
-        # Open the image
+def draw_circles_on_image(image_path, gps_points, flight_degree, gimbal_degree, 
+                          gps_latitude, gps_longitude, altitude_meters, 
+                          fov_deg, focal_length_mm, sensor_width_mm, sensor_height_mm):
+
+    # Open the image
     img = Image.open(image_path)
     image_width, image_height = img.size
-    draw = ImageDraw.Draw(img)    
-    
+    draw = ImageDraw.Draw(img)
+
     flight_degree = float(flight_degree) if flight_degree else 0.0
     gimbal_degree = float(gimbal_degree) if gimbal_degree else 0.0
 
-    # Calculate the real-world distance per pixel (adjusted for altitude)
-    fov_rad = math.radians(fov_deg)
-    # Adjusted field of view based on altitude (simplified approach)
-    adjusted_fov_deg = fov_deg * (1 + altitude_meters / 1000)  # Simple correction for altitude
-    adjusted_fov_rad = math.radians(adjusted_fov_deg)
-    
-    real_world_distance_per_pixel = (math.tan(adjusted_fov_rad / 2) * 2 * sensor_width_mm) / image_width
+    # **Calculate Horizontal and Vertical FOV using Focal Length**
+    fov_rad_h = 2 * math.atan((sensor_width_mm / (2 * focal_length_mm)))  
+    fov_rad_v = 2 * math.atan((sensor_height_mm / (2 * focal_length_mm)))
+
+    # **Calculate Ground Coverage using FOV and Altitude**
+    ground_width_meters = 2 * altitude_meters * math.tan(fov_rad_h / 2)
+    ground_height_meters = 2 * altitude_meters * math.tan(fov_rad_v / 2)
+
+    # **Calculate Ground Sample Distance (GSD)**
+    gsd_meters_per_pixel_x = ground_width_meters / image_width
+    gsd_meters_per_pixel_y = ground_height_meters / image_height
 
     pixels = []
 
     for lat, lon in gps_points:
-        # Convert lat/lon to pixel coordinates
-        pixel_x, pixel_y = get_pixel_from_gps(lat, lon, flight_degree, gimbal_degree, image_width, image_height, real_world_distance_per_pixel, gps_latitude, gps_longitude)
-        
+        # Convert lat/lon to pixel coordinates using accurate scaling
+        pixel_x, pixel_y = get_pixel_from_gps(lat, lon, flight_degree, gimbal_degree, 
+                                              image_width, image_height, 
+                                              gsd_meters_per_pixel_x, gsd_meters_per_pixel_y,
+                                              gps_latitude, gps_longitude)
+
         # Draw a circle at the calculated pixel coordinates
-        radius = 100  # Radius of the circle in pixels
-        draw.ellipse([pixel_x - radius, pixel_y - radius, pixel_x + radius, pixel_y + radius], outline="red", width=20)
+        radius = 20  
+        draw.ellipse([pixel_x - radius, pixel_y - radius, pixel_x + radius, pixel_y + radius], 
+                     outline="red", width=10)
         print("Circle drawn at:", pixel_x, pixel_y)
 
         pixels.append({"x": pixel_x, "y": pixel_y})
 
     # Save the modified image with circles
-    output_image_path = "../../images/output_image_with_circles.jpg"
+    output_image_path = "../images/output_image_with_circles.jpg"
     img.save(output_image_path)
 
     return pixels
@@ -246,17 +273,19 @@ def process_image(image_path, gps_points):
     img = Image.open(image_path)
     image_width, image_height = img.size
 
-    # Camera specifications Riseholme drone
-    # focal_length_mm = 4.5
-    # fov_deg = 73.7
-    # sensor_width_mm = 11.04 # 6.3
+    # Camera specifications Riseholme # https://enterprise.dji.com/zenmuse-h20-series/specs
+    focal_length_mm = 4.5
+    fov_deg = 73.7
+    sensor_width_mm =  6.17
+    sensor_height_mm = 4.55
 
-    # Camera specifications Agri tech centre jojo drone
-    focal_length_mm = 35.0
-    fov_deg = 54.4
-    sensor_width_mm = 35.9
+    # Camera specifications Outfields drone DJI Mavic 3 Multispectral (M3M) 1/2.3 inch wide sensor
+    # focal_length_mm = 12.3
+    # fov_deg = 73.7
+    # sensor_width_mm = 17.4
+    # sensor_height_mm = 13.0
     
-    flight_yaw_degree, flight_pitch_degree, flight_roll_degree, gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, gps_latitude, gps_longitude, gps_altitude, fov_degrees, image_height, image_width = extract_exif(image_path)
+    flight_yaw_degree, flight_pitch_degree, flight_roll_degree, gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, gps_latitude, gps_longitude, gps_altitude, fov_degrees, focal_length_mm, image_height, image_width = extract_exif(image_path)
 
     flight_yaw_num = extract_number(flight_yaw_degree)
     flight_pitch_num = extract_number(flight_pitch_degree)
@@ -266,19 +295,20 @@ def process_image(image_path, gps_points):
     gimbal_roll_num = extract_number(gimbal_roll_degree)
     gps_altitude_num = extract_number(gps_altitude)
     fov_degrees_num = extract_number(fov_degrees)
+    focal_length_mm = extract_number(focal_length_mm)
 
-    print(f"Flight Degree: {flight_yaw_num}")
-    print(f"Flight Pitch Degree: {flight_pitch_num}")
-    print(f"Flight Roll Degree: {flight_roll_num}")    
-    print(f"Gimbal Degree: {gimbal_yaw_num}")
-    print(f"Gimbal Pitch Degree: {gimbal_pitch_num}")
-    print(f"Gimbal Roll Degree: {gimbal_roll_num}")
-    print(f"GPS Coordinates: Latitude = {gps_latitude}, Longitude = {gps_longitude}")
-    print(f"GPS Altitude: {gps_altitude_num}")
-    print(f"Field of View: {fov_degrees_num}")
+    # print(f"Flight Degree: {flight_yaw_num}")
+    # print(f"Flight Pitch Degree: {flight_pitch_num}")
+    # print(f"Flight Roll Degree: {flight_roll_num}")    
+    # print(f"Gimbal Degree: {gimbal_yaw_num}")
+    # print(f"Gimbal Pitch Degree: {gimbal_pitch_num}")
+    # print(f"Gimbal Roll Degree: {gimbal_roll_num}")
+    # print(f"GPS Coordinates: Latitude = {gps_latitude}, Longitude = {gps_longitude}")
+    # print(f"GPS Altitude: {gps_altitude_num}")
+    # print(f"Field of View: {fov_degrees_num}")
 
     # Draw cirels on image where the poles are
-    pole_pixels = draw_circles_on_image(image_path, gps_points, flight_yaw_num, gimbal_yaw_num, gps_latitude, gps_longitude, gps_altitude_num, fov_degrees_num, focal_length_mm, sensor_width_mm)
+    pole_pixels = draw_circles_on_image(image_path, gps_points, flight_yaw_num, gimbal_yaw_num, gps_latitude, gps_longitude, gps_altitude_num, fov_degrees_num, focal_length_mm, sensor_width_mm, sensor_height_mm)
     # TODO fix gps to pixel in some rotations.
 
     # Initialize GeoJSON FeatureCollection structure
@@ -298,7 +328,7 @@ def process_image(image_path, gps_points):
     pixels = pole_pixels
 
     for pixel in pixels:
-        latitude, longitude = get_gps_from_pixel(pixel["x"], pixel["y"], image_width, image_height, flight_yaw_num, gimbal_yaw_num, gps_latitude, gps_longitude, gps_altitude_num, fov_degrees_num, sensor_width_mm)
+        latitude, longitude = get_gps_from_pixel(pixel["x"], pixel["y"], image_width, image_height, flight_yaw_num, gimbal_yaw_num, gps_latitude, gps_longitude, gps_altitude_num, focal_length_mm, sensor_width_mm, sensor_height_mm)
 
         # Create a feature for each pole with lat/long coordinates
         feature = {
@@ -318,177 +348,72 @@ def process_image(image_path, gps_points):
         print(f"Pixel ({pixel['x']}, {pixel['y']}) -> Latitude: {latitude}, Longitude: {longitude}")
 
     # Save the GeoJSON data to a file
-    output_geojson_file = "../../data/detected_pole_coordinates.geojson"
+    output_geojson_file = "../data/detected_pole_coordinates.geojson"
     with open(output_geojson_file, "w") as json_file:
         json.dump(geojson_data, json_file, indent=4)
 
 if __name__ == "__main__":
-    # Riseholme images
-    # image_path = "../images/39_feet/DJI_20240802143112_0076_W.JPG"
-    # gps_points = [
-    #         (53.26818842,-0.52427737),
-    #         (53.26813837,-0.52426541),
-    #         (53.26808856,-0.52425335),
-    #         (53.26803849,-0.52424047),
-    #         (53.26818522,-0.52431449),
-    #         (53.26813509,-0.52430208),
-    #         (53.26808532,-0.52428968),
-    #         (53.26803515,-0.52427742),
-    #         (53.26818187,-0.52435181),
-    #         (53.26813158,-0.52433952),
-    #         (53.26808211,-0.52432693),
-    #         (53.26803182,-0.52431475),
-    #         (53.26817882,-0.52438866),
-    #         (53.26812848,-0.52437636),
-    #         (53.26807903,-0.52436409),
-    #         (53.26802873,-0.52435185),
-    #         (53.26817541,-0.52442589),
-    #         (53.26812517,-0.5244135),
-    #         (53.26807555,-0.5244011),
-    #         (53.2680255,-0.52438878),
-    #         (53.26817238,-0.52446323),
-    #         (53.26812194,-0.52445077),
-    #         (53.26807253,-0.52443819),
-    #         (53.26802228,-0.52442619),
-    #         (53.26816928,-0.52449965),
-    #         (53.26811864,-0.52448766),
-    #         (53.26806932,-0.52447579),
-    #         (53.26801926,-0.52446331),
-    #         (53.26816599,-0.52453691),
-    #         (53.26811528,-0.5245244),
-    #         (53.26806603,-0.52451219),
-    #         (53.26801591,-0.52449999),
-    #         (53.26816264,-0.52457417),
-    #         (53.2681122,-0.52456217),
-    #         (53.26806294,-0.52454963),
-    #         (53.26801275,-0.52453719),
-    #         (53.26815947,-0.52461139),
-    #         (53.26810906,-0.52459885),
-    #         (53.26805976,-0.52458653),
-    #         (53.26800959,-0.52457471)#,
-
-    #         #(53.26815, -0.524575), # centre of image to check if it is correct
-    #         #(53.268175184088804, -0.5245453595031128) # random point
-    # ]
-
-    # agri tech centre jojo images
-    image_path = "../../images/jojo/agri_tech_centre/RX1RII/DSC00611.JPG"
+    image_path = "../images/39_feet/DJI_20240802143112_0076_W.JPG"
     gps_points = [
-        (51.59582063, -0.976308092),
-        (51.5958375, -0.976328625),
-        (51.59585509, -0.976350153),
-        (51.59587208, -0.976370332),
-        (51.59596369, -0.976231233),
-        (51.59598063, -0.976251008),
-        (51.59599902, -0.976273093),
-        (51.5960155, -0.976293175),
-        (51.59603249, -0.976313357),
-        (51.59605217, -0.976333038),
-        (51.59606868, -0.976356615),
-        (51.59608582, -0.976375968),
-        (51.5961033, -0.976394997),
-        (51.59611978, -0.976416308),
-        (51.59613705, -0.976438012),
-        (51.59615408, -0.97645898),
-        (51.59617303, -0.976481707),
-        (51.59618407, -0.976511233),
-        (51.59619595, -0.976543132),
-        (51.59620683, -0.976576393),
-        (51.59621935, -0.97660774),
-        (51.59623094, -0.976641725),
-        (51.59624247, -0.976674438),
-        (51.59625389, -0.976706587),
-        (51.59626589, -0.976738952),
-        (51.59627835, -0.976772358),
-        (51.59628909, -0.976804342),
-        (51.59630126, -0.97683698),
-        (51.59631333, -0.976868902),
-        (51.59634774, -0.976910332),
-        (51.59637477, -0.976910862),
-        (51.59639978, -0.976911398),
-        (51.59642758, -0.976913208),
-        (51.596453, -0.976915407),
-        (51.59648097, -0.976916022),
-        (51.59650619, -0.97691642),
-        (51.59653253, -0.976917137),
-        (51.5965601, -0.976918102),
-        (51.59658701, -0.976919368),
-        (51.59660652, -0.976933038),
-        (51.59662551, -0.976946942),
-        (51.59664579, -0.976962568),
-        (51.59666478, -0.97698008),
-        (51.59668491, -0.976997122),
-        (51.59670547, -0.977013732),
-        (51.59672291, -0.977029587),
-        (51.59674352, -0.977043947),
-        (51.59676322, -0.977060253),
-        (51.59678315, -0.977076215),
-        (51.59680315, -0.977090823),
-        (51.59682169, -0.977107953),
-        (51.59684128, -0.977117602),
-        (51.59686089, -0.977137943),
-        (51.59688133, -0.977154178),
-        (51.59690086, -0.977169663),
-        (51.59691982, -0.977184858),
-        (51.5969396, -0.977200423),
-        (51.59696008, -0.977216982),
-        (51.59697925, -0.97723283),
-        (51.59699923, -0.977247895),
-        (51.59701783, -0.977260307),
-        (51.59703876, -0.977280702),
-        (51.59705736, -0.977297343),
-        (51.59707712, -0.977312557),
-        (51.59709645, -0.977327777),
-        (51.5971163, -0.977343405),
-        (51.59713453, -0.977352172),
-        (51.59715495, -0.977375562),
-        (51.5971753, -0.97738795),
-        (51.59719553, -0.977407828),
-        (51.59720543, -0.97744212),
-        (51.59720869, -0.977493973),
-        (51.59721199, -0.97754461),
-        (51.5972179, -0.977594317),
-        (51.59721915, -0.977645028),
-        (51.59722289, -0.977695118),
-        (51.59722648, -0.977746253),
-        (51.59723116, -0.977796637),
-        (51.59723301, -0.977848063),
-        (51.59723837, -0.97789605),
-        (51.59724069, -0.977948122),
-        (51.59724344, -0.977999907),
-        (51.59724877, -0.97804876),
-        (51.59725069, -0.978098912),
-        (51.59725368, -0.978149272),
-        (51.597257, -0.978198935),
-        (51.59726015, -0.978248705),
-        (51.59726409, -0.978298327),
-        (51.59726642, -0.978347693),
-        (51.59727075, -0.978396548),
-        (51.59727427, -0.978447578),
-        (51.59719596, -0.978614212),
-        (51.59717202, -0.978615178),
-        (51.59714519, -0.97860989),
-        (51.59711884, -0.978608298),
-        (51.59709227, -0.97860552),
-        (51.59706683, -0.978603537),
-        (51.59704076, -0.978600882),
-        (51.59701473, -0.978599157),
-        (51.59698732, -0.97859699),
-        (51.59696199, -0.978594655),
-        (51.59693639, -0.97859313),
-        (51.59690978, -0.978590523),
-        (51.59688452, -0.978587923),
-        (51.5968589, -0.978585803),
-        (51.59683282, -0.978582593),
-        (51.59680725, -0.978581185),
-        (51.59678525, -0.978582413),
-        (51.59676044, -0.978578013),
-        (51.59673221, -0.978569183),
-        (51.59670706, -0.978565863),
-        (51.59668139, -0.978562272),
-        (51.59665597, -0.978559368),
-        (51.59663087, -0.97855462),
-        (51.59660493, -0.978552143),
-        (51.59615277777778, -0.9782361111111111) # centre of image to check if it is correct
+            (53.26818842,-0.52427737),
+            (53.26813837,-0.52426541),
+            (53.26808856,-0.52425335),
+            (53.26803849,-0.52424047),
+            (53.26818522,-0.52431449),
+            (53.26813509,-0.52430208),
+            (53.26808532,-0.52428968),
+            (53.26803515,-0.52427742),
+            (53.26818187,-0.52435181),
+            (53.26813158,-0.52433952),
+            (53.26808211,-0.52432693),
+            (53.26803182,-0.52431475),
+            (53.26817882,-0.52438866),
+            (53.26812848,-0.52437636),
+            (53.26807903,-0.52436409),
+            (53.26802873,-0.52435185),
+            (53.26817541,-0.52442589),
+            (53.26812517,-0.5244135),
+            (53.26807555,-0.5244011),
+            (53.2680255,-0.52438878),
+            (53.26817238,-0.52446323),
+            (53.26812194,-0.52445077),
+            (53.26807253,-0.52443819),
+            (53.26802228,-0.52442619),
+            (53.26816928,-0.52449965),
+            (53.26811864,-0.52448766),
+            (53.26806932,-0.52447579),
+            (53.26801926,-0.52446331),
+            (53.26816599,-0.52453691),
+            (53.26811528,-0.5245244),
+            (53.26806603,-0.52451219),
+            (53.26801591,-0.52449999),
+            (53.26816264,-0.52457417),
+            (53.2681122,-0.52456217),
+            (53.26806294,-0.52454963),
+            (53.26801275,-0.52453719),
+            (53.26815947,-0.52461139),
+            (53.26810906,-0.52459885),
+            (53.26805976,-0.52458653),
+            (53.26800959,-0.52457471)#,
+
+            #(53.26815, -0.524575), # centre of image to check if it is correct
+            #(53.268175184088804, -0.5245453595031128) # random point
     ]
+        
+    # image_path = "../images/outfields/jojo/topdown/DJI_20240618142122_0258_D.JPG"
+
+    # with open("../data/jojo_row_posts_10_rows.geojson", 'r') as f:
+    #     geojson_data = json.load(f)
+
+    # gps_points = []
+    # if geojson_data['type'] == 'FeatureCollection':
+    #     for feature in geojson_data['features']:
+    #         if feature['geometry']['type'] == 'Point':
+    #             coordinates = feature['geometry']['coordinates']
+    #             # GeoJSON stores coordinates as [longitude, latitude], so we reverse them.
+    #             latitude, longitude = coordinates[1], coordinates[0]
+    #             gps_points.append((latitude, longitude))
+    # else:
+    #     print("Error: GeoJSON file is not a FeatureCollection.")
+
     process_image(image_path, gps_points)

@@ -14,7 +14,7 @@ import image_gps_pixel_show_poles
 import numpy as np
 
 # Define the folder containing images for inference
-image_folder = "../../images/39_feet/"
+image_folder = "../../images/riseholme/august_2024/39_feet/"
 output_folder = "../../images/output/"
 os.makedirs(output_folder, exist_ok=True)
 

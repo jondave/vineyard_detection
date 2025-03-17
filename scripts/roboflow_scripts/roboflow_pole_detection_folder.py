@@ -116,7 +116,7 @@ def detect_poles(image_folder, output_folder, api_key_path, model_id, sensor_wid
 
 if __name__ == "__main__":
     geojson_data = detect_poles(
-        image_folder="../../images/39_feet/",
+        image_folder="../../images/riseholme/august_2024/39_feet/",
         output_folder="../../images/output/",
         api_key_path="../../config/api_key.json",
         model_id="vineyard_test/4",

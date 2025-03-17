@@ -32,8 +32,7 @@ def process_vine_row_segmentation(image_folder, output_folder, model_path, senso
         results = model.predict(image_path, conf=0.4)
         img = Image.open(image_path).convert("RGB")
         width, height = img.size
-        mask_image = np.zeros((height, width), dtype=np.uint8)
-        
+        mask_image = np.zeros((height, width), dtype=np.uint8)        
         for result in results:
             if result.masks is not None:
                 masks = result.masks.data.cpu().numpy()
@@ -55,7 +54,16 @@ def process_vine_row_segmentation(image_folder, output_folder, model_path, senso
             gimbal_pitch_num = image_gps_pixel_show_poles.extract_number(gimbal_pitch_degree)
             gimbal_roll_num = image_gps_pixel_show_poles.extract_number(gimbal_roll_degree)
             gps_altitude_num = image_gps_pixel_show_poles.extract_number(gps_altitude)
-            fov_degrees_num = image_gps_pixel_show_poles.extract_number(fov_degrees)
+            fov_degrees_num = image_gps_pixel_show_poles.extract_number(fov_degrees)            
+
+            if gimbal_yaw_num == 0.0:
+                gimbal_yaw_num = flight_yaw_degree
+
+            if gimbal_pitch_num == 0.0:
+                gimbal_pitch_num = flight_pitch_degree
+
+            if gimbal_roll_num == 0.0:
+                gimbal_roll_num = flight_roll_degree
 
             # print(f"Flight Yaw Degree: {flight_yaw_num}")
             # print(f"Flight Pitch Degree: {flight_pitch_num}")
@@ -103,9 +111,10 @@ def process_vine_row_segmentation(image_folder, output_folder, model_path, senso
     return merged_geojson_data
 
 if __name__ == "__main__":
-    image_folder = "../images/39_feet/"
+    image_folder = "../images/riseholme/august_2024/39_feet/"
     output_folder = "../images/output/row_detection/"
     model_path = "../weights/vine_row_segmentation/best.pt"
+    # model_path = "../weights/vineyard_segmentation_v7_weights.pt"
     
     # Camera specifications
     focal_length_mm = 4.5

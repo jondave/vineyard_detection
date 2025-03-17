@@ -56,5 +56,5 @@ def extract_flight_gimbal_degrees(image_path):
         print(f"Error: {e}")
 
 # Path to image
-image_path = "../images/39_feet/DJI_20240802142835_0003_W.JPG"
+image_path = "../images/riseholme/august_2024/39_feet/DJI_20240802142835_0003_W.JPG"
 extract_flight_gimbal_degrees(image_path)

@@ -14,9 +14,11 @@ import topological_map_scripts.kml_to_tmap
 
 vineyard_name = "Riseholme"
 
-image_folder="../images/39_feet/"
+image_folder="../images/riseholme/august_2024/39_feet/"
+# image_folder="../images/jojo/agri_tech_centre/RX1RII/"
 output_folder_poles="../images/output/"
 model_id_roboflow="vineyard_test/4"
+# model_id_roboflow="vineyard_segmentation/7"
 
 # Load the API key
 with open("../config/api_key.json", 'r') as file:

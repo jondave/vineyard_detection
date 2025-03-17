@@ -168,5 +168,5 @@ def process_image(image_path):
         print("No valid GPS data found.")
 
 if __name__ == "__main__":
-    image_path = "../images/39_feet/DJI_20240802142835_0003_W.JPG"  # Replace with your image path
+    image_path = "../images/riseholme/august_2024/39_feet/DJI_20240802142835_0003_W.JPG"  # Replace with your image path
     process_image(image_path)

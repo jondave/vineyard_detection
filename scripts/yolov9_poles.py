@@ -16,7 +16,7 @@ if "pole" not in class_names.values():
 pole_class_id = [k for k, v in class_names.items() if v == "pole"][0]
 
 # Load image and predict
-input_image = '../images/39_feet/DJI_20240802142846_0008_W.JPG'
+input_image = '../images/riseholme/august_2024/39_feet/DJI_20240802142846_0008_W.JPG'
 output_image_path = '../images/yolo_output/detected_poles_only.jpg'
 
 # Read the image

@@ -12,7 +12,7 @@ from shapely.ops import unary_union
 model = YOLO('../weights/roboflow_version_8_weights.pt')
 
 # Define the folder containing images for inference
-image_folder = "../images/39_feet/"
+image_folder = "../images/riseholme/august_2024/39_feet/"
 
 # Get a list of all image files
 image_files = [f for f in os.listdir(image_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]

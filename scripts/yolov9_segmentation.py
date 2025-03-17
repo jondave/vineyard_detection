@@ -7,8 +7,8 @@ model = YOLO('../weights/vine_row_segmentation/best.pt')
 
 # Load image and predict
 # input_image = '../images/orthophoto/odm_orthophoto-3.png'
-# input_image = '../images/100_feet/DJI_20240802142143_0014_W.JPG'
-input_image = '../images/39_feet/DJI_20240802142942_0034_W.JPG'
+# input_image = '../images/riseholme/august_2024/100_feet/DJI_20240802142143_0014_W.JPG'
+input_image = '../images/riseholme/august_2024/39_feet/DJI_20240802142942_0034_W.JPG'
 # input_image = '../images/wraxall/DJI_20241004151307_0045_D.JPG'
 results = model.predict(input_image, conf=0.4)
 

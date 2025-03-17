@@ -24,7 +24,8 @@ def extract_exif_data(image_path):
     except Exception as e:
         print(f"Error: {e}")
 
-# image_path = "../images/39_feet/DJI_20240802142835_0003_W.JPG"
+image_path = "../images/riseholme/august_2024/39_feet/DJI_20240802142835_0003_W.JPG"
 # image_path = "../images/jojo/agri_tech_centre/RX1RII/DSC00610.JPG"
-image_path = "../images/outfields/wraxall/topdown/rgb/DJI_20241004151155_0009_D.JPG"
+# image_path = "../images/outfields/wraxall/topdown/rgb/DJI_20241004151155_0009_D.JPG"
+# image_path="../images/outfields/jojo/topdown/DJI_20240618141121_0011_D.JPG"
 extract_exif_data(image_path)

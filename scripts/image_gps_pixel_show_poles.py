@@ -41,13 +41,14 @@ def extract_exif(image_path):
             flight_yaw_degree = metadata_dict.get('FlightYawDegree', None) # DO NOT USE FlightYawDegree use GimbalYawDegree, GimbalYawDegree is the compass heading of the camera and image in degrees.
             flight_pitch_degree = metadata_dict.get('FlightPitchDegree', None)
             flight_roll_degree = metadata_dict.get('FlightRollDegree', None)
-            gimbal_yaw_degree = metadata_dict.get('GimbalYawDegree', None) # GimbalYawDegree is the compass heading of the camera and image in degrees.
-            gimbal_pitch_degree = metadata_dict.get('GimbalPitchDegree', None)
-            gimbal_roll_degree = metadata_dict.get('GimbalRollDegree', None)
+            gimbal_yaw_degree = metadata_dict.get('GimbalYawDegree', 0) # GimbalYawDegree is the compass heading of the camera and image in degrees.
+            gimbal_pitch_degree = metadata_dict.get('GimbalPitchDegree', 0)
+            gimbal_roll_degree = metadata_dict.get('GimbalRollDegree', 0)
             gps_latitude_dms = metadata_dict.get('GPSLatitude', None)
             gps_longitude_dms = metadata_dict.get('GPSLongitude', None)
             gps_altitude = metadata_dict.get('RelativeAltitude', None)
             fov_degrees = metadata_dict.get('FOV', None)
+            focal_length_mm = metadata_dict.get('FocalLength', None)
             image_height = metadata_dict.get('ImageHeight', None)
             image_width = metadata_dict.get('ImageWidth', None)
 
@@ -71,13 +72,13 @@ def extract_exif(image_path):
             else:
                 gps_latitude = gps_longitude = None
 
-            return flight_yaw_degree, flight_pitch_degree, flight_roll_degree, gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, gps_latitude, gps_longitude, gps_altitude, fov_degrees, image_height, image_width
+            return flight_yaw_degree, flight_pitch_degree, flight_roll_degree, gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, gps_latitude, gps_longitude, gps_altitude, fov_degrees, focal_length_mm, image_height, image_width
         else:
             print("No metadata found.")
-            return None, None, None, None, None, None, None, None, None, None, None, None
+            return None, None, None, None, None, None, None, None, None, None, None, None, None
     except Exception as e:
         print(f"Error: {e}")
-        return None, None, None, None, None, None, None, None, None, None, None, None
+        return None, None, None, None, None, None, None, None, None, None, None, None, None
     
 def dms_to_decimal(dms_str):
     """
@@ -115,66 +116,80 @@ def extract_number(input_string):
         return float(match.group())
     return None
 
-# Function to get new latitude and longitude for a pixel
-def get_gps_from_pixel(pixel_x, pixel_y, image_width, image_height, flight_degree, gimbal_degree, gps_lat_decimal, gps_lon_decimal, altitude_meters, fov_deg, sensor_width_mm):
+# Function to get latitude and longitude for a pixel
+def get_gps_from_pixel(pixel_x, pixel_y, image_width, image_height, 
+                       flight_degree, gimbal_degree, gps_lat_decimal, gps_lon_decimal, 
+                       altitude_meters, focal_length_mm, sensor_width_mm, sensor_height_mm):
     """
     Convert pixel coordinates back to GPS latitude and longitude.
     
     Args:
     - pixel_x, pixel_y: The pixel coordinates in the image.
+    - image_width, image_height: The dimensions of the image in pixels.
     - flight_degree: The flight yaw orientation in degrees.
     - gimbal_degree: The gimbal yaw orientation in degrees.
-    - image_width, image_height: The dimensions of the image in pixels.
-    - real_world_distance_per_pixel: Real-world distance (in meters) represented by a single pixel.
     - gps_lat_decimal, gps_lon_decimal: GPS coordinates (latitude and longitude) of the image center.
+    - altitude_meters: The altitude of the drone in meters.
+    - focal_length_mm: Camera focal length in millimeters.
+    - sensor_width_mm, sensor_height_mm: Camera sensor size in millimeters.
     
     Returns:
     - (latitude, longitude): The GPS coordinates corresponding to the pixel location.
     """
+
+    # **Calculate Horizontal and Vertical FOV using Focal Length**
+    fov_rad_h = 2 * math.atan((sensor_width_mm / (2 * focal_length_mm)))  
+    fov_rad_v = 2 * math.atan((sensor_height_mm / (2 * focal_length_mm)))
+
+    # **Calculate Ground Coverage**
+    ground_width_meters = 2 * altitude_meters * math.tan(fov_rad_h / 2)
+    ground_height_meters = 2 * altitude_meters * math.tan(fov_rad_v / 2)
+
+    # **Calculate Ground Sample Distance (GSD)**
+    gsd_meters_per_pixel_x = ground_width_meters / image_width
+    gsd_meters_per_pixel_y = ground_height_meters / image_height
+
     # Offset the pixel coordinates relative to the center of the image
     corrected_pixel_x = pixel_x - (image_width / 2)
     corrected_pixel_y = (image_height / 2) - pixel_y  # Invert Y-axis for image coordinates
 
-    # Calculate the real-world distance per pixel (adjusted for altitude)
-    fov_rad = math.radians(fov_deg)
-    # Adjusted field of view based on altitude (simplified approach)
-    adjusted_fov_deg = fov_deg * (1 + altitude_meters / 1000)  # Simple correction for altitude
-    adjusted_fov_rad = math.radians(adjusted_fov_deg)
-    
-    real_world_distance_per_pixel = (math.tan(adjusted_fov_rad / 2) * 2 * sensor_width_mm) / image_width
-    
     # Convert pixel offsets to real-world distances in meters
-    corrected_lon_change = corrected_pixel_x * real_world_distance_per_pixel
-    corrected_lat_change = corrected_pixel_y * real_world_distance_per_pixel
-    
+    corrected_lon_change = corrected_pixel_x * gsd_meters_per_pixel_x
+    corrected_lat_change = corrected_pixel_y * gsd_meters_per_pixel_y
+
     # Convert gimbal orientation to radians
-    gimbal_radians = math.radians(gimbal_degree)
-    
+    gimbal_radians = math.radians(float(gimbal_degree))
+
     # Reverse the displacement adjustments for gimbal orientation
     lon_change = corrected_lon_change * math.cos(gimbal_radians) + corrected_lat_change * math.sin(gimbal_radians)
     lat_change = -corrected_lon_change * math.sin(gimbal_radians) + corrected_lat_change * math.cos(gimbal_radians)
-    
+
     # Convert the real-world displacements back to degrees
     latitude = gps_lat_decimal + (lat_change / 111320)  # Convert meters to degrees for latitude
     longitude = gps_lon_decimal + (lon_change / (40008000 * math.cos(math.radians(latitude)) / 360))  # Convert meters to degrees for longitude
-    
+
     return latitude, longitude
 
-def get_pixel_from_gps(latitude, longitude, flight_degree, gimbal_degree, image_width, image_height, real_world_distance_per_pixel, gps_lat_decimal, gps_lon_decimal):
+
+def get_pixel_from_gps(latitude, longitude, flight_degree, gimbal_degree, 
+                       image_width, image_height, 
+                       gsd_x, gsd_y,  # Separate GSD values for x and y
+                       gps_lat_decimal, gps_lon_decimal):
+    
     # Calculate the real-world displacement in meters from the given lat/lon to the center point
     lat_change = (latitude - gps_lat_decimal) * 111320  # Approximate conversion to meters for latitude
     lon_change = (longitude - gps_lon_decimal) * (40008000 * math.cos(math.radians(latitude)) / 360)  # Conversion to meters for longitude
 
     # Convert gimbal orientation to radians
-    gimbal_radians = math.radians(gimbal_degree)
+    gimbal_radians = math.radians(float(gimbal_degree))
 
     # Adjust the displacement for gimbal orientation
     corrected_lon_change = lon_change * math.cos(gimbal_radians) - lat_change * math.sin(gimbal_radians)
     corrected_lat_change = lon_change * math.sin(gimbal_radians) + lat_change * math.cos(gimbal_radians)
 
-    # Adjust pixel distance using real-world distance per pixel
-    corrected_pixel_x = corrected_lon_change / real_world_distance_per_pixel
-    corrected_pixel_y = corrected_lat_change / real_world_distance_per_pixel
+    # Adjust pixel distance using separate real-world distance per pixel values (GSD)
+    corrected_pixel_x = corrected_lon_change / gsd_x
+    corrected_pixel_y = corrected_lat_change / gsd_y
 
     # Convert to pixel coordinates (adjusting for the center of the image)
     pixel_x = (image_width / 2) + corrected_pixel_x
@@ -183,32 +198,43 @@ def get_pixel_from_gps(latitude, longitude, flight_degree, gimbal_degree, image_
     return int(pixel_x), int(pixel_y)
 
 # Function to draw circles on the image based on lat/lon coordinates
-def draw_circles_on_image(image_path, gps_points, flight_degree, gimbal_degree, gps_latitude, gps_longitude, altitude_meters, fov_deg, focal_length_mm, sensor_width_mm):
-        # Open the image
+def draw_circles_on_image(image_path, gps_points, flight_degree, gimbal_degree, 
+                          gps_latitude, gps_longitude, altitude_meters, 
+                          fov_deg, focal_length_mm, sensor_width_mm, sensor_height_mm):
+
+    # Open the image
     img = Image.open(image_path)
     image_width, image_height = img.size
-    draw = ImageDraw.Draw(img)    
-    
+    draw = ImageDraw.Draw(img)
+
     flight_degree = float(flight_degree) if flight_degree else 0.0
     gimbal_degree = float(gimbal_degree) if gimbal_degree else 0.0
 
-    # Calculate the real-world distance per pixel (adjusted for altitude)
-    fov_rad = math.radians(fov_deg)
-    # Adjusted field of view based on altitude (simplified approach)
-    adjusted_fov_deg = fov_deg * (1 + altitude_meters / 1000)  # Simple correction for altitude
-    adjusted_fov_rad = math.radians(adjusted_fov_deg)
-    
-    real_world_distance_per_pixel = (math.tan(adjusted_fov_rad / 2) * 2 * sensor_width_mm) / image_width
+    # **Calculate Horizontal and Vertical FOV using Focal Length**
+    fov_rad_h = 2 * math.atan((sensor_width_mm / (2 * focal_length_mm)))  
+    fov_rad_v = 2 * math.atan((sensor_height_mm / (2 * focal_length_mm)))
+
+    # **Calculate Ground Coverage using FOV and Altitude**
+    ground_width_meters = 2 * altitude_meters * math.tan(fov_rad_h / 2)
+    ground_height_meters = 2 * altitude_meters * math.tan(fov_rad_v / 2)
+
+    # **Calculate Ground Sample Distance (GSD)**
+    gsd_meters_per_pixel_x = ground_width_meters / image_width
+    gsd_meters_per_pixel_y = ground_height_meters / image_height
 
     pixels = []
 
     for lat, lon in gps_points:
-        # Convert lat/lon to pixel coordinates
-        pixel_x, pixel_y = get_pixel_from_gps(lat, lon, flight_degree, gimbal_degree, image_width, image_height, real_world_distance_per_pixel, gps_latitude, gps_longitude)
-        
+        # Convert lat/lon to pixel coordinates using accurate scaling
+        pixel_x, pixel_y = get_pixel_from_gps(lat, lon, flight_degree, gimbal_degree, 
+                                              image_width, image_height, 
+                                              gsd_meters_per_pixel_x, gsd_meters_per_pixel_y,
+                                              gps_latitude, gps_longitude)
+
         # Draw a circle at the calculated pixel coordinates
-        radius = 100  # Radius of the circle in pixels
-        draw.ellipse([pixel_x - radius, pixel_y - radius, pixel_x + radius, pixel_y + radius], outline="red", width=20)
+        radius = 20  
+        draw.ellipse([pixel_x - radius, pixel_y - radius, pixel_x + radius, pixel_y + radius], 
+                     outline="red", width=10)
         print("Circle drawn at:", pixel_x, pixel_y)
 
         pixels.append({"x": pixel_x, "y": pixel_y})
@@ -225,14 +251,19 @@ def process_image(image_path, gps_points):
     img = Image.open(image_path)
     image_width, image_height = img.size
 
-    # Camera specifications
+    # Camera specifications Riseholme # https://enterprise.dji.com/zenmuse-h20-series/specs
     focal_length_mm = 4.5
     fov_deg = 73.7
-    sensor_width_mm = 11.04 # 6.3
-    
-    flight_yaw_degree, flight_pitch_degree, flight_roll_degree, gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, gps_latitude, gps_longitude, gps_altitude, fov_degrees, image_height, image_width = extract_exif(image_path)
+    sensor_width_mm =  6.17
+    sensor_height_mm = 4.55
 
-    focal_length_mm = 4.5 # From camera specs
+    # Camera specifications Outfields drone DJI Mavic 3 Multispectral (M3M) 1/2.3 inch wide sensor
+    # focal_length_mm = 12.3
+    # fov_deg = 73.7
+    # sensor_width_mm = 17.4
+    # sensor_height_mm = 13.0
+    
+    flight_yaw_degree, flight_pitch_degree, flight_roll_degree, gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, gps_latitude, gps_longitude, gps_altitude, fov_degrees, focal_length_mm, image_height, image_width = extract_exif(image_path)
 
     flight_yaw_num = extract_number(flight_yaw_degree)
     flight_pitch_num = extract_number(flight_pitch_degree)
@@ -242,6 +273,7 @@ def process_image(image_path, gps_points):
     gimbal_roll_num = extract_number(gimbal_roll_degree)
     gps_altitude_num = extract_number(gps_altitude)
     fov_degrees_num = extract_number(fov_degrees)
+    focal_length_mm = extract_number(focal_length_mm)
 
     # print(f"Flight Degree: {flight_yaw_num}")
     # print(f"Flight Pitch Degree: {flight_pitch_num}")
@@ -254,7 +286,7 @@ def process_image(image_path, gps_points):
     # print(f"Field of View: {fov_degrees_num}")
 
     # Draw cirels on image where the poles are
-    pole_pixels = draw_circles_on_image(image_path, gps_points, flight_yaw_num, gimbal_yaw_num, gps_latitude, gps_longitude, gps_altitude_num, fov_degrees_num, focal_length_mm, sensor_width_mm)
+    pole_pixels = draw_circles_on_image(image_path, gps_points, flight_yaw_num, gimbal_yaw_num, gps_latitude, gps_longitude, gps_altitude_num, fov_degrees_num, focal_length_mm, sensor_width_mm, sensor_height_mm)
     # TODO fix gps to pixel in some rotations.
 
     # Initialize GeoJSON FeatureCollection structure
@@ -274,7 +306,7 @@ def process_image(image_path, gps_points):
     pixels = pole_pixels
 
     for pixel in pixels:
-        latitude, longitude = get_gps_from_pixel(pixel["x"], pixel["y"], image_width, image_height, flight_yaw_num, gimbal_yaw_num, gps_latitude, gps_longitude, gps_altitude_num, fov_degrees_num, sensor_width_mm)
+        latitude, longitude = get_gps_from_pixel(pixel["x"], pixel["y"], image_width, image_height, flight_yaw_num, gimbal_yaw_num, gps_latitude, gps_longitude, gps_altitude_num, focal_length_mm, sensor_width_mm, sensor_height_mm)
 
         # Create a feature for each pole with lat/long coordinates
         feature = {
@@ -299,7 +331,7 @@ def process_image(image_path, gps_points):
         json.dump(geojson_data, json_file, indent=4)
 
 if __name__ == "__main__":
-    image_path = "../images/39_feet/DJI_20240802143112_0076_W.JPG"
+    image_path = "../images/riseholme/august_2024/39_feet/DJI_20240802143112_0076_W.JPG"
     gps_points = [
             (53.26818842,-0.52427737),
             (53.26813837,-0.52426541),
@@ -345,4 +377,21 @@ if __name__ == "__main__":
             #(53.26815, -0.524575), # centre of image to check if it is correct
             #(53.268175184088804, -0.5245453595031128) # random point
     ]
+        
+    # image_path = "../images/outfields/jojo/topdown/DJI_20240618142122_0258_D.JPG"
+
+    # with open("../data/jojo_row_posts_10_rows.geojson", 'r') as f:
+    #     geojson_data = json.load(f)
+
+    # gps_points = []
+    # if geojson_data['type'] == 'FeatureCollection':
+    #     for feature in geojson_data['features']:
+    #         if feature['geometry']['type'] == 'Point':
+    #             coordinates = feature['geometry']['coordinates']
+    #             # GeoJSON stores coordinates as [longitude, latitude], so we reverse them.
+    #             latitude, longitude = coordinates[1], coordinates[0]
+    #             gps_points.append((latitude, longitude))
+    # else:
+    #     print("Error: GeoJSON file is not a FeatureCollection.")
+
     process_image(image_path, gps_points)

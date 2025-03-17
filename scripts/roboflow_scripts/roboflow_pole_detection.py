@@ -12,7 +12,7 @@ from PIL import Image, ImageDraw
 import image_gps_pixel_show_poles
 
 # Define the image URL to use for inference
-image_file = "../../images/39_feet/DJI_20240802142844_0007_W.JPG"
+image_file = "../../images/riseholme/august_2024/39_feet/DJI_20240802142844_0007_W.JPG"
 # image_file = "../../images/jojo/agri_tech_centre/RX1RII/DSC00610.JPG"
 image = cv2.imread(image_file)
 

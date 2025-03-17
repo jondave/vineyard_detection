@@ -9,7 +9,7 @@ import image_gps_pixel_show_poles
 model = YOLO('../weights/vine_row_segmentation/best.pt')
 
 # Load image and predict
-input_image = '../images/39_feet/DJI_20240802142942_0034_W.JPG'
+input_image = '../images/riseholme/august_2024/39_feet/DJI_20240802142942_0034_W.JPG'
 results = model.predict(input_image, conf=0.2)
 
 # Open original image

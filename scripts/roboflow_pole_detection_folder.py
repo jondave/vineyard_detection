@@ -69,6 +69,9 @@ def detect_poles(image_folder, output_folder, ROBOFLOW_API_KEY, model_id, sensor
             gps_altitude_num = image_gps_pixel_show_poles.extract_number(gps_altitude)
             fov_degrees_num = image_gps_pixel_show_poles.extract_number(fov_degrees)
 
+            if gimbal_yaw_num == 0.0:
+                gimbal_yaw_num = flight_yaw_degree
+
             for prediction in results.predictions:
                 if prediction.class_name != "pole":
                     continue
@@ -116,7 +119,7 @@ if __name__ == "__main__":
     ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")
 
     geojson_data = detect_poles(
-        image_folder="../../images/39_feet/",
+        image_folder="../../images/riseholme/august_2024/39_feet/",
         output_folder="../../images/output/",
         ROBOFLOW_API_KEY=ROBOFLOW_API_KEY,
         model_id="vineyard_test/4",

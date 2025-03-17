@@ -152,5 +152,5 @@ def process_image(image_path):
         print("GeoTIFF creation skipped due to invalid GPS coordinates.")
 
 if __name__ == "__main__":
-    image_path = "../images/39_feet/DJI_20240802142835_0003_W.JPG"
+    image_path = "../images/riseholme/august_2024/39_feet/DJI_20240802142835_0003_W.JPG"
     process_image(image_path)

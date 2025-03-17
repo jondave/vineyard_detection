@@ -15,7 +15,7 @@ import image_gps_pixel_show_poles
 def detect_poles(image_folder, output_folder, api_key_path, model_id, sensor_width_mm):
 
     # Define the folder containing images for inference
-    image_folder = "../images/39_feet/"
+    image_folder = "../images/riseholme/august_2024/39_feet/"
     output_folder = "../images/output/"
     os.makedirs(output_folder, exist_ok=True)
 
