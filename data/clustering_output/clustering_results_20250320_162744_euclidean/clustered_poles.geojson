@@ -1,0 +1,412 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243634922842315,
+                    53.268078305514166
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.5583056211471558,
+                "cluster_id": 2,
+                "point_count": 6,
+                "avg_distance_km": 7.596511299530962e-05,
+                "max_distance_km": 0.0001572050153493105
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244011859454367,
+                    53.2680751876825
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.4675312042236328,
+                "cluster_id": 3,
+                "point_count": 8,
+                "avg_distance_km": 0.00011136719745436462,
+                "max_distance_km": 0.0001848426216512641
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244870662678175,
+                    53.26811884770367
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.6141409277915955,
+                "cluster_id": 6,
+                "point_count": 4,
+                "avg_distance_km": 4.212452920376032e-05,
+                "max_distance_km": 5.1810861514324296e-05
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5242734569255633,
+                    53.26803496959382
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.6250490546226501,
+                "cluster_id": 17,
+                "point_count": 6,
+                "avg_distance_km": 0.00011777301850639082,
+                "max_distance_km": 0.00021487617531006962
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244219842900668,
+                    53.26802185071698
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.7171486020088196,
+                "cluster_id": 20,
+                "point_count": 4,
+                "avg_distance_km": 7.210988827871375e-05,
+                "max_distance_km": 0.00010983131628881266
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243238482155762,
+                    53.268183330023604
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.6470669507980347,
+                "cluster_id": 0,
+                "point_count": 5,
+                "avg_distance_km": 0.00010573172293493814,
+                "max_distance_km": 0.00017825447373643485
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5242827997252728,
+                    53.26818677455482
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.4805477261543274,
+                "cluster_id": 1,
+                "point_count": 5,
+                "avg_distance_km": 7.520965601607175e-05,
+                "max_distance_km": 0.0001434484900748608
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.524442657702444,
+                    53.26812470511726
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.8085252046585083,
+                "cluster_id": 4,
+                "point_count": 6,
+                "avg_distance_km": 7.84016286287245e-05,
+                "max_distance_km": 9.635172649902774e-05
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243290964449452,
+                    53.268078176738776
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.5918670296669006,
+                "cluster_id": 7,
+                "point_count": 12,
+                "avg_distance_km": 0.00013894308622872993,
+                "max_distance_km": 0.000268542121483364
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243790950562243,
+                    53.268124540903095
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.4275863766670227,
+                "cluster_id": 8,
+                "point_count": 4,
+                "avg_distance_km": 4.82311255982792e-05,
+                "max_distance_km": 7.458258398719599e-05
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244559257760489,
+                    53.26802142903278
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.6151052713394165,
+                "cluster_id": 9,
+                "point_count": 6,
+                "avg_distance_km": 0.00011090857542434365,
+                "max_distance_km": 0.00018016980211069223
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243011600642203,
+                    53.2681302667901
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.8051864504814148,
+                "cluster_id": 11,
+                "point_count": 5,
+                "avg_distance_km": 6.289734010657579e-05,
+                "max_distance_km": 8.911290193839936e-05
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243415900472778,
+                    53.268128668691006
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.5789401531219482,
+                "cluster_id": 12,
+                "point_count": 10,
+                "avg_distance_km": 0.00013972537129889928,
+                "max_distance_km": 0.00028038862340914973
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243923605098005,
+                    53.26802150248569
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.5745505094528198,
+                "cluster_id": 13,
+                "point_count": 6,
+                "avg_distance_km": 8.220184390085529e-05,
+                "max_distance_km": 0.00014531836042738777
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243547299824864,
+                    53.26802555606373
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.49057453870773315,
+                "cluster_id": 14,
+                "point_count": 5,
+                "avg_distance_km": 7.304505663977668e-05,
+                "max_distance_km": 0.00013829096641742794
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243166239878538,
+                    53.26802834530118
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.7385090589523315,
+                "cluster_id": 15,
+                "point_count": 5,
+                "avg_distance_km": 8.08459063704785e-05,
+                "max_distance_km": 0.0001122582951664113
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5243905607338715,
+                    53.268177506094915
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.5896480679512024,
+                "cluster_id": 16,
+                "point_count": 5,
+                "avg_distance_km": 6.779017327155406e-05,
+                "max_distance_km": 0.0001177048701720236
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244181304067382,
+                    53.268123428568224
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.5740748643875122,
+                "cluster_id": 18,
+                "point_count": 4,
+                "avg_distance_km": 5.77313232257677e-05,
+                "max_distance_km": 7.009825835538543e-05
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244927832424401,
+                    53.268019687661486
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.7425311207771301,
+                "cluster_id": 19,
+                "point_count": 7,
+                "avg_distance_km": 0.0001074712832540353,
+                "max_distance_km": 0.00016534095609111742
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5242473151028995,
+                    53.26809228625446
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.6570945978164673,
+                "cluster_id": 24,
+                "point_count": 5,
+                "avg_distance_km": 9.02901902734181e-05,
+                "max_distance_km": 0.00014408727643611802
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.5244419279042779,
+                    53.26806854683901
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.5689996480941772,
+                "cluster_id": 25,
+                "point_count": 4,
+                "avg_distance_km": 6.22124841158776e-05,
+                "max_distance_km": 0.00010235692217756395
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.524353528196452,
+                    53.26817980373514
+                ]
+            },
+            "properties": {
+                "type": "pole",
+                "confidence": 0.5397359728813171,
+                "cluster_id": 27,
+                "point_count": 4,
+                "avg_distance_km": 6.941639902770308e-05,
+                "max_distance_km": 0.00013443981469225878
+            }
+        }
+    ],
+    "metadata": {
+        "clustering_info": {
+            "algorithm": "DBSCAN",
+            "eps": 0.14871794871794872,
+            "min_samples": 4,
+            "metric": "euclidean",
+            "num_clusters": 29,
+            "num_noise_points": 513,
+            "total_points": 675
+        }
+    }
+}

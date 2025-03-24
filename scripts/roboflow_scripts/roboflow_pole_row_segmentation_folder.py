@@ -18,6 +18,7 @@ import numpy as np
 import shapely.geometry
 import math
 import pole_clustering
+import time
 
 def erode_polygon(polygon, erosion_distance):
     """Erodes a polygon by a given distance."""
@@ -160,17 +161,17 @@ def detect_poles_and_vine_rows(image_file, model, confidence, sensor_width_mm, s
         if gimbal_roll_num == 0.0:
             gimbal_roll_num = flight_roll_degree
 
-        print(f"Flight Yaw Degree: {flight_yaw_num}")
-        print(f"Flight Pitch Degree: {flight_pitch_num}")
-        print(f"Flight Roll Degree: {flight_roll_num}")
-        print(f"Gimbal Yaw Degree: {gimbal_yaw_num}")
-        print(f"Gimbal Pitch Degree: {gimbal_pitch_num}")
-        print(f"Gimbal Roll Degree: {gimbal_roll_num}")
-        print(f"GPS Latitude (Decimal): {gps_latitude}")
-        print(f"GPS Longitude (Decimal): {gps_longitude}")
-        print(f"GPS Altitude: {gps_altitude_num}")
-        print(f"Field of View: {fov_degrees_num}")
-        print(f"Focal Length: {focal_length_mm}")
+        # print(f"Flight Yaw Degree: {flight_yaw_num}")
+        # print(f"Flight Pitch Degree: {flight_pitch_num}")
+        # print(f"Flight Roll Degree: {flight_roll_num}")
+        # print(f"Gimbal Yaw Degree: {gimbal_yaw_num}")
+        # print(f"Gimbal Pitch Degree: {gimbal_pitch_num}")
+        # print(f"Gimbal Roll Degree: {gimbal_roll_num}")
+        # print(f"GPS Latitude (Decimal): {gps_latitude}")
+        # print(f"GPS Longitude (Decimal): {gps_longitude}")
+        # print(f"GPS Altitude: {gps_altitude_num}")
+        # print(f"Field of View: {fov_degrees_num}")
+        # print(f"Focal Length: {focal_length_mm}")
 
         # Open the image for size info
         img = Image.open(image_file)
@@ -253,88 +254,78 @@ def detect_poles_and_vine_rows(image_file, model, confidence, sensor_width_mm, s
         #         print(f"Error: ZeroDivisionError for vine_row: {vine_row}")
         #         continue  # Skip to the next vine_row
 
-        # Process detected vine rows and clip them to the rectangle
-        filtered_vine_rows_points = []
-        for vine_row in vine_rows_points:
-            points = vine_row["points"]
+        # # Process detected vine rows and clip them to the rectangle
+        # filtered_vine_rows_points = []
+        # for vine_row in vine_rows_points:
+        #     points = vine_row["points"]
 
-            # Check if points list is empty
-            if not points:
-                print(f"Warning: Empty points list for vine_row: {vine_row}")
-                continue  # Skip to the next vine_row
+        #     # Check if points list is empty
+        #     if not points:
+        #         print(f"Warning: Empty points list for vine_row: {vine_row}")
+        #         continue  # Skip to the next vine_row
 
-            try:
-                # Create a Shapely Polygon from the points
-                polygon = Polygon(points)
+        #     try:
+        #         # Create a Shapely Polygon from the points
+        #         polygon = Polygon(points)
 
-                # Calculate rectangle boundary centered on image center
-                rect_half_width = image_width / 2
-                rect_half_height = image_height / 2
+        #         # Calculate rectangle boundary centered on image center
+        #         rect_half_width = image_width / 2
+        #         rect_half_height = image_height / 2
 
-                rect_left = image_center_x - rect_half_width
-                rect_right = image_center_x + rect_half_width
-                rect_top = image_center_y - rect_half_height
-                rect_bottom = image_center_y + rect_half_height
+        #         rect_left = image_center_x - rect_half_width
+        #         rect_right = image_center_x + rect_half_width
+        #         rect_top = image_center_y - rect_half_height
+        #         rect_bottom = image_center_y + rect_half_height
 
-                # Create a Shapely Polygon for the rectangle
-                rectangle = box(rect_left, rect_top, rect_right, rect_bottom)
+        #         # Create a Shapely Polygon for the rectangle
+        #         rectangle = box(rect_left, rect_top, rect_right, rect_bottom)
 
-                # Calculate the intersection of the polygon and the rectangle
-                intersection = polygon.intersection(rectangle)
+        #         # Calculate the intersection of the polygon and the rectangle
+        #         intersection = polygon.intersection(rectangle)
 
-                # Check if the intersection is not empty (meaning there's overlap)
-                if not intersection.is_empty:
-                    # If there's an intersection, get the coordinates of the clipped polygon
-                    if intersection.geom_type == 'Polygon':
-                        clipped_points = list(intersection.exterior.coords)
-                        # Remove the last coordinate as it duplicates the first for a closed polygon
-                        clipped_points = clipped_points[:-1]
-                        filtered_vine_rows_points.append({"points": clipped_points, "confidence": vine_row["confidence"]})
-                    elif intersection.geom_type == 'MultiPolygon':
-                        # Handle cases where the intersection results in multiple polygons
-                        for geom in intersection.geoms:
-                            clipped_points = list(geom.exterior.coords)
-                            clipped_points = clipped_points[:-1]
-                            filtered_vine_rows_points.append({"points": clipped_points, "confidence": vine_row["confidence"]})
-                    else:
-                        # Handle other intersection types if needed (e.g., LineString, Point)
-                        print(f"Warning: Intersection resulted in a {intersection.geom_type}, skipping.")
+        #         # Check if the intersection is not empty (meaning there's overlap)
+        #         if not intersection.is_empty:
+        #             # If there's an intersection, get the coordinates of the clipped polygon
+        #             if intersection.geom_type == 'Polygon':
+        #                 clipped_points = list(intersection.exterior.coords)
+        #                 # Remove the last coordinate as it duplicates the first for a closed polygon
+        #                 clipped_points = clipped_points[:-1]
+        #                 filtered_vine_rows_points.append({"points": clipped_points, "confidence": vine_row["confidence"]})
+        #             elif intersection.geom_type == 'MultiPolygon':
+        #                 # Handle cases where the intersection results in multiple polygons
+        #                 for geom in intersection.geoms:
+        #                     clipped_points = list(geom.exterior.coords)
+        #                     clipped_points = clipped_points[:-1]
+        #                     filtered_vine_rows_points.append({"points": clipped_points, "confidence": vine_row["confidence"]})
+        #             else:
+        #                 # Handle other intersection types if needed (e.g., LineString, Point)
+        #                 print(f"Warning: Intersection resulted in a {intersection.geom_type}, skipping.")
 
-            except ZeroDivisionError:
-                print(f"Error: ZeroDivisionError for vine_row: {vine_row}")
-                continue  # Skip to the next vine_row
-            except Exception as e:
-                print(f"Error processing polygon: {e}")
-                continue
+        #     except ZeroDivisionError:
+        #         print(f"Error: ZeroDivisionError for vine_row: {vine_row}")
+        #         continue  # Skip to the next vine_row
+        #     except Exception as e:
+        #         print(f"Error processing polygon: {e}")
+        #         continue
 
-        # Now, use filtered_vine_rows_points for coordinate conversion
-        all_vine_row_coordinates = []
-        for vine_row in filtered_vine_rows_points:
-            vine_row_coordinates = []
-            for point in vine_row["points"]:
-                vine_row_point_latitude, vine_row_point_longitude = image_gps_pixel_show_poles.get_gps_from_pixel(
-                    int(point[0]), int(point[1]), image_width, image_height,
-                    flight_yaw_num, gimbal_yaw_num, gps_latitude, gps_longitude,
-                    gps_altitude_num, focal_length_mm, sensor_width_mm, sensor_height_mm
-                )
+        # # Now, use filtered_vine_rows_points for coordinate conversion
+        # all_vine_row_coordinates = []
+        # for vine_row in filtered_vine_rows_points:
+        #     vine_row_coordinates = []
+        #     for point in vine_row["points"]:
+        #         vine_row_point_latitude, vine_row_point_longitude = image_gps_pixel_show_poles.get_gps_from_pixel(
+        #             int(point[0]), int(point[1]), image_width, image_height,
+        #             flight_yaw_num, gimbal_yaw_num, gps_latitude, gps_longitude,
+        #             gps_altitude_num, focal_length_mm, sensor_width_mm, sensor_height_mm
+        #         )
 
-                vine_row_coordinates.append([vine_row_point_longitude, vine_row_point_latitude])
+        #         vine_row_coordinates.append([vine_row_point_longitude, vine_row_point_latitude])
 
-            all_vine_row_coordinates.append({
-                "type": "Feature",
-                "geometry": {"type": "Polygon", "coordinates": [vine_row_coordinates]},
-                "properties": {"type": "vine_row", "confidence": vine_row["confidence"]}
-            })
-
-            # feature_vine_row = {
-            #     "type": "Feature",
-            #     "geometry": {
-            #         "type": "Polygon",
-            #         "coordinates": [vine_row_coordinates]
-            #     },
-            #     "properties": {"type": "vine_row"}
-            # }
-            # geojson_data_vine_rows["features"].append(feature_vine_row)
+        #     all_vine_row_coordinates.append({
+        #         "type": "Feature",
+        #         "geometry": {"type": "Polygon", "coordinates": [vine_row_coordinates]},
+        #         "properties": {"type": "vine_row", "confidence": vine_row["confidence"]}
+        #     })
 
         # # Load detections and annotate the image
         # detections = sv.Detections.from_inference(results)
@@ -352,7 +343,7 @@ def detect_poles_and_vine_rows(image_file, model, confidence, sensor_width_mm, s
         return all_pole_coordinates, all_vine_row_coordinates
 
 if __name__ == "__main__":
-    #image_folder="../../images/riseholme/august_2024/39_feet/" # Riseholme
+    # image_folder="../../images/riseholme/august_2024/39_feet/" # Riseholme
     # image_folder="../../images/riseholme/august_2024/65_feet/" # Riseholme
     # image_folder="../../images/riseholme/august_2024/100_feet/" # Riseholme
     # image_folder="../../images/riseholme/march_2025/39_feet/" # Riseholme
@@ -406,6 +397,8 @@ if __name__ == "__main__":
     # Get a list of all image files
     image_files = [f for f in os.listdir(image_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
     total_images = len(image_files)
+
+    start_time = time.time()
         
     for i, image_file in enumerate(image_files, start=1):
         image_path = os.path.join(image_folder, image_file)
@@ -424,6 +417,10 @@ if __name__ == "__main__":
         all_pole_coordinates.extend(pole_coordinates)
         all_vine_row_coordinates.extend(vine_row_coordinates)
 
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(f"Time taken {elapsed_time:.6f} seconds")
+
     for pole in all_pole_coordinates:
         geojson_data_poles["features"].append(pole)
 
@@ -433,76 +430,76 @@ if __name__ == "__main__":
     # Cluster poles
     geojson_data_poles_clustered = pole_clustering.cluster_poles(geojson_data_poles, eps=0.0000002, min_samples=2, metric="chebyshev") # eps=0.0000002
    
-    iou_threshold = 0.3
-    nms_results = non_maximum_suppression_polygons(all_vine_row_coordinates, iou_threshold)
+    # iou_threshold = 0.3
+    # nms_results = non_maximum_suppression_polygons(all_vine_row_coordinates, iou_threshold)
 
-    # Convert GeoJSON coordinates to shapely polygons
-    all_polygons = []
-    for feature in nms_results: # nms_results or all_vine_row_coordinates
-        if feature["geometry"]["type"] == "Polygon":
-            coordinates = feature["geometry"]["coordinates"][0]
-            if len(coordinates) >= 4:  # Check for at least 4 coordinates
-                polygon = Polygon(feature["geometry"]["coordinates"][0])
+    # # Convert GeoJSON coordinates to shapely polygons
+    # all_polygons = []
+    # for feature in nms_results: # nms_results or all_vine_row_coordinates
+    #     if feature["geometry"]["type"] == "Polygon":
+    #         coordinates = feature["geometry"]["coordinates"][0]
+    #         if len(coordinates) >= 4:  # Check for at least 4 coordinates
+    #             polygon = Polygon(feature["geometry"]["coordinates"][0])
 
-                # Fix invalid polygons
-                if not polygon.is_valid or polygon.is_empty:
-                    polygon = polygon.buffer(0)
+    #             # Fix invalid polygons
+    #             if not polygon.is_valid or polygon.is_empty:
+    #                 polygon = polygon.buffer(0)
 
-                if polygon.is_valid and not polygon.is_empty:
-                    all_polygons.append(polygon)
-        elif feature["geometry"]["type"] == "MultiPolygon":
-            for poly_coords in feature["geometry"]["coordinates"]:
-                polygon = Polygon(poly_coords[0])
-                if not polygon.is_valid or polygon.is_empty:
-                    polygon = polygon.buffer(0)
-                if polygon.is_valid and not polygon.is_empty:
-                    all_polygons.append(polygon)
+    #             if polygon.is_valid and not polygon.is_empty:
+    #                 all_polygons.append(polygon)
+    #     elif feature["geometry"]["type"] == "MultiPolygon":
+    #         for poly_coords in feature["geometry"]["coordinates"]:
+    #             polygon = Polygon(poly_coords[0])
+    #             if not polygon.is_valid or polygon.is_empty:
+    #                 polygon = polygon.buffer(0)
+    #             if polygon.is_valid and not polygon.is_empty:
+    #                 all_polygons.append(polygon)
 
-    # # **Step 1: Filter out small polygons**
-    # if all_polygons:
-    #     average_area = sum(p.area for p in all_polygons) / len(all_polygons)
-    #     min_area_threshold = 0.5 * average_area  # Half the average area
-    #     filtered_polygons = [p for p in all_polygons if p.area >= min_area_threshold]
-    # else:
-    #     filtered_polygons = []
+    # # # **Step 1: Filter out small polygons**
+    # # if all_polygons:
+    # #     average_area = sum(p.area for p in all_polygons) / len(all_polygons)
+    # #     min_area_threshold = 0.5 * average_area  # Half the average area
+    # #     filtered_polygons = [p for p in all_polygons if p.area >= min_area_threshold]
+    # # else:
+    # #     filtered_polygons = []
 
-    filtered_polygons = all_polygons
+    # filtered_polygons = all_polygons
 
-    # # Step 1.2: Erode polygons
-    # erosion_distance = 0.0000001
-    # eroded_polygons = []
-    # for poly in filtered_polygons:
-    #     eroded_poly = erode_polygon(poly, erosion_distance)
-    #     if eroded_poly.is_valid and not eroded_poly.is_empty:
-    #         eroded_polygons.append(eroded_poly)
+    # # # Step 1.2: Erode polygons
+    # # erosion_distance = 0.0000001
+    # # eroded_polygons = []
+    # # for poly in filtered_polygons:
+    # #     eroded_poly = erode_polygon(poly, erosion_distance)
+    # #     if eroded_poly.is_valid and not eroded_poly.is_empty:
+    # #         eroded_polygons.append(eroded_poly)
 
-    # Step 2: Cluster overlapping polygons together
-    merged_vine_rows = []
-    if filtered_polygons:
-        str_tree = STRtree(filtered_polygons)
-        visited = set()
+    # # Step 2: Cluster overlapping polygons together
+    # merged_vine_rows = []
+    # if filtered_polygons:
+    #     str_tree = STRtree(filtered_polygons)
+    #     visited = set()
 
-        for poly in filtered_polygons:
-            if poly in visited:
-                continue
+    #     for poly in filtered_polygons:
+    #         if poly in visited:
+    #             continue
 
-            merged_result = merge_cluster(poly, filtered_polygons, visited)
-            merged_vine_rows.extend(merged_result)
+    #         merged_result = merge_cluster(poly, filtered_polygons, visited)
+    #         merged_vine_rows.extend(merged_result)
 
-    # Step 3: Convert merged polygons back into GeoJSON format
-    merged_geojson_list = []
-    for merged_polygon in merged_vine_rows:
-        if isinstance(merged_polygon, Polygon) and not merged_polygon.is_empty:
-            merged_geojson_list.append({
-                "type": "Feature",
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [list(merged_polygon.exterior.coords)]
-                },
-                "properties": {"type": "merged_vine_row"}
-            })
+    # # Step 3: Convert merged polygons back into GeoJSON format
+    # merged_geojson_list = []
+    # for merged_polygon in merged_vine_rows:
+    #     if isinstance(merged_polygon, Polygon) and not merged_polygon.is_empty:
+    #         merged_geojson_list.append({
+    #             "type": "Feature",
+    #             "geometry": {
+    #                 "type": "Polygon",
+    #                 "coordinates": [list(merged_polygon.exterior.coords)]
+    #             },
+    #             "properties": {"type": "merged_vine_row"}
+    #         })
 
-    merged_geojson = {"type": "FeatureCollection", "features": merged_geojson_list}
+    # merged_geojson = {"type": "FeatureCollection", "features": merged_geojson_list}
     
     # for vine_row in all_vine_row_coordinates:     
     #     geojson_data_vine_rows["features"].append(vine_row)
@@ -517,7 +514,7 @@ if __name__ == "__main__":
     with open(f"{output_folder}detected_vine_row_coordinates.geojson", "w") as json_file:
         json.dump(geojson_data_vine_rows, json_file, indent=4)
 
-    with open(f"{output_folder}detected_merged_vine_rows.geojson", "w") as json_file:
-        json.dump(merged_geojson, json_file, indent=4)
+    # with open(f"{output_folder}detected_merged_vine_rows.geojson", "w") as json_file:
+    #     json.dump(merged_geojson, json_file, indent=4)
 
     print(f"GeoJSON files saved to: {output_folder}")

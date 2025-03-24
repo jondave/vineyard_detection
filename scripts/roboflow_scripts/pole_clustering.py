@@ -79,7 +79,7 @@ if __name__ == "__main__":
         input_geojson = json.load(file)
     
     # Process clustering
-    clustered_geojson = cluster_poles(input_geojson, eps=0.0000002, min_samples=3, metric="chebyshev")
+    clustered_geojson = cluster_poles(input_geojson, eps=0.0000002, min_samples=2, metric="chebyshev") #  metric="chebyshev"
     
     # Save the clustered GeoJSON to a file
     with open(output_file, "w") as file:

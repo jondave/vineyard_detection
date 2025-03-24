@@ -80,19 +80,19 @@ def extract_exif(image_path):
             if flight_roll_degree == None:
                 flight_roll_degree = metadata_dict.get('Roll', None)           
 
-            print(f"Flight Yaw Degree: {flight_yaw_degree}")
-            print(f"Flight Pitch Degree: {flight_pitch_degree}")
-            print(f"Flight Roll Degree: {flight_roll_degree}")
-            print(f"Gimbal Yaw Degree: {gimbal_yaw_degree}")
-            print(f"Gimbal Pitch Degree: {gimbal_pitch_degree}")
-            print(f"Gimbal Roll Degree: {gimbal_roll_degree}")
-            print(f"GPS Latitude (DMS): {gps_latitude_dms}")
-            print(f"GPS Longitude (DMS): {gps_longitude_dms}")
-            print(f"GPS Altitude: {gps_altitude}")
-            print(f"Field of View: {fov_degrees}")
-            print(f"Focal Length: {focal_length_mm}")
-            print(f"Image Height: {image_height}")
-            print(f"Image Width: {image_width}")
+            # print(f"Flight Yaw Degree: {flight_yaw_degree}")
+            # print(f"Flight Pitch Degree: {flight_pitch_degree}")
+            # print(f"Flight Roll Degree: {flight_roll_degree}")
+            # print(f"Gimbal Yaw Degree: {gimbal_yaw_degree}")
+            # print(f"Gimbal Pitch Degree: {gimbal_pitch_degree}")
+            # print(f"Gimbal Roll Degree: {gimbal_roll_degree}")
+            # print(f"GPS Latitude (DMS): {gps_latitude_dms}")
+            # print(f"GPS Longitude (DMS): {gps_longitude_dms}")
+            # print(f"GPS Altitude: {gps_altitude}")
+            # print(f"Field of View: {fov_degrees}")
+            # print(f"Focal Length: {focal_length_mm}")
+            # print(f"Image Height: {image_height}")
+            # print(f"Image Width: {image_width}")
 
             return flight_yaw_degree, flight_pitch_degree, flight_roll_degree, gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, gps_latitude, gps_longitude, gps_altitude, fov_degrees, focal_length_mm, image_height, image_width
         else:
@@ -345,7 +345,7 @@ def process_image(image_path, gps_points):
         # Append the feature to the features list
         geojson_data["features"].append(feature)
 
-        print(f"Pixel ({pixel['x']}, {pixel['y']}) -> Latitude: {latitude}, Longitude: {longitude}")
+        # print(f"Pixel ({pixel['x']}, {pixel['y']}) -> Latitude: {latitude}, Longitude: {longitude}")
 
     # Save the GeoJSON data to a file
     output_geojson_file = "../data/detected_pole_coordinates.geojson"
