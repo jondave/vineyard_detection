@@ -343,7 +343,7 @@ def detect_poles_and_vine_rows(image_file, model, confidence, sensor_width_mm, s
         return all_pole_coordinates, all_vine_row_coordinates
 
 if __name__ == "__main__":
-    # image_folder="../../images/riseholme/august_2024/39_feet/" # Riseholme
+    image_folder="../../images/riseholme/august_2024/39_feet/" # Riseholme
     # image_folder="../../images/riseholme/august_2024/65_feet/" # Riseholme
     # image_folder="../../images/riseholme/august_2024/100_feet/" # Riseholme
     # image_folder="../../images/riseholme/march_2025/39_feet/" # Riseholme
@@ -351,7 +351,7 @@ if __name__ == "__main__":
     # image_folder="../../images/riseholme/march_2025/100_feet/" # Riseholme
     # image_folder="../../images/jojo/agri_tech_centre/RX1RII/"
     # image_folder="../../images/outfields/wraxall/topdown/rgb/"
-    image_folder="../../images/outfields/jojo/topdown/"
+    # image_folder="../../images/outfields/jojo/topdown/"
     # image_folder="../../images/outfields/jojo/high_altitude_oblique/"
     # image_folder="../../images/outfields/jojo/low_altitude_side_view/"
 
@@ -362,11 +362,11 @@ if __name__ == "__main__":
     confidence=0.4
 
     # Camera specifications Riseholme # https://enterprise.dji.com/zenmuse-h20-series/specs
-    # focal_length_mm = 4.5
-    # fov_deg = 73.7
-    # sensor_width_mm =  6.17
-    # sensor_height_mm = 4.55
-
+    focal_length_mm = 4.5
+    fov_deg = 73.7
+    sensor_width_mm =  6.17
+    sensor_height_mm = 4.55
++
     # Camera specifications Agri tech centre jojo drone # https://www.sony.co.uk/electronics/cyber-shot-compact-cameras/dsc-rx1rm2
     # focal_length_mm = 35.0 # * 0.12
     # fov_deg = 54.4
@@ -374,10 +374,10 @@ if __name__ == "__main__":
     # sensor_height_mm = 24.0
 
     # Camera specifications Outfields drone DJI Mavic 3 Multispectral (M3M) 1/2.3 inch wide sensor
-    focal_length_mm = 12.3
-    fov_deg = 73.7
-    sensor_width_mm = 17.4
-    sensor_height_mm = 13.0
+    # focal_length_mm = 12.3
+    # fov_deg = 73.7
+    # sensor_width_mm = 17.4
+    # sensor_height_mm = 13.0
 
     # Initialize GeoJSON structures
     geojson_data_poles = {"type": "FeatureCollection", "features": []}

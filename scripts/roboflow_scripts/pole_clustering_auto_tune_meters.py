@@ -322,7 +322,8 @@ if __name__ == "__main__":
     output_dir = f"clustering_results_{timestamp}"
     os.makedirs(output_dir, exist_ok=True)
     
-    input_file = "../../data/riseholme/detected_pole_coordinates.geojson"
+    # input_file = "../../data/riseholme/detected_pole_coordinates.geojson"
+    input_file = "../../data/detected_pole_coordinates.geojson"
     output_file = f"{output_dir}/clustered_poles.geojson"
     
     # Load input GeoJSON

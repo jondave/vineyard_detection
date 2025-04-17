@@ -174,8 +174,9 @@ def process_image(image_path, df, output_folder):
 
         pixel_x, pixel_y = get_pixel_from_gps(vine_lat, vine_lon, flight_yaw_num, gimbal_yaw_num, image_width, image_height, gsd_meters_per_pixel_x, gsd_meters_per_pixel_y, gps_latitude, gps_longitude)
 
-        one_meter_pixels_x = 1 / gsd_meters_per_pixel_x
-        one_meter_pixels_y = 1 / gsd_meters_per_pixel_y
+        # one_meter_pixels_x = XX / gsd_meters_per_pixel_x ' change XX to desired sirwe of cropeed image
+        one_meter_pixels_x = 1 / gsd_meters_per_pixel_x # X m squared area in pixels
+        one_meter_pixels_y = 1 / gsd_meters_per_pixel_y # X m squared area in pixels
 
         crop_left = int(pixel_x - (one_meter_pixels_x / 2))
         crop_top = int(pixel_y - (one_meter_pixels_y / 2))
@@ -194,10 +195,10 @@ def process_image(image_path, df, output_folder):
         print(f"Cropped and saved: {output_crop_path}")
 
 if __name__ == "__main__":
-    image_folder = "../images/riseholme/march_2025/100_feet/"
+    image_folder = "../images/riseholme/august_2024/100_feet/"
     csv_file = "../data/riseholme_vineyard_lat_long_vines.csv"
 
-    output_folder = "../images/output/vines_from_tile_images"
+    output_folder = "../images/output/vines_from_tile_images/1m_square_images/august_2024_100_feet"
     os.makedirs(output_folder, exist_ok=True)
 
     try:

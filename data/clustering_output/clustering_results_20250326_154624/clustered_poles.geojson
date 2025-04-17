@@ -12,7 +12,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 0
+                "confidence": 0.7866740226745605,
+                "cluster_id": 0,
+                "point_count": 36,
+                "avg_distance_km": 0.0005725084345989703,
+                "max_distance_km": 0.0010643825450893066
             }
         },
         {
@@ -26,7 +30,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 1
+                "confidence": 0.6471020579338074,
+                "cluster_id": 1,
+                "point_count": 26,
+                "avg_distance_km": 0.0006407644002682974,
+                "max_distance_km": 0.0014299364209020512
             }
         },
         {
@@ -40,7 +48,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 2
+                "confidence": 0.5379268527030945,
+                "cluster_id": 2,
+                "point_count": 20,
+                "avg_distance_km": 0.0005174782809297502,
+                "max_distance_km": 0.0010401738600651095
             }
         },
         {
@@ -54,7 +66,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 3
+                "confidence": 0.4805179834365845,
+                "cluster_id": 3,
+                "point_count": 24,
+                "avg_distance_km": 0.0005988158789306046,
+                "max_distance_km": 0.0012474182013493874
             }
         },
         {
@@ -68,7 +84,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 4
+                "confidence": 0.761265754699707,
+                "cluster_id": 4,
+                "point_count": 19,
+                "avg_distance_km": 0.0004926055910580536,
+                "max_distance_km": 0.0007903332212752428
             }
         },
         {
@@ -82,7 +102,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 5
+                "confidence": 0.7385063171386719,
+                "cluster_id": 5,
+                "point_count": 18,
+                "avg_distance_km": 0.0004615051541720425,
+                "max_distance_km": 0.0009794885031095557
             }
         },
         {
@@ -96,7 +120,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 6
+                "confidence": 0.6024275422096252,
+                "cluster_id": 6,
+                "point_count": 30,
+                "avg_distance_km": 0.0005556031541212232,
+                "max_distance_km": 0.0010230412845319275
             }
         },
         {
@@ -110,7 +138,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 7
+                "confidence": 0.5918529033660889,
+                "cluster_id": 7,
+                "point_count": 22,
+                "avg_distance_km": 0.0005418064798144329,
+                "max_distance_km": 0.001338897152710877
             }
         },
         {
@@ -124,7 +156,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 8
+                "confidence": 0.558293342590332,
+                "cluster_id": 8,
+                "point_count": 25,
+                "avg_distance_km": 0.0005626539179147214,
+                "max_distance_km": 0.0012261441575241588
             }
         },
         {
@@ -138,7 +174,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 9
+                "confidence": 0.4675179123878479,
+                "cluster_id": 9,
+                "point_count": 31,
+                "avg_distance_km": 0.0005312768396781995,
+                "max_distance_km": 0.0008894448729096594
             }
         },
         {
@@ -152,7 +192,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 10
+                "confidence": 0.742533266544342,
+                "cluster_id": 10,
+                "point_count": 25,
+                "avg_distance_km": 0.0005094084583746743,
+                "max_distance_km": 0.0010400356909583324
             }
         },
         {
@@ -166,7 +210,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 11
+                "confidence": 0.7330084443092346,
+                "cluster_id": 11,
+                "point_count": 14,
+                "avg_distance_km": 0.000531851121595799,
+                "max_distance_km": 0.0010546339219875262
             }
         },
         {
@@ -180,7 +228,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 12
+                "confidence": 0.7265008091926575,
+                "cluster_id": 12,
+                "point_count": 39,
+                "avg_distance_km": 0.0005881544431977063,
+                "max_distance_km": 0.0010788517853500194
             }
         },
         {
@@ -194,7 +246,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 13
+                "confidence": 0.5790247917175293,
+                "cluster_id": 13,
+                "point_count": 15,
+                "avg_distance_km": 0.000496773855025805,
+                "max_distance_km": 0.0008519728495047928
             }
         },
         {
@@ -208,7 +264,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 14
+                "confidence": 0.6775888204574585,
+                "cluster_id": 14,
+                "point_count": 19,
+                "avg_distance_km": 0.00043444576919661807,
+                "max_distance_km": 0.0008326445238706884
             }
         },
         {
@@ -222,7 +282,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 15
+                "confidence": 0.45830869674682617,
+                "cluster_id": 15,
+                "point_count": 6,
+                "avg_distance_km": 0.0003239847344332659,
+                "max_distance_km": 0.0005988663696837049
             }
         },
         {
@@ -236,7 +300,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 16
+                "confidence": 0.7320482134819031,
+                "cluster_id": 16,
+                "point_count": 16,
+                "avg_distance_km": 0.0005317197291353534,
+                "max_distance_km": 0.0012798475914140843
             }
         },
         {
@@ -250,7 +318,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 17
+                "confidence": 0.6114508509635925,
+                "cluster_id": 17,
+                "point_count": 22,
+                "avg_distance_km": 0.000494490138447835,
+                "max_distance_km": 0.0009522424353338395
             }
         },
         {
@@ -264,7 +336,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 18
+                "confidence": 0.5851076245307922,
+                "cluster_id": 18,
+                "point_count": 6,
+                "avg_distance_km": 0.00029772881975027193,
+                "max_distance_km": 0.0005342069441917069
             }
         },
         {
@@ -278,7 +354,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 19
+                "confidence": 0.4568650722503662,
+                "cluster_id": 19,
+                "point_count": 13,
+                "avg_distance_km": 0.0004176137147741971,
+                "max_distance_km": 0.0009108337082931428
             }
         },
         {
@@ -292,7 +372,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 20
+                "confidence": 0.7171163558959961,
+                "cluster_id": 20,
+                "point_count": 18,
+                "avg_distance_km": 0.0005062029830796793,
+                "max_distance_km": 0.0008060635776254955
             }
         },
         {
@@ -306,7 +390,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 21
+                "confidence": 0.44501060247421265,
+                "cluster_id": 21,
+                "point_count": 6,
+                "avg_distance_km": 0.0003933644413839735,
+                "max_distance_km": 0.0007298256598147707
             }
         },
         {
@@ -320,7 +408,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 22
+                "confidence": 0.7039976119995117,
+                "cluster_id": 22,
+                "point_count": 21,
+                "avg_distance_km": 0.0004964058873966089,
+                "max_distance_km": 0.000901724165183615
             }
         },
         {
@@ -334,7 +426,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 23
+                "confidence": 0.6409661769866943,
+                "cluster_id": 23,
+                "point_count": 7,
+                "avg_distance_km": 0.00038221526257990746,
+                "max_distance_km": 0.0005853376255304699
             }
         },
         {
@@ -348,7 +444,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 24
+                "confidence": 0.6097208857536316,
+                "cluster_id": 24,
+                "point_count": 21,
+                "avg_distance_km": 0.0005241725729883543,
+                "max_distance_km": 0.0008357991774227516
             }
         },
         {
@@ -362,7 +462,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 25
+                "confidence": 0.5828611850738525,
+                "cluster_id": 25,
+                "point_count": 29,
+                "avg_distance_km": 0.0005511165204904386,
+                "max_distance_km": 0.000984930819822191
             }
         },
         {
@@ -376,7 +480,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 26
+                "confidence": 0.47766101360321045,
+                "cluster_id": 26,
+                "point_count": 2,
+                "avg_distance_km": 0.00022267367946832245,
+                "max_distance_km": 0.00022267368143437022
             }
         },
         {
@@ -390,7 +498,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 27
+                "confidence": 0.5789371132850647,
+                "cluster_id": 27,
+                "point_count": 26,
+                "avg_distance_km": 0.0005402457756769216,
+                "max_distance_km": 0.0008859719254343891
             }
         },
         {
@@ -404,7 +516,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 28
+                "confidence": 0.750505805015564,
+                "cluster_id": 28,
+                "point_count": 26,
+                "avg_distance_km": 0.0005061385397879258,
+                "max_distance_km": 0.0011067123899673092
             }
         },
         {
@@ -418,7 +534,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 29
+                "confidence": 0.6803243160247803,
+                "cluster_id": 29,
+                "point_count": 5,
+                "avg_distance_km": 0.00033684985522424186,
+                "max_distance_km": 0.000791367193894981
             }
         },
         {
@@ -432,7 +552,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 30
+                "confidence": 0.7416234612464905,
+                "cluster_id": 30,
+                "point_count": 14,
+                "avg_distance_km": 0.0005780259097420247,
+                "max_distance_km": 0.0009706610675052959
             }
         },
         {
@@ -446,7 +570,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 31
+                "confidence": 0.7430070638656616,
+                "cluster_id": 31,
+                "point_count": 9,
+                "avg_distance_km": 0.0005570426285880975,
+                "max_distance_km": 0.0007770258306894106
             }
         },
         {
@@ -460,7 +588,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 32
+                "confidence": 0.7205398082733154,
+                "cluster_id": 32,
+                "point_count": 14,
+                "avg_distance_km": 0.0005062920606178444,
+                "max_distance_km": 0.0007668410945115859
             }
         },
         {
@@ -474,7 +606,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 33
+                "confidence": 0.6476807594299316,
+                "cluster_id": 33,
+                "point_count": 13,
+                "avg_distance_km": 0.000522309104776362,
+                "max_distance_km": 0.0008775684595425216
             }
         },
         {
@@ -488,7 +624,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 34
+                "confidence": 0.6781262755393982,
+                "cluster_id": 34,
+                "point_count": 14,
+                "avg_distance_km": 0.0003914022689361797,
+                "max_distance_km": 0.0008570605393236937
             }
         },
         {
@@ -496,13 +636,17 @@
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    -0.5246137394305931,
-                    53.26816209577781
+                    -0.5246144186613944,
+                    53.26816013892556
                 ]
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 35
+                "confidence": 0.6567709445953369,
+                "cluster_id": 35,
+                "point_count": 6,
+                "avg_distance_km": 0.0003395614556773613,
+                "max_distance_km": 0.0004746521283547289
             }
         },
         {
@@ -516,7 +660,11 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 36
+                "confidence": 0.4992671012878418,
+                "cluster_id": 36,
+                "point_count": 7,
+                "avg_distance_km": 0.00046344155837849165,
+                "max_distance_km": 0.0006175381479551813
             }
         },
         {
@@ -530,8 +678,23 @@
             },
             "properties": {
                 "type": "pole",
-                "pole_id": 37
+                "confidence": 0.5498854517936707,
+                "cluster_id": 37,
+                "point_count": 6,
+                "avg_distance_km": 0.0006010721636061983,
+                "max_distance_km": 0.0008156300408681589
             }
         }
-    ]
+    ],
+    "metadata": {
+        "clustering_info": {
+            "algorithm": "DBSCAN",
+            "eps": 0.8,
+            "min_samples": 2,
+            "metric": "chebyshev",
+            "num_clusters": 38,
+            "num_noise_points": 5,
+            "total_points": 675
+        }
+    }
 }
