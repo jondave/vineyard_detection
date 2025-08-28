@@ -7,7 +7,8 @@ sys.path.append('/home/cabbage/Code/yolov9')
 # Load the API key
 with open('../../config/api_key.json', 'r') as file:
     config = json.load(file)
-ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")    
+ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")
+# ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY_FRE")
 
 rf = roboflow.Roboflow(api_key=ROBOFLOW_API_KEY)
 
@@ -15,7 +16,7 @@ rf = roboflow.Roboflow(api_key=ROBOFLOW_API_KEY)
 project = rf.workspace().project("vineyard_segmentation")
 
 #can specify weights_filename, default is "weights/best.pt"
-version = project.version(11)
+version = project.version(14)
 # version.deploy("yolov9", "/home/cheddar/code/yolov9/runs/train/exp3", "weights/best.pt")
 # version.deploy(model_type="yolov9", model_path=f"/home/cheddar/code/yolov9/runs/train/exp4")
-version.deploy(model_type="yolov11", model_path=f"/home/cheddar/code/vineyard_detection/data/datasets/trained/vineyard_segmentation_v11/run1")
+version.deploy(model_type="yolov11", model_path=f"/home/cheddar/code/vineyard_detection/data/datasets/trained/vineyard_segmentation_v14/run1")

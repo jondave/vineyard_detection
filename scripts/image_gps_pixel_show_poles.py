@@ -251,17 +251,23 @@ def process_image(image_path, gps_points):
     img = Image.open(image_path)
     image_width, image_height = img.size
 
-    # Camera specifications Riseholme # https://enterprise.dji.com/zenmuse-h20-series/specs
-    focal_length_mm = 4.5
-    fov_deg = 73.7
-    sensor_width_mm =  6.17
-    sensor_height_mm = 4.55
+    # # Camera specifications Riseholme # https://enterprise.dji.com/zenmuse-h20-series/specs
+    # focal_length_mm = 4.5
+    # fov_deg = 73.7
+    # sensor_width_mm =  6.17
+    # sensor_height_mm = 4.55
 
     # Camera specifications Outfields drone DJI Mavic 3 Multispectral (M3M) 1/2.3 inch wide sensor
     # focal_length_mm = 12.3
     # fov_deg = 73.7
     # sensor_width_mm = 17.4
     # sensor_height_mm = 13.0
+
+    # Camera specifications Agri tech centre drone P1 camera # https://enterprise.dji.com/zenmuse-p1
+    focal_length_mm = 35.0 # * 0.12
+    fov_deg = 63.5
+    sensor_width_mm = 35.9
+    sensor_height_mm = 24.0
     
     flight_yaw_degree, flight_pitch_degree, flight_roll_degree, gimbal_yaw_degree, gimbal_pitch_degree, gimbal_roll_degree, gps_latitude, gps_longitude, gps_altitude, fov_degrees, focal_length_mm, image_height, image_width = extract_exif(image_path)
 
@@ -331,52 +337,67 @@ def process_image(image_path, gps_points):
         json.dump(geojson_data, json_file, indent=4)
 
 if __name__ == "__main__":
-    image_path = "../images/riseholme/august_2024/39_feet/DJI_20240802143112_0076_W.JPG"
-    gps_points = [
-            (53.26818842,-0.52427737),
-            (53.26813837,-0.52426541),
-            (53.26808856,-0.52425335),
-            (53.26803849,-0.52424047),
-            (53.26818522,-0.52431449),
-            (53.26813509,-0.52430208),
-            (53.26808532,-0.52428968),
-            (53.26803515,-0.52427742),
-            (53.26818187,-0.52435181),
-            (53.26813158,-0.52433952),
-            (53.26808211,-0.52432693),
-            (53.26803182,-0.52431475),
-            (53.26817882,-0.52438866),
-            (53.26812848,-0.52437636),
-            (53.26807903,-0.52436409),
-            (53.26802873,-0.52435185),
-            (53.26817541,-0.52442589),
-            (53.26812517,-0.5244135),
-            (53.26807555,-0.5244011),
-            (53.2680255,-0.52438878),
-            (53.26817238,-0.52446323),
-            (53.26812194,-0.52445077),
-            (53.26807253,-0.52443819),
-            (53.26802228,-0.52442619),
-            (53.26816928,-0.52449965),
-            (53.26811864,-0.52448766),
-            (53.26806932,-0.52447579),
-            (53.26801926,-0.52446331),
-            (53.26816599,-0.52453691),
-            (53.26811528,-0.5245244),
-            (53.26806603,-0.52451219),
-            (53.26801591,-0.52449999),
-            (53.26816264,-0.52457417),
-            (53.2681122,-0.52456217),
-            (53.26806294,-0.52454963),
-            (53.26801275,-0.52453719),
-            (53.26815947,-0.52461139),
-            (53.26810906,-0.52459885),
-            (53.26805976,-0.52458653),
-            (53.26800959,-0.52457471)#,
+    # image_path = "../images/riseholme/august_2024/39_feet/DJI_20240802143112_0076_W.JPG"
+    # image_path = "../images/agri_tech_centre/jojo/DJI_20250331152541_0196.JPG"
+    image_path = "../images/agri_tech_centre/jojo/DJI_20250331160730_0594.JPG"
 
-            #(53.26815, -0.524575), # centre of image to check if it is correct
-            #(53.268175184088804, -0.5245453595031128) # random point
-    ]
+    # Load the uploaded GeoJSON file
+    geojson_path = "../data/Detected_PostPositions_UTM_shifted.geojson"
+    with open(geojson_path, "r") as f:
+        geojson_data = json.load(f)
+
+    # Extract coordinates from the GeoJSON features
+    gps_points = []
+    for feature in geojson_data["features"]:
+        coords = feature["geometry"]["coordinates"]
+        # Assuming coordinates are in (lon, lat) and we want (lat, lon)
+        gps_points.append((coords[1], coords[0]))
+
+    # gps_points = [
+    #         (53.26818842,-0.52427737),
+    #         (53.26813837,-0.52426541),
+    #         (53.26808856,-0.52425335),
+    #         (53.26803849,-0.52424047),
+    #         (53.26818522,-0.52431449),
+    #         (53.26813509,-0.52430208),
+    #         (53.26808532,-0.52428968),
+    #         (53.26803515,-0.52427742),
+    #         (53.26818187,-0.52435181),
+    #         (53.26813158,-0.52433952),
+    #         (53.26808211,-0.52432693),
+    #         (53.26803182,-0.52431475),
+    #         (53.26817882,-0.52438866),
+    #         (53.26812848,-0.52437636),
+    #         (53.26807903,-0.52436409),
+    #         (53.26802873,-0.52435185),
+    #         (53.26817541,-0.52442589),
+    #         (53.26812517,-0.5244135),
+    #         (53.26807555,-0.5244011),
+    #         (53.2680255,-0.52438878),
+    #         (53.26817238,-0.52446323),
+    #         (53.26812194,-0.52445077),
+    #         (53.26807253,-0.52443819),
+    #         (53.26802228,-0.52442619),
+    #         (53.26816928,-0.52449965),
+    #         (53.26811864,-0.52448766),
+    #         (53.26806932,-0.52447579),
+    #         (53.26801926,-0.52446331),
+    #         (53.26816599,-0.52453691),
+    #         (53.26811528,-0.5245244),
+    #         (53.26806603,-0.52451219),
+    #         (53.26801591,-0.52449999),
+    #         (53.26816264,-0.52457417),
+    #         (53.2681122,-0.52456217),
+    #         (53.26806294,-0.52454963),
+    #         (53.26801275,-0.52453719),
+    #         (53.26815947,-0.52461139),
+    #         (53.26810906,-0.52459885),
+    #         (53.26805976,-0.52458653),
+    #         (53.26800959,-0.52457471)#,
+
+    #         #(53.26815, -0.524575), # centre of image to check if it is correct
+    #         #(53.268175184088804, -0.5245453595031128) # random point
+    # ]
         
     # image_path = "../images/outfields/jojo/topdown/DJI_20240618142122_0258_D.JPG"
 

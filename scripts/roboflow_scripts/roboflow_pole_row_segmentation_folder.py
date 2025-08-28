@@ -329,16 +329,17 @@ def detect_poles_and_vine_rows(image_file, model, confidence, sensor_width_mm, s
 
         # # Load detections and annotate the image
         # detections = sv.Detections.from_inference(results)
-        # mask_annotator = sv.MaskAnnotator()
-        # label_annotator = sv.LabelAnnotator()
+        # if len(detections) > 0:
+        #     mask_annotator = sv.MaskAnnotator()
+        #     label_annotator = sv.LabelAnnotator()
 
-        # annotated_image = mask_annotator.annotate(scene=image, detections=detections)
-        # annotated_image = label_annotator.annotate(scene=annotated_image, detections=detections)
+        #     annotated_image = mask_annotator.annotate(scene=image, detections=detections)
+        #     annotated_image = label_annotator.annotate(scene=annotated_image, detections=detections)
 
-        # # Save the annotated image
-        # filename = os.path.basename(image_file)
-        # cv2.imwrite(f"../../images/output/row_detection/annotated_{filename}", annotated_image)
-        # print(f"Annotated image saved to: ../../images/output/row_detection/annotated_{filename}")
+        #     # Save the annotated image
+        #     filename = os.path.basename(image_file)
+        #     cv2.imwrite(f"../../images/output/row_detection/annotated_{filename}", annotated_image)
+        #     print(f"Annotated image saved to: ../../images/output/row_detection/annotated_{filename}")
 
         return all_pole_coordinates, all_vine_row_coordinates
 
@@ -349,11 +350,18 @@ if __name__ == "__main__":
     # image_folder="../../images/riseholme/march_2025/39_feet/" # Riseholme
     # image_folder="../../images/riseholme/march_2025/65_feet/" # Riseholme
     # image_folder="../../images/riseholme/march_2025/100_feet/" # Riseholme
+
     # image_folder="../../images/jojo/agri_tech_centre/RX1RII/"
+
     # image_folder="../../images/outfields/wraxall/topdown/rgb/"
     # image_folder="../../images/outfields/jojo/topdown/"
     # image_folder="../../images/outfields/jojo/high_altitude_oblique/"
     # image_folder="../../images/outfields/jojo/low_altitude_side_view/"
+
+    # image_folder="../../images/agri_tech_centre/jojo/"
+    # image_folder="../../images/agri_tech_centre/arun_1/"
+    # image_folder="../../images/agri_tech_centre/arun_2/"
+    # image_folder="../../images/agri_tech_centre/coolhurst/"
 
     output_folder = "../../data/"
     
@@ -362,17 +370,23 @@ if __name__ == "__main__":
     confidence=0.4
 
     # Camera specifications Riseholme # https://enterprise.dji.com/zenmuse-h20-series/specs
-    focal_length_mm = 4.5
-    fov_deg = 73.7
-    sensor_width_mm =  6.17
-    sensor_height_mm = 4.55
-+
-    # Camera specifications Agri tech centre jojo drone # https://www.sony.co.uk/electronics/cyber-shot-compact-cameras/dsc-rx1rm2
+    # focal_length_mm = 4.5
+    # fov_deg = 73.7
+    # sensor_width_mm =  6.17
+    # sensor_height_mm = 4.55
+
+    # # Camera specifications Agri tech centre jojo drone # https://www.sony.co.uk/electronics/cyber-shot-compact-cameras/dsc-rx1rm2
     # focal_length_mm = 35.0 # * 0.12
     # fov_deg = 54.4
     # sensor_width_mm = 35.9
     # sensor_height_mm = 24.0
 
+    # Camera specifications Agri tech centre drone P1 camera # https://enterprise.dji.com/zenmuse-p1
+    focal_length_mm = 35.0 # * 0.12
+    fov_deg = 63.5
+    sensor_width_mm = 35.9
+    sensor_height_mm = 24.0
+    
     # Camera specifications Outfields drone DJI Mavic 3 Multispectral (M3M) 1/2.3 inch wide sensor
     # focal_length_mm = 12.3
     # fov_deg = 73.7

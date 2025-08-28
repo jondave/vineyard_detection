@@ -3,6 +3,15 @@
 /config
 /yolov5-env
 /yolov9-env
+/resnet18-env
 /weights
 /data/datasets
 *.pyc
+*.jpg
+*.JPG
+*.png
+*.PNG
+*.pth
+*.PTH
+*.pt
+*.PH
