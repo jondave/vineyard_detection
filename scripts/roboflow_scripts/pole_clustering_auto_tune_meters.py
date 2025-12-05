@@ -323,8 +323,11 @@ if __name__ == "__main__":
     os.makedirs(output_dir, exist_ok=True)
     
     # input_file = "../../data/riseholme/detected_pole_coordinates.geojson"
-    input_file = "../../data/detected_pole_coordinates.geojson"
-    output_file = f"{output_dir}/clustered_poles.geojson"
+    # input_file = "../../data/detected_pole_coordinates.geojson"
+    # output_file = f"{output_dir}/clustered_poles.geojson"
+
+    input_file = "../../data/jojo/detected_pole_coordinates.geojson"
+    output_file = "../../data/jojo/clustered_poles.geojson"
     
     # Load input GeoJSON
     with open(input_file, "r") as file:

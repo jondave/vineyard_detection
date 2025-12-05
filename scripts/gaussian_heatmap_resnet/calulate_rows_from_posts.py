@@ -23,12 +23,18 @@ def process_vineyard_data_with_labelled_ends(all_posts_data, end_posts_data):
     end_posts = end_posts_data['features']
     row_endpoints = {}
     
-    # Group the end posts by their row number
+    # Group the end posts by their row number. Ensure row_num is always a string.
+    # for post in end_posts:
+    #     row_num = str(post['properties']['Row'])  # Convert the row number to a string
+    #     if row_num not in row_endpoints:
+    #         row_endpoints[row_num] = []
+    #     row_endpoints[row_num].append(post['geometry']['coordinates'])
+
     for post in end_posts:
-        row_num = post['properties']['Row']
+        row_num = str(post['properties']['Row'])
         if row_num not in row_endpoints:
             row_endpoints[row_num] = []
-        row_endpoints[row_num].append(post['geometry']['coordinates'])
+        row_endpoints[row_num].append(post['geometry']['coordinates'][:2])
     
     # Calculate direction vectors for each labeled row and find the average vector
     direction_vectors = []
@@ -54,7 +60,8 @@ def process_vineyard_data_with_labelled_ends(all_posts_data, end_posts_data):
     perpendicular_vector = np.array([-avg_direction_vector[1], avg_direction_vector[0]])
     
     # 2. Map all posts to the closest labeled row
-    all_posts = [feature['geometry']['coordinates'] for feature in all_posts_data['features']]
+    # all_posts = [feature['geometry']['coordinates'] for feature in all_posts_data['features']]
+    all_posts = [feature['geometry']['coordinates'][:2] for feature in all_posts_data['features']]
     
     # Calculate the projection for each known row's center point
     row_projections = {}
@@ -69,7 +76,8 @@ def process_vineyard_data_with_labelled_ends(all_posts_data, end_posts_data):
     posts_grouped_by_row = {row_num: [] for row_num in row_endpoints.keys()}
     
     for post_coord in all_posts:
-        post_proj = np.dot(np.array(post_coord), perpendicular_vector)
+        # post_proj = np.dot(np.array(post_coord), perpendicular_vector)
+        post_proj = np.dot(np.array(post_coord[:2]), perpendicular_vector)
         
         # Find the closest known row projection by minimizing the absolute difference
         closest_proj = min(row_projections.keys(), key=lambda p: abs(p - post_proj))
@@ -81,11 +89,12 @@ def process_vineyard_data_with_labelled_ends(all_posts_data, end_posts_data):
     sorted_row_numbers = sorted(posts_grouped_by_row.keys())
     output_features = []
     
-    for row_number in sorted_row_numbers:
-        row_points = posts_grouped_by_row[row_number]
+    for row_number_str in sorted_row_numbers:
+        row_points = posts_grouped_by_row[row_number_str]
         
         # Sort points within the row along the direction of the row itself.
-        row_points_sorted = sorted(row_points, key=lambda p: np.dot(np.array(p), avg_direction_vector))
+        # row_points_sorted = sorted(row_points, key=lambda p: np.dot(np.array(p), avg_direction_vector))
+        row_points_sorted = sorted(row_points, key=lambda p: np.dot(np.array(p[:2]), avg_direction_vector))
         
         line_string = {
             "type": "Feature",
@@ -94,7 +103,7 @@ def process_vineyard_data_with_labelled_ends(all_posts_data, end_posts_data):
                 "coordinates": row_points_sorted
             },
             "properties": {
-                "row_number": f"{row_number:02d}"
+                "row_number": f"{int(row_number_str):02d}"  # Use the original row number
             }
         }
         output_features.append(line_string)
@@ -108,7 +117,7 @@ def process_vineyard_data_with_labelled_ends(all_posts_data, end_posts_data):
                     "coordinates": point
                 },
                 "properties": {
-                    "row_number": f"{row_number:02d}"
+                    "row_number": f"{int(row_number_str):02d}"
                 }
             })
             
@@ -122,8 +131,12 @@ def process_vineyard_data_with_labelled_ends(all_posts_data, end_posts_data):
 # Main script execution
 if __name__ == "__main__":
     # Define file paths
-    all_posts_file = '../../ground_truth/jojo/jojo_lidar_posts.geojson'
-    end_posts_file = '../../ground_truth/jojo/jojo_end_posts_labelled.geojson'
+    # all_posts_file = '../../ground_truth/jojo/jojo_lidar_posts.geojson'
+    # end_posts_file = '../../ground_truth/jojo/jojo_end_posts_labelled.geojson'
+    # output_file_name = '../../ground_truth/vine_rows_from_ends.geojson'
+    
+    all_posts_file = '../../ground_truth/coolhurst/other/south_block/coolhurst_lidar_posts_south_west_block.geojson'
+    end_posts_file = '../../ground_truth/coolhurst/other/south_block/coolhurst_end_posts_south_west_block_labelled.geojson'
     output_file_name = '../../ground_truth/vine_rows_from_ends.geojson'
     
     # Check if necessary files exist

@@ -72,8 +72,11 @@ def cluster_poles(geojson_data, eps=2, min_samples=3, metric="chebyshev", target
     return clustered_geojson
 
 if __name__ == "__main__":
-    input_file = "../../data/detected_pole_coordinates.geojson"
-    output_file = "../../data/clustered_poles.geojson"
+    # input_file = "../../data/detected_pole_coordinates.geojson"
+    # output_file = "../../data/clustered_poles.geojson"
+
+    input_file = "../../data/jojo/detected_pole_coordinates.geojson"
+    output_file = "../../data/jojo/clustered_poles.geojson"
     
     # Load input GeoJSON
     with open(input_file, "r") as file:

@@ -72,32 +72,18 @@ class UNetWithResnet18(nn.Module):
 
 # --- Custom Dataset Class (with deterministic augmentation) ---
 class VineyardDataset(Dataset):
-    def __init__(self, image_dir, mask_dir, image_size=(512, 512), threshold=0.5):
-        self.image_dir = image_dir
-        self.mask_dir = mask_dir
+    def __init__(self, all_image_paths, all_mask_map, image_size=(512, 512), threshold=0.5):
         self.image_size = image_size
         self.threshold = threshold
         
-        original_image_paths = []
-        original_image_filenames = []
-        for root, _, files in os.walk(image_dir):
-            for file in files:
-                if file.lower().endswith(('.jpg', '.jpeg', '.png')):
-                    original_image_paths.append(os.path.join(root, file))
-                    original_image_filenames.append(file)
+        self.post_mask_map = all_mask_map
         
-        self.post_mask_map = {}
-        for root, _, files in os.walk(mask_dir):
-            for file in files:
-                if file.startswith("posts_mask_"):
-                    original_image_name = file.replace("posts_mask_", "")
-                    self.post_mask_map[original_image_name] = os.path.join(root, file)
-
         self.image_paths = []
         self.image_filenames = []
         self.transforms = []
 
-        for original_path, original_name in zip(original_image_paths, original_image_filenames):
+        for original_path in all_image_paths:
+            original_name = os.path.basename(original_path)
             for rotation in [0, 90, 180, 270]:
                 self.image_paths.append(original_path)
                 self.image_filenames.append(original_name)
@@ -142,7 +128,13 @@ class VineyardDataset(Dataset):
 if __name__ == "__main__":
     # IMAGE_FOLDER = "../../images/riseholme/august_2024/"
     # IMAGE_FOLDER = "../../images/riseholme/march_2025/"
-    IMAGE_FOLDER = "../../images/riseholme/"
+    # IMAGE_FOLDER = "../../images/riseholme/"
+
+    # 1. Define all image and mask folder paths
+    IMAGE_FOLDERS = [
+        "../../images/riseholme/",
+        "../../images/agri_tech_centre/jojo/"
+    ]
     MASK_FOLDER = "./heatmap_masks/"
 
     BATCH_SIZE = 8
@@ -153,6 +145,30 @@ if __name__ == "__main__":
     # PATIENCE is now part of the scheduler
     # The early stopping logic will be based on a new counter
     PATIENCE = 60
+
+    # 2. Consolidate image and mask paths from all specified folders
+    all_image_paths = []
+    for image_folder in IMAGE_FOLDERS:
+        for root, _, files in os.walk(image_folder):
+            for file in files:
+                if file.lower().endswith(('.jpg', '.jpeg', '.png')):
+                    all_image_paths.append(os.path.join(root, file))
+
+    all_mask_map = {}
+    for root, _, files in os.walk(MASK_FOLDER):
+        for file in files:
+            if file.startswith("posts_mask_"):
+                original_image_name = file.replace("posts_mask_", "")
+                all_mask_map[original_image_name] = os.path.join(root, file)
+
+    print(f"Found {len(all_image_paths)} images across all folders.")
+    
+    # 3. Create the dataset with the consolidated lists
+    full_dataset = VineyardDataset(
+        all_image_paths=all_image_paths, 
+        all_mask_map=all_mask_map, 
+        image_size=IMAGE_SIZE
+    )
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
@@ -164,7 +180,6 @@ if __name__ == "__main__":
     # --- Initialize the scheduler ---
     scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=5)
     
-    full_dataset = VineyardDataset(image_dir=IMAGE_FOLDER, mask_dir=MASK_FOLDER, image_size=IMAGE_SIZE)
     train_size = int(0.8 * len(full_dataset))
     val_size = len(full_dataset) - train_size
     train_dataset, val_dataset = random_split(full_dataset, [train_size, val_size])

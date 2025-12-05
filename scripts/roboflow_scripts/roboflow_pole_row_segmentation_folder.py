@@ -370,10 +370,10 @@ if __name__ == "__main__":
     confidence=0.4
 
     # Camera specifications Riseholme # https://enterprise.dji.com/zenmuse-h20-series/specs
-    # focal_length_mm = 4.5
-    # fov_deg = 73.7
-    # sensor_width_mm =  6.17
-    # sensor_height_mm = 4.55
+    focal_length_mm = 4.5
+    fov_deg = 73.7
+    sensor_width_mm =  6.17
+    sensor_height_mm = 4.55
 
     # # Camera specifications Agri tech centre jojo drone # https://www.sony.co.uk/electronics/cyber-shot-compact-cameras/dsc-rx1rm2
     # focal_length_mm = 35.0 # * 0.12
@@ -381,11 +381,11 @@ if __name__ == "__main__":
     # sensor_width_mm = 35.9
     # sensor_height_mm = 24.0
 
-    # Camera specifications Agri tech centre drone P1 camera # https://enterprise.dji.com/zenmuse-p1
-    focal_length_mm = 35.0 # * 0.12
-    fov_deg = 63.5
-    sensor_width_mm = 35.9
-    sensor_height_mm = 24.0
+    # # Camera specifications Agri tech centre drone P1 camera # https://enterprise.dji.com/zenmuse-p1
+    # focal_length_mm = 35.0 # * 0.12
+    # fov_deg = 63.5
+    # sensor_width_mm = 35.9
+    # sensor_height_mm = 24.0
     
     # Camera specifications Outfields drone DJI Mavic 3 Multispectral (M3M) 1/2.3 inch wide sensor
     # focal_length_mm = 12.3

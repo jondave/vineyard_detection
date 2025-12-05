@@ -83,14 +83,14 @@ def detect_poles_and_vine_rows(image_file, model, geojson_data_poles, geojson_da
     return geojson_data_poles, geojson_data_poles_clustered, geojson_data_vine_rows
 
 if __name__ == "__main__":
-    # image_file = "../../images/orthophoto/39_feet/odm_orthophoto.tif"
+    image_file = "../../images/orthophoto/39_feet/odm_orthophoto.tif"
     # image_file = "../../images/orthophoto/65_feet/odm_orthophoto.tif"
     # image_file = "../../images/orthophoto/100_feet/odm_orthophoto.tif"
     # image_file = "../../images/orthophoto/jojo/agri_tech_centre/winter_2022/Vineyard_RGB_transparent_mosaic_group1.tif"
     # image_file = "../../images/orthophoto/outfields/wraxall/topdown/odm_orthophoto.tif"
-    image_file = "../../images/orthophoto/outfields/jojo/topdown/odm_orthophoto.tif"
+    # image_file = "../../images/orthophoto/outfields/jojo/topdown/odm_orthophoto.tif"
 
-    output_folder = "../../data/"
+    output_folder = "../../data/riseholme/orthophoto/39_feet/"
     api_key_file = '../../config/api_key.json'
     model_id="vineyard_segmentation/11"
     

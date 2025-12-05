@@ -67,7 +67,7 @@ class UNetWithResnet18(nn.Module):
 
 # --- Main Inference Script (background + post) ---
 if __name__ == "__main__":
-    MODEL_PATH = "./models/riseholme/august_2024_march_2025/all_altitudes/posts_rows_background/augmentation/vineyard_detection_model_posts_background_image_size_1280x960_batch_size_8_epochs_66.pth"
+    MODEL_PATH = "./models/patch_images/vineyard_detection_model_posts_rows_background_image_size_800x800_batch_size_4_epochs_50.pth"
     # NEW_IMAGE_PATH = "../../images/riseholme/august_2024/39_feet/DJI_20240802142923_0025_W.JPG"
     # NEW_IMAGE_PATH = "../../images/riseholme/march_2025/39_feet/DJI_20250310145027_0078_W.JPG"
     NEW_IMAGE_PATH = "../../images/riseholme/august_2024/65_feet/DJI_20240802140739_0043_W.JPG"

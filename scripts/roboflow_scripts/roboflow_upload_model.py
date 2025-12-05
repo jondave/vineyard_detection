@@ -16,7 +16,7 @@ rf = roboflow.Roboflow(api_key=ROBOFLOW_API_KEY)
 project = rf.workspace().project("vineyard_segmentation")
 
 #can specify weights_filename, default is "weights/best.pt"
-version = project.version(14)
+version = project.version(20)
 # version.deploy("yolov9", "/home/cheddar/code/yolov9/runs/train/exp3", "weights/best.pt")
 # version.deploy(model_type="yolov9", model_path=f"/home/cheddar/code/yolov9/runs/train/exp4")
-version.deploy(model_type="yolov11", model_path=f"/home/cheddar/code/vineyard_detection/data/datasets/trained/vineyard_segmentation_v14/run1")
+version.deploy(model_type="yolov11", model_path=f"/home/cheddar/code/vineyard_detection/data/datasets/trained/vineyard_segmentation-20/run1")

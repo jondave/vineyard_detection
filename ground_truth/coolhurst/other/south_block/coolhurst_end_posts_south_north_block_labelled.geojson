@@ -1,0 +1,18 @@
+{
+"type": "FeatureCollection",
+"name": "coolhurst_end_posts_south_block_labelled",
+"features": [
+{ "type": "Feature", "id": 468, "properties": { "Row": 235 }, "geometry": { "type": "Point", "coordinates": [ -0.295432, 51.051977 ] } },
+{ "type": "Feature", "id": 469, "properties": { "Row": 235 }, "geometry": { "type": "Point", "coordinates": [ -0.29525, 51.051643 ] } },
+{ "type": "Feature", "id": 470, "properties": { "Row": 236 }, "geometry": { "type": "Point", "coordinates": [ -0.295403, 51.051984 ] } },
+{ "type": "Feature", "id": 471, "properties": { "Row": 236 }, "geometry": { "type": "Point", "coordinates": [ -0.295219, 51.051649 ] } },
+{ "type": "Feature", "id": 472, "properties": { "Row": 237 }, "geometry": { "type": "Point", "coordinates": [ -0.295372, 51.051988 ] } },
+{ "type": "Feature", "id": 473, "properties": { "Row": 237 }, "geometry": { "type": "Point", "coordinates": [ -0.295189, 51.051655 ] } },
+{ "type": "Feature", "id": 474, "properties": { "Row": 238 }, "geometry": { "type": "Point", "coordinates": [ -0.295344, 51.051996 ] } },
+{ "type": "Feature", "id": 475, "properties": { "Row": 238 }, "geometry": { "type": "Point", "coordinates": [ -0.295158, 51.051661 ] } },
+{ "type": "Feature", "id": 476, "properties": { "Row": 239 }, "geometry": { "type": "Point", "coordinates": [ -0.295314, 51.052002 ] } },
+{ "type": "Feature", "id": 477, "properties": { "Row": 239 }, "geometry": { "type": "Point", "coordinates": [ -0.295129, 51.051668 ] } },
+{ "type": "Feature", "id": 478, "properties": { "Row": 240 }, "geometry": { "type": "Point", "coordinates": [ -0.295285, 51.052008 ] } },
+{ "type": "Feature", "id": 479, "properties": { "Row": 240 }, "geometry": { "type": "Point", "coordinates": [ -0.295099, 51.051674 ] } }
+]
+}

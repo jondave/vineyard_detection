@@ -22,12 +22,12 @@ import json
 # Load the API key
 with open('../../config/api_key.json', 'r') as file:
     config = json.load(file)
-ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")  
+ROBOFLOW_API_KEY = config.get("ROBOFLOW_API_KEY")
 
 rf = Roboflow(api_key=ROBOFLOW_API_KEY)
 # project = rf.workspace().project("vineyard_test")
 project = rf.workspace("vista-qsopb").project("vineyard_segmentation")
-version = project.version(14)
+version = project.version(22)
 
 # Download dataset in YOLO format
 dataset = version.download("yolov11")
