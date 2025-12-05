@@ -7,24 +7,24 @@ from PIL import Image, ImageDraw, ImageFilter
 import cv2
 
 # --- User-Provided Information ---
-# image_folder = "../../images/riseholme/march_2025/100_feet/"
-# geojson_file_path = "../../ground_truth/riseholme/riseholme_pole_locations.geojson"
-# output_folder = "./heatmap_masks/riseholme/march_2025/100_feet/"
+image_folder = "../../images/riseholme/july_2025/100_feet/"
+geojson_file_path = "../../ground_truth/riseholme/riseholme_pole_locations.geojson"
+output_folder = "./heatmap_masks/riseholme/july_2025/100_feet/"
 
-image_folder = "../../images/agri_tech_centre/jojo/"
-geojson_file_path = "../../ground_truth/jojo/jojo_pole_locations.geojson"
-output_folder = "./heatmap_masks/agri_tech_centre/jojo/"
+# image_folder = "../../images/agri_tech_centre/jojo/"
+# geojson_file_path = "../../ground_truth/jojo/jojo_pole_locations.geojson"
+# output_folder = "./heatmap_masks/agri_tech_centre/jojo/"
 
 # --- Flag to save mask images overlaid on input images ---
 SAVE_OVERLAY_IMAGE = True
-overlay_output_folder = "./annotated_images/agri_tech_centre/jojo/"
+overlay_output_folder = "./annotated_images/riseholme/july_2025/100_feet/"
 
 # # 39 feet altitude image
 # # --- Base values for mask sizes at the image center ---
-# POST_RADIUS_BASE = 75    # Radius for post markers at the center
-# ROW_WIDTH_BASE = 125     # Width of the rows at the center
-# BLUR_RADIUS_POST = 50    # Base blur radius for post heatmaps
-# BLUR_RADIUS_ROW = 100    # Base blur radius for row heatmaps
+# POST_RADIUS_BASE = 75   # Radius for post markers at the center
+# ROW_WIDTH_BASE = 125    # Width of the rows at the center
+# BLUR_RADIUS_POST = 50   # Base blur radius for post heatmaps
+# BLUR_RADIUS_ROW = 100   # Base blur radius for row heatmaps
 
 # # 65 feet altitude image
 # # --- Base values for mask sizes at the image center ---

@@ -10,16 +10,11 @@ import pandas as pd
 # CONFIGURATION
 # ==========================================================
 IMAGE_DIRS = [
-    "../../images/riseholme/august_2024/39_feet",
-    "../../images/riseholme/august_2024/65_feet",
-    "../../images/riseholme/august_2024/100_feet",
-    "../../images/riseholme/march_2025/39_feet",
-    "../../images/riseholme/march_2025/65_feet",
-    "../../images/riseholme/march_2025/100_feet"
+    "../../images/agri_tech_centre/arun_1"
 ]
 
-MASK_BASE = "heatmap_masks/riseholme"
-OUTPUT_BASE = "dataset_gps_masks/riseholme"
+MASK_BASE = "terrain_aware_mask_gen/agri_tech_centre/arun_1"
+OUTPUT_BASE = "dataset_terrain_aware_mask_gen/agri_tech_centre/arun_1"
 
 PATCH_SIZES = [(960, 1280), (480, 640)] # (height, width)
 OVERLAP = 0.2  # 20% overlap
@@ -106,13 +101,30 @@ def copy_full_res(images, subset):
 
         # Copy associated masks
         for mask_type, out_dir in zip(MASK_TYPES, [posts_dir, rows_dir, vine_dir]):
-            mask_path = img_path.replace("../../images", "heatmap_masks").replace(
-                "DJI_", f"{mask_type}_mask_DJI_"
-            )
-            if os.path.exists(mask_path):
-                shutil.copy(mask_path, os.path.join(out_dir, os.path.basename(mask_path)))
-            else:
-                print(f"[WARN] Missing mask for {mask_type}: {mask_path}")
+            # Try multiple naming conventions and extensions in both mask directories
+            base_name = os.path.basename(img_path)
+            
+            # Try different patterns (both mask directory locations)
+            patterns = [
+                img_path.replace("../../images", "terrain_aware_mask_gen/heatmap_masks").replace("DJI_", f"{mask_type}_mask_DJI_"),
+                img_path.replace("../../images", "terrain_aware_mask_gen/heatmap_masks").replace("DJI_", f"{mask_type}_DJI_"),
+                img_path.replace("../../images", "terrain_aware_mask_gen/heatmap_masks").replace("DJI_", f"{mask_type}_mask_DJI_").replace(".JPG", ".png"),
+                img_path.replace("../../images", "terrain_aware_mask_gen/heatmap_masks").replace("DJI_", f"{mask_type}_DJI_").replace(".JPG", ".png"),
+                img_path.replace("../../images", "heatmap_masks").replace("DJI_", f"{mask_type}_mask_DJI_"),
+                img_path.replace("../../images", "heatmap_masks").replace("DJI_", f"{mask_type}_DJI_"),
+                img_path.replace("../../images", "heatmap_masks").replace("DJI_", f"{mask_type}_mask_DJI_").replace(".JPG", ".png"),
+                img_path.replace("../../images", "heatmap_masks").replace("DJI_", f"{mask_type}_DJI_").replace(".JPG", ".png"),
+            ]
+            
+            mask_found = False
+            for mask_path in patterns:
+                if os.path.exists(mask_path):
+                    shutil.copy(mask_path, os.path.join(out_dir, os.path.basename(mask_path)))
+                    mask_found = True
+                    break
+            
+            if not mask_found:
+                print(f"[WARN] Missing mask for {mask_type}: {base_name}")
 
 
 # ==========================================================
@@ -168,10 +180,25 @@ def create_patched_dataset(images, patch_size, subset):
 
             # Save masks
             for mask_type, out_dir in zip(MASK_TYPES, [posts_dir, rows_dir, vine_dir]):
-                mask_path = img_path.replace("../../images", "heatmap_masks").replace(
-                    "DJI_", f"{mask_type}_mask_DJI_"
-                )
-                if os.path.exists(mask_path):
+                # Try multiple naming conventions and extensions in both mask directories
+                patterns = [
+                    img_path.replace("../../images", "terrain_aware_mask_gen/heatmap_masks").replace("DJI_", f"{mask_type}_mask_DJI_"),
+                    img_path.replace("../../images", "terrain_aware_mask_gen/heatmap_masks").replace("DJI_", f"{mask_type}_DJI_"),
+                    img_path.replace("../../images", "terrain_aware_mask_gen/heatmap_masks").replace("DJI_", f"{mask_type}_mask_DJI_").replace(".JPG", ".png"),
+                    img_path.replace("../../images", "terrain_aware_mask_gen/heatmap_masks").replace("DJI_", f"{mask_type}_DJI_").replace(".JPG", ".png"),
+                    img_path.replace("../../images", "heatmap_masks").replace("DJI_", f"{mask_type}_mask_DJI_"),
+                    img_path.replace("../../images", "heatmap_masks").replace("DJI_", f"{mask_type}_DJI_"),
+                    img_path.replace("../../images", "heatmap_masks").replace("DJI_", f"{mask_type}_mask_DJI_").replace(".JPG", ".png"),
+                    img_path.replace("../../images", "heatmap_masks").replace("DJI_", f"{mask_type}_DJI_").replace(".JPG", ".png"),
+                ]
+                
+                mask_path = None
+                for p in patterns:
+                    if os.path.exists(p):
+                        mask_path = p
+                        break
+                
+                if mask_path and os.path.exists(mask_path):
                     mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
                     if mask is None:
                         continue
