@@ -1,0 +1,30 @@
+{
+  "image_path": "../../images/riseholme/august_2024/100_feet/DJI_20240802142146_0015_W.JPG",
+  "image_filename": "100_feet/DJI_20240802142146_0015_W.JPG",
+  "gcps": [
+    {
+      "pixel_x": 1382,
+      "pixel_y": 2717,
+      "gps_lat": 53.26799377,
+      "gps_lon": -0.524593067,
+      "label": "Control Point 3",
+      "elevation": 83.97875
+    },
+    {
+      "pixel_x": 1190,
+      "pixel_y": 644,
+      "gps_lat": 53.2681784,
+      "gps_lon": -0.524652258,
+      "label": "Control Point 2",
+      "elevation": 85.51847
+    },
+    {
+      "pixel_x": 3855,
+      "pixel_y": 591,
+      "gps_lat": 53.26821989,
+      "gps_lon": -0.524252789,
+      "label": "Control Point 4",
+      "elevation": 84.78154407
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "image_path": "../../images/riseholme/august_2024/65_feet/DJI_20240802140934_0103_W.JPG",
+  "image_filename": "65_feet/DJI_20240802140934_0103_W.JPG",
+  "gcps": [
+    {
+      "pixel_x": 2426,
+      "pixel_y": 1425,
+      "gps_lat": 53.26821989,
+      "gps_lon": -0.524252789,
+      "label": "Control Point 4",
+      "elevation": 84.78154407
+    }
+  ]
+}

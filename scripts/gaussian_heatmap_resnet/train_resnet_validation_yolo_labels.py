@@ -18,17 +18,17 @@ import yaml
 # =======================
 # CONFIGURATION
 # =======================
-DATASET_ROOT = "heatmap_masks_from_yolo_labels/vineyard_segmentation_20"
-BACKBONE = "resnet18"  # options: "resnet18" or "resnet50"
-MODEL_OUTPUT_PATH = f"{BACKBONE}_vineyard_segmentation_20_unet_image_size_2028x1520_batch_size_2.pth"
+DATASET_ROOT = "heatmap_masks_from_yolo_labels/vineyard_segmentation_paper_1"
+BACKBONE = "resnet101"  # options: "resnet18" or "resnet50" or "resnet101"
+MODEL_OUTPUT_PATH = f"{BACKBONE}_vineyard_segmentation_paper_1_unet_image_size_640x480_batch_size_2.pth"
 
 BATCH_SIZE = 2
 LEARNING_RATE = 0.0001
 NUM_EPOCHS = 100
-IMAGE_SIZE = (2028, 1520) # (width, height)
+# IMAGE_SIZE = (2028, 1520) # (width, height)
 # IMAGE_SIZE = (1014, 760) # (width, height)
 # IMAGE_SIZE = (1280, 960) # (width, height)
-# IMAGE_SIZE = (640, 480) # (width, height)
+IMAGE_SIZE = (640, 480) # (width, height)
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 EARLY_STOPPING_PATIENCE = 20
 NUM_CLASSES = 4
@@ -36,7 +36,7 @@ CLASS_NAMES = ["background", "pole", "trunk", "vine_row"]
 
 # --- Metrics logging setup ---
 RUN_NAME = f"train_{BACKBONE}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-RESULTS_DIR = os.path.join("results_resnet/yolo_masks", RUN_NAME)
+RESULTS_DIR = os.path.join("results_resnet/yolo_masks/vineyard_segmentation_paper_1/", RUN_NAME) # change folder name accordingly
 os.makedirs(RESULTS_DIR, exist_ok=True)
 METRICS_PATH = os.path.join(RESULTS_DIR, "metrics.csv")
 
@@ -73,7 +73,7 @@ with open(TRAINING_CONFIG_PATH, "w") as f:
 print(f"📄 Training configuration saved to: {TRAINING_CONFIG_PATH}")
 
 # =======================
-# MODEL DEFINITION (Flexible)
+# MODEL DEFINITION (Updated for ResNet-101)
 # =======================
 class UNetResNet(nn.Module):
     def __init__(self, n_classes, backbone="resnet18"):
@@ -82,10 +82,15 @@ class UNetResNet(nn.Module):
         # Choose backbone
         if backbone == "resnet18":
             resnet = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
-            enc_ch = [64, 64, 128, 256, 512]  # channels after each stage
+            enc_ch = [64, 64, 128, 256, 512] 
         elif backbone == "resnet50":
             resnet = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
             enc_ch = [64, 256, 512, 1024, 2048]
+        elif backbone == "resnet101":
+            # --- NEW ADDITION ---
+            resnet = models.resnet101(weights=models.ResNet101_Weights.DEFAULT)
+            # ResNet101 has the same channel width as ResNet50
+            enc_ch = [64, 256, 512, 1024, 2048] 
         else:
             raise ValueError(f"Backbone '{backbone}' not supported")
 
@@ -97,7 +102,8 @@ class UNetResNet(nn.Module):
         self.encoder3 = resnet.layer3
         self.encoder4 = resnet.layer4
 
-        # Decoder: in_channels = upconv_out_channels + skip_channels
+        # Decoder
+        # Note: We use dynamic sizes based on enc_ch, so this works for both 50 and 101 automatically
         self.upconv4 = nn.ConvTranspose2d(enc_ch[4], enc_ch[3], 2, stride=2)
         self.dec4 = nn.Conv2d(enc_ch[3] + enc_ch[3], enc_ch[3], 3, padding=1)
 
@@ -108,37 +114,47 @@ class UNetResNet(nn.Module):
         self.dec2 = nn.Conv2d(enc_ch[1] + enc_ch[1], enc_ch[1], 3, padding=1)
 
         self.upconv1 = nn.ConvTranspose2d(enc_ch[1], enc_ch[0], 2, stride=2)
-        self.dec1 = nn.Conv2d(enc_ch[0] + enc_ch[0], 64, 3, padding=1)  # final decoder before output
+        self.dec1 = nn.Conv2d(enc_ch[0] + enc_ch[0], 64, 3, padding=1)
 
         # Final classification layer
         self.final = nn.Conv2d(64, n_classes, 1)
 
     def forward(self, x):
-        # Encoder
-        x0 = self.encoder0(x)
-        x1 = self.pool0(x0)
-        x2 = self.encoder1(x1)
-        x3 = self.encoder2(x2)
-        x4 = self.encoder3(x3)
-        x5 = self.encoder4(x4)
+        # --- Encoder ---
+        x0 = self.encoder0(x)      # Initial features
+        x1 = self.pool0(x0)        # Downsample
+        x2 = self.encoder1(x1)     # Layer 1
+        x3 = self.encoder2(x2)     # Layer 2
+        x4 = self.encoder3(x3)     # Layer 3
+        x5 = self.encoder4(x4)     # Layer 4 (Bottleneck)
 
-        # Decoder
-        d4 = F.interpolate(self.upconv4(x5), size=x4.shape[2:], mode='bilinear', align_corners=True)
+        # --- Decoder ---
+        
+        # Block 4: Upsample x5, merge with x4
+        d4 = self.upconv4(x5)
+        d4 = F.interpolate(d4, size=x4.shape[2:], mode='bilinear', align_corners=True)
         d4 = torch.cat([d4, x4], dim=1)
         d4 = self.dec4(d4)
 
-        d3 = F.interpolate(self.upconv3(d4), size=x3.shape[2:], mode='bilinear', align_corners=True)
+        # Block 3: Upsample d4, merge with x3
+        d3 = self.upconv3(d4)
+        d3 = F.interpolate(d3, size=x3.shape[2:], mode='bilinear', align_corners=True)
         d3 = torch.cat([d3, x3], dim=1)
         d3 = self.dec3(d3)
 
-        d2 = F.interpolate(self.upconv2(d3), size=x2.shape[2:], mode='bilinear', align_corners=True)
+        # Block 2: Upsample d3, merge with x2
+        d2 = self.upconv2(d3)  # <--- Input is d3 (from below)
+        d2 = F.interpolate(d2, size=x2.shape[2:], mode='bilinear', align_corners=True)
         d2 = torch.cat([d2, x2], dim=1)
         d2 = self.dec2(d2)
 
-        d1 = F.interpolate(self.upconv1(d2), size=x0.shape[2:], mode='bilinear', align_corners=True)
+        # Block 1: Upsample d2, merge with x0
+        d1 = self.upconv1(d2)
+        d1 = F.interpolate(d1, size=x0.shape[2:], mode='bilinear', align_corners=True)
         d1 = torch.cat([d1, x0], dim=1)
         d1 = self.dec1(d1)
 
+        # --- Output ---
         out = self.final(d1)
         out = F.interpolate(out, size=x.shape[2:], mode='bilinear', align_corners=True)
         return out
@@ -164,24 +180,15 @@ class VineyardDataset(Dataset):
         img_name = self.image_files[idx]
         img_path = os.path.join(self.images_dir, img_name)
         
-        # 1. Load Image (Native size 1014x760)
+        # 1. Load Image and resize to target_size
         image = Image.open(img_path).convert("RGB")
-        w, h = image.size
-        
-        # 2. Calculate Padding needed to reach target_size (1024x768)
-        # We pad right and bottom
-        pad_w = max(0, self.target_size[0] - w)
-        pad_h = max(0, self.target_size[1] - h)
-        
-        # 3. Apply Padding (0 is black for image)
-        # Padding tuple: (left, top, right, bottom)
-        image = TF.pad(image, (0, 0, pad_w, pad_h), fill=0)
+        image = image.resize(self.target_size, Image.BILINEAR)
         
         # Convert to Tensor
         image = np.array(image) / 255.0
         image = torch.from_numpy(image).permute(2, 0, 1).float()
 
-        # 4. Handle Masks
+        # 2. Handle Masks
         mask = np.zeros((self.target_size[1], self.target_size[0]), dtype=np.uint8)
         base_name = os.path.splitext(img_name)[0]
         
@@ -194,12 +201,9 @@ class VineyardDataset(Dataset):
             if mask_files:
                 cls_mask_path = os.path.join(cls_mask_dir, mask_files[0])
                 
-                # Load mask at native size
+                # Load mask and resize directly to target size
                 cls_mask = Image.open(cls_mask_path).convert("L")
-                
-                # Pad mask exactly like the image! 
-                # Fill with 0 (background)
-                cls_mask = TF.pad(cls_mask, (0, 0, pad_w, pad_h), fill=0)
+                cls_mask = cls_mask.resize(self.target_size, Image.NEAREST)
                 
                 cls_mask_np = np.array(cls_mask) > 127
                 mask[cls_mask_np] = cls_idx

@@ -218,12 +218,12 @@ def detect_poles_and_vine_rows(image_file, detection_model, confidence, sensor_w
 # --- Main Execution ---
 
 if __name__ == "__main__":
-    # image_folder = "../../images/agri_tech_centre/coolhurst/"
-    # output_folder = "../../data/coolhurst/vineyard_segmentation-21/train2_inference_results/"
-    image_folder = "../../images/riseholme/july_2025/39_feet/"
-    output_folder = "../../data/riseholme/vineyard_segmentation-22/train5_inference_results/july_2025/39_feet"
-    annotated_images_output_dir = os.path.join(output_folder, "annotated_images")
-    # annotated_images_output_dir = None # dont save annotated images
+    image_folder = "../../images/agri_tech_centre/jojo/"
+    output_folder = "../../data/jojo/vineyard_segmentation-21/train3_inference_results/"
+    # image_folder = "../../images/riseholme/july_2025/39_feet/"
+    # output_folder = "../../data/riseholme/vineyard_segmentation-22/train5_inference_results/july_2025/39_feet"
+    # annotated_images_output_dir = os.path.join(output_folder, "annotated_images")
+    annotated_images_output_dir = None # dont save annotated images
 
     # Create output directories
     os.makedirs(output_folder, exist_ok=True)
@@ -232,22 +232,22 @@ if __name__ == "__main__":
     if annotated_images_output_dir:
         os.makedirs(annotated_images_output_dir, exist_ok=True)
 
-    model_path = "../../data/datasets/trained/vineyard_segmentation-22/train5/weights/best.pt"
+    model_path = "../../data/datasets/trained/vineyard_segmentation-21/train3/weights/best.pt"
     confidence = 0.4
-    slice_height = 1520 # 760 # 640
-    slice_width = 2028 # 1014 # 640
+    slice_height = 760 # 1520 # 760 # 640
+    slice_width = 1014 # 2028 # 1014 # 640
 
     # # --- Camera specifications Riseholme (Zenmuse H20) --- 
-    focal_length_mm = 4.5
-    fov_deg = 73.7
-    sensor_width_mm = 6.17
-    sensor_height_mm = 4.55
+    # focal_length_mm = 4.5
+    # fov_deg = 73.7
+    # sensor_width_mm = 6.07 # 6.17
+    # sensor_height_mm = 4.55
 
     # # Camera specifications Agri tech centre drone P1 camera # https://enterprise.dji.com/zenmuse-p1
-    # focal_length_mm = 35.0 # * 0.12
-    # fov_deg = 63.5
-    # sensor_width_mm = 35.9
-    # sensor_height_mm = 24.0
+    focal_length_mm = 35.0 # * 0.12
+    fov_deg = 63.5
+    sensor_width_mm = 35.9
+    sensor_height_mm = 24.0
 
     print(f"Loading model from {model_path}...")
     detection_model = AutoDetectionModel.from_pretrained(

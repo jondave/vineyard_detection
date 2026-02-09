@@ -1,0 +1,11 @@
+{
+  "focal_length_mm": 4.514755774375243,
+  "sensor_width_mm": 6.194898935349676,
+  "sensor_height_mm": 4.523776892599624,
+  "rmse_meters": 1.7022690843530408,
+  "initial_rmse_meters": 1.7034982301819144,
+  "improvement_percent": 0.07215421813160963,
+  "method": "local",
+  "num_images": 190,
+  "num_gcps": 253
+}

@@ -11,12 +11,16 @@ import json
 # CONFIGURATION
 # ==========================================================
 MODEL_PATH = "../../data/datasets/trained/vineyard_segmentation-22/train5/weights/best.pt"
-IMAGE_DIR = "../../images/agri_tech_centre/arun_2"
-OUTPUT_DIR = "../../data/datasets/auto_labeled_yolo_posts/bbox/agri_tech_centre/arun_2/"
+
+IMAGE_DIR = "../../images/agri_tech_centre/jojo"
+OUTPUT_DIR = "../../data/datasets/auto_labeled_yolo_posts/bbox/agri_tech_centre/jojo/"
+
+# IMAGE_DIR = "../../images/jojo/riccardo/DJI_202507311147_029_jojo3-120"
+# OUTPUT_DIR = "../../data/datasets/auto_labeled_yolo_posts/bbox/riccardo/jojo/DJI_202507311147_029_jojo3-120/"
 
 # YOLO class IDs (update based on your model)
 CLASS_NAMES = {
-    0: "post",  # Only interested in posts
+    0: "pole",  # Only interested in posts
     # Add other classes if needed
 }
 

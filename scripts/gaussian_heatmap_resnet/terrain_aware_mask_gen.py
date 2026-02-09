@@ -28,8 +28,8 @@ from pyproj import Transformer
 CURRENT_PROFILE = 'H20' 
 
 # # 2. DATA PATHS
-image_folder = "../../images/jojo/riccardo/DJI_202507301654_030_jojo"
-output_folder = "./terrain_aware_mask_gen/heatmap_masks/riccardo/jojo/DJI_202507301654_030_jojo"
+image_folder = "../../images/jojo/riccardo/DJI_202507311147_029_jojo3-120"
+output_folder = "./terrain_aware_mask_gen/heatmap_masks/riccardo/jojo/DJI_202507311147_029_jojo3-120"
 
 # image_folder = "../../images/outfields/jojo/topdown"
 # output_folder = "./terrain_aware_mask_gen/heatmap_masks/outfields/jojo/topdown"
@@ -51,7 +51,7 @@ NORTH_OFFSET_METERS = 0.0
 ALT_OFFSET_METERS = 0.0
 
 # Output Settings
-SAVE_OVERLAY_IMAGE = False
+SAVE_OVERLAY_IMAGE = True
 overlay_output_folder = os.path.join(output_folder, "overlays")
 
 # POST_RADIUS_BASE = 100

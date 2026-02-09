@@ -7,8 +7,8 @@ from PIL import Image, ImageFilter
 # ========================
 # CONFIGURATION
 # ========================
-DATASET_ROOT = "../../data/datasets/vineyard_segmentation-21"
-OUTPUT_ROOT = "heatmap_masks_from_yolo_labels/vineyard_segmentation_21"
+DATASET_ROOT = "../../data/datasets/vineyard_segmentation_paper-1"
+OUTPUT_ROOT = "heatmap_masks_from_yolo_labels/vineyard_segmentation_paper-1"
 
 GAUSSIAN_RADIUS = 20    # controls gaussian spread (sigma) for bbox centers
 BLUR_RADIUS = 15        # gaussian blur sigma for the final mask image
