@@ -1,0 +1,170 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244034441722588,
+          53.26810739890038
+        ]
+      },
+      "properties": {
+        "type": "pole",
+        "confidence": 0.9264635830994842,
+        "detection_count": 1699
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245884219373533,
+          53.26810904336895
+        ]
+      },
+      "properties": {
+        "type": "pole",
+        "confidence": 0.9257263285773141,
+        "detection_count": 49
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245075328904113,
+          53.26806650485822
+        ]
+      },
+      "properties": {
+        "type": "pole",
+        "confidence": 0.9513480152402606,
+        "detection_count": 28
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5247222557497792,
+          53.26810772245619
+        ]
+      },
+      "properties": {
+        "type": "pole",
+        "confidence": 0.7091158574277704,
+        "detection_count": 11
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245501181680117,
+          53.26806571021477
+        ]
+      },
+      "properties": {
+        "type": "pole",
+        "confidence": 0.8585239529609681,
+        "detection_count": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5246910492861806,
+          53.26807759224945
+        ]
+      },
+      "properties": {
+        "type": "pole",
+        "confidence": 0.7199495335419973,
+        "detection_count": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524322884671196,
+          53.268278883952654
+        ]
+      },
+      "properties": {
+        "type": "pole",
+        "confidence": 0.7889183362325033,
+        "detection_count": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245779983256665,
+          53.26805927153507
+        ]
+      },
+      "properties": {
+        "type": "pole",
+        "confidence": 0.9508388837178549,
+        "detection_count": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244030927095747,
+          53.26788008848685
+        ]
+      },
+      "properties": {
+        "type": "pole",
+        "confidence": 0.6603765189647675,
+        "detection_count": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243070727789629,
+          53.26829797685207
+        ]
+      },
+      "properties": {
+        "type": "pole",
+        "confidence": 0.6029268801212311,
+        "detection_count": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242762932214856,
+          53.268325927711544
+        ]
+      },
+      "properties": {
+        "type": "pole",
+        "confidence": 0.8096626102924347,
+        "detection_count": 2
+      }
+    }
+  ]
+}

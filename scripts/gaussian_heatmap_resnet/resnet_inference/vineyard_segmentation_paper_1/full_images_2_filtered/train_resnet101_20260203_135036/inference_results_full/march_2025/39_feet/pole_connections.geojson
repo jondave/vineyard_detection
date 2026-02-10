@@ -1,0 +1,125 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.5245368242544827,
+            53.268006984998465
+          ],
+          [
+            -0.5245024096653254,
+            53.26801115118433
+          ]
+        ]
+      },
+      "properties": {
+        "row_id": 1,
+        "num_poles": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.5242839868307173,
+            53.26808933320723
+          ],
+          [
+            -0.5243018095141755,
+            53.26812950847859
+          ]
+        ]
+      },
+      "properties": {
+        "row_id": 2,
+        "num_poles": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.5245168551799403,
+            53.268117065432826
+          ],
+          [
+            -0.524532881565678,
+            53.26813164444435
+          ]
+        ]
+      },
+      "properties": {
+        "row_id": 3,
+        "num_poles": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.5244313439987662,
+            53.268010477533394
+          ],
+          [
+            -0.5244551917890276,
+            53.268023876622124
+          ]
+        ]
+      },
+      "properties": {
+        "row_id": 4,
+        "num_poles": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.5243101461041728,
+            53.26816694161016
+          ],
+          [
+            -0.5243186227794027,
+            53.268182804357245
+          ]
+        ]
+      },
+      "properties": {
+        "row_id": 5,
+        "num_poles": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.5245430411965045,
+            53.268065744058966
+          ],
+          [
+            -0.5245596883260969,
+            53.2681148190369
+          ]
+        ]
+      },
+      "properties": {
+        "row_id": 6,
+        "num_poles": 2
+      }
+    }
+  ]
+}

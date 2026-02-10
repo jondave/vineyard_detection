@@ -11,7 +11,7 @@ from tqdm import tqdm
 from skimage.feature import peak_local_max
 from skimage.morphology import skeletonize
 from scipy.spatial import cKDTree
-from shapely.geometry import Point as ShapelyPoint, LineString
+from shapely.geometry import Point as ShapelyPoint, LineString, Polygon
 from shapely.ops import nearest_points
 
 # --- Import your GPS Utils ---
@@ -21,8 +21,8 @@ import image_gps_pixel_show_poles
 # CONFIGURATION
 # ======================
 MODEL_PATH = "results_resnet/yolo_masks/vineyard_segmentation_paper_1/train_resnet101_20260203_135036/resnet101_vineyard_segmentation_paper_1_unet_image_size_1280x960_batch_size_2.pth"
-INPUT_DIR = "../../images/riseholme/august_2024/39_feet/"
-OUTPUT_DIR = "resnet_inference/vineyard_segmentation_paper_1/full_images_2_filtered/train_resnet101_20260203_135036/inference_results_full/39_feet/"
+INPUT_DIR = "../../images/riseholme/march_2025/65_feet/"
+OUTPUT_DIR = "resnet_inference/vineyard_segmentation_paper_1/full_images_2_filtered/train_resnet101_20260203_135036/inference_results_full/march_2025/65_feet/"
 
 BACKBONE = "resnet101"
 
@@ -33,12 +33,26 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Memory optimization
 USE_MIXED_PRECISION = True  # Use FP16 for inference to save memory
 
+# Prediction outputs
+SAVE_AS_NPZ = False  # Save probability maps as compressed NPZ files (~20-50MB per image)
+# Greyscale image outputs (PNG compression, ~1-2MB per image)
+SAVE_AS_IMAGE_BACKGROUND = False
+SAVE_AS_IMAGE_POLE = True
+SAVE_AS_IMAGE_TRUNK = False
+SAVE_AS_IMAGE_VINE_ROW = False
+PREDICTIONS_DIR = os.path.join(OUTPUT_DIR, "predictions")
+
 # Thresholds
 CONFIDENCE_THRESHOLDS = {
-    "pole": 0.3,
-    "trunk": 0.3,
-    "vine_row": 0.3
+    "pole": 0.7,
+    "trunk": 0.5,
+    "vine_row": 0.7
 }
+
+# Vine row polygon extraction
+ROW_POLY_MIN_AREA_PX = 1500
+ROW_POLY_SIMPLIFY_PX = 6.0
+ROW_POLY_DILATE_PX = 3
 
 # Deduplication Parameters (in meters)
 ROW_SPACING_M = 2.5  # Distance between vine rows
@@ -53,6 +67,8 @@ SENSOR_WIDTH_MM = 6.17
 SENSOR_HEIGHT_MM = 4.55
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+if SAVE_AS_NPZ or SAVE_AS_IMAGE_BACKGROUND or SAVE_AS_IMAGE_POLE or SAVE_AS_IMAGE_TRUNK or SAVE_AS_IMAGE_VINE_ROW:
+    os.makedirs(PREDICTIONS_DIR, exist_ok=True)
 
 # ======================
 # MODEL DEFINITION
@@ -170,39 +186,41 @@ def deduplicate_points(points_list, radius_m):
     return kept
 
 def associate_poles_to_rows(poles_gps, rows_gps, max_dist_m):
-    """Associate each pole to its nearest vine row.
+    """Associate each pole to its nearest vine row polygon.
     Returns: dict {pole_idx: row_idx} and dict {row_idx: [pole_indices]}
     """
-    from shapely.geometry import Point as ShapelyPoint, LineString
-    from shapely.ops import nearest_points
-    
     pole_to_row = {}
     row_to_poles = {i: [] for i in range(len(rows_gps))}
-    
+
     for p_idx, (p_lat, p_lon, p_conf, p_props) in enumerate(poles_gps):
         pole_point = ShapelyPoint(p_lon, p_lat)
-        
-        min_dist = float('inf')
+
+        min_dist = float("inf")
         closest_row = None
-        
+
         for r_idx, row_coords in enumerate(rows_gps):
-            if len(row_coords) < 2:
+            if len(row_coords) < 3:
                 continue
-            row_line = LineString([(lon, lat) for lat, lon in row_coords])
-            dist = pole_point.distance(row_line)
-            
+            row_poly = Polygon([(lon, lat) for lat, lon in row_coords])
+            if not row_poly.is_valid:
+                row_poly = row_poly.buffer(0)
+            if row_poly.is_empty:
+                continue
+
+            dist = pole_point.distance(row_poly)
+
             # Convert degrees to approximate meters (rough estimate at mid-latitudes)
             dist_m = dist * 111320 * np.cos(np.radians(p_lat))
-            
+
             if dist_m < min_dist:
                 min_dist = dist_m
                 closest_row = r_idx
-        
+
         # Only associate if within max distance
         if closest_row is not None and min_dist < max_dist_m:
             pole_to_row[p_idx] = closest_row
             row_to_poles[closest_row].append(p_idx)
-    
+
     return pole_to_row, row_to_poles
 
 # ======================
@@ -246,7 +264,7 @@ image_files = [f for f in os.listdir(INPUT_DIR) if f.lower().endswith(('.jpg', '
 # Store all detections before deduplication
 all_poles = []  # [(lat, lon, confidence, props), ...]
 all_trunks = []  # [(lat, lon, confidence, props), ...]
-all_rows = []  # [[(lat, lon), (lat, lon), ...], ...]  # List of line coordinates per image
+all_rows = []  # [[(lat, lon), (lat, lon), ...], ...]  # List of polygon coordinates per image
 
 print(f"Processing {len(image_files)} images...")
 print(f"Using device: {DEVICE}, Mixed Precision: {USE_MIXED_PRECISION}")
@@ -292,6 +310,35 @@ for file in tqdm(image_files):
         if DEVICE.type == 'cuda':
             torch.cuda.empty_cache()
 
+    # --- Save Prediction Outputs ---
+    if SAVE_AS_NPZ or SAVE_AS_IMAGE_BACKGROUND or SAVE_AS_IMAGE_POLE or SAVE_AS_IMAGE_TRUNK or SAVE_AS_IMAGE_VINE_ROW:
+        base_name = os.path.splitext(file)[0]
+        
+        # Save all probability maps as compressed numpy array
+        if SAVE_AS_NPZ:
+            # Shape: (num_classes, height, width)
+            prob_save_path = os.path.join(PREDICTIONS_DIR, f"{base_name}_probs.npz")
+            np.savez_compressed(
+                prob_save_path,
+                probabilities=probs,  # All class probabilities
+                class_names=CLASS_NAMES,
+                image_size=IMAGE_SIZE
+            )
+        
+        # Save selected classes as greyscale images (PNG compression)
+        # Converts probability values (0.0 to 1.0) to greyscale (0-255)
+        image_flags = [SAVE_AS_IMAGE_BACKGROUND, SAVE_AS_IMAGE_POLE, SAVE_AS_IMAGE_TRUNK, SAVE_AS_IMAGE_VINE_ROW]
+        images_saved = []
+        for class_idx, (class_name, save_flag) in enumerate(zip(CLASS_NAMES, image_flags)):
+            if save_flag:
+                # Convert probability map to 8-bit greyscale
+                greyscale = (probs[class_idx] * 255).astype(np.uint8)
+                img_path = os.path.join(PREDICTIONS_DIR, f"{base_name}_{class_name}_prob.png")
+                Image.fromarray(greyscale, mode='L').save(img_path)
+                images_saved.append(class_name)
+        if images_saved:
+            print(f"  💾 Saved {len(images_saved)} greyscale image(s) for {base_name}: {', '.join(images_saved)}")
+
     # --- 3. Feature Extraction & Visualization ---
     
     # Define Indices
@@ -319,20 +366,31 @@ for file in tqdm(image_files):
         color_map=cv2.COLORMAP_WINTER # Blue/Green for Trunks
     )
 
-    # C. Vine Rows (Skeletonization)
+    # C. Vine Rows (Polygon Extraction)
     row_prob_map = probs[row_idx]
     row_binary = row_prob_map > CONFIDENCE_THRESHOLDS["vine_row"]
-    row_skeleton = skeletonize(row_binary)
-    row_y, row_x = np.where(row_skeleton)
-    row_pixels = np.column_stack((row_x, row_y))
+    row_mask = (row_binary * 255).astype(np.uint8)
+    if ROW_POLY_DILATE_PX > 0:
+        kernel = np.ones((ROW_POLY_DILATE_PX, ROW_POLY_DILATE_PX), np.uint8)
+        row_mask = cv2.morphologyEx(row_mask, cv2.MORPH_CLOSE, kernel)
 
-    # Visualization for Rows (Overlay the green skeleton)
+    contours, _ = cv2.findContours(row_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    row_polygons_px = []
+    for contour in contours:
+        area = cv2.contourArea(contour)
+        if area < ROW_POLY_MIN_AREA_PX:
+            continue
+        approx = cv2.approxPolyDP(contour, ROW_POLY_SIMPLIFY_PX, True)
+        if len(approx) < 3:
+            continue
+        row_polygons_px.append(approx.reshape(-1, 2))
+
+    # Visualization for Rows (Overlay the polygons)
     row_vis = image_np.copy()
-    # Make the skeleton bright green and thick
-    # Dilate slightly for visibility
-    skel_uint8 = (row_skeleton * 255).astype(np.uint8)
-    skel_dilated = cv2.dilate(skel_uint8, np.ones((3,3), np.uint8))
-    row_vis[skel_dilated > 0] = [0, 255, 0] 
+    overlay = row_vis.copy()
+    for poly in row_polygons_px:
+        cv2.fillPoly(overlay, [poly.astype(np.int32)], color=(0, 255, 0))
+    row_vis = cv2.addWeighted(overlay, 0.35, row_vis, 0.65, 0)
     Image.fromarray(row_vis).save(os.path.join(OUTPUT_DIR, f"{file}_row_vis.jpg"))
 
     # --- 4. GPS Conversion ---
@@ -356,13 +414,67 @@ for file in tqdm(image_files):
         confidence = float(probs[trunk_idx, y, x])
         all_trunks.append((lat, lon, confidence, {"image": file}))
 
-    # Collect Rows
-    if len(row_pixels) > 0:
+    # Collect Rows (Polygons)
+    for poly in row_polygons_px:
         row_gps_points = []
-        for x, y in row_pixels[::15]: 
-            lat, lon = to_gps(x, y)
+        for x, y in poly:
+            lat, lon = to_gps(int(x), int(y))
             row_gps_points.append((lat, lon))
-        all_rows.append(row_gps_points)
+        if len(row_gps_points) >= 3:
+            if row_gps_points[0] != row_gps_points[-1]:
+                row_gps_points.append(row_gps_points[0])
+            all_rows.append(row_gps_points)
+
+print("\n💾 Saving unfiltered GeoJSON outputs...")
+
+# Unfiltered Poles
+geojson_poles_raw = {"type": "FeatureCollection", "features": []}
+for lat, lon, conf, props in all_poles:
+    geojson_poles_raw["features"].append({
+        "type": "Feature",
+        "geometry": {"type": "Point", "coordinates": [lon, lat]},
+        "properties": {
+            "confidence": conf,
+            "image": props["image"],
+        },
+    })
+
+# Unfiltered Trunks
+geojson_trunks_raw = {"type": "FeatureCollection", "features": []}
+for lat, lon, conf, props in all_trunks:
+    geojson_trunks_raw["features"].append({
+        "type": "Feature",
+        "geometry": {"type": "Point", "coordinates": [lon, lat]},
+        "properties": {
+            "confidence": conf,
+            "image": props["image"],
+        },
+    })
+
+# Unfiltered Vine Rows (Polygons)
+geojson_rows_raw = {"type": "FeatureCollection", "features": []}
+for r_idx, row_coords in enumerate(all_rows):
+    if len(row_coords) >= 4:
+        geojson_rows_raw["features"].append({
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[lon, lat] for lat, lon in row_coords]],
+            },
+            "properties": {
+                "row_id": r_idx,
+                "num_points": len(row_coords),
+            },
+        })
+
+with open(os.path.join(OUTPUT_DIR, "poles_raw.geojson"), "w") as f:
+    json.dump(geojson_poles_raw, f, indent=2)
+
+with open(os.path.join(OUTPUT_DIR, "trunks_raw.geojson"), "w") as f:
+    json.dump(geojson_trunks_raw, f, indent=2)
+
+with open(os.path.join(OUTPUT_DIR, "vine_rows_raw.geojson"), "w") as f:
+    json.dump(geojson_rows_raw, f, indent=2)
 
 print("\n🔄 Deduplicating detections...")
 
@@ -412,15 +524,15 @@ for lat, lon, conf, props in unique_trunks:
         }
     })
 
-# 3. VINE ROWS GeoJSON
+# 3. VINE ROWS GeoJSON (Polygons)
 geojson_rows = {"type": "FeatureCollection", "features": []}
 for r_idx, row_coords in enumerate(all_rows):
-    if len(row_coords) >= 2:
+    if len(row_coords) >= 4:
         geojson_rows["features"].append({
             "type": "Feature",
             "geometry": {
-                "type": "LineString",
-                "coordinates": [[lon, lat] for lat, lon in row_coords]
+                "type": "Polygon",
+                "coordinates": [[[lon, lat] for lat, lon in row_coords]]
             },
             "properties": {
                 "row_id": r_idx,
@@ -466,3 +578,23 @@ print(f"  - poles.geojson ({len(unique_poles)} poles)")
 print(f"  - trunks.geojson ({len(unique_trunks)} trunks)")
 print(f"  - vine_rows.geojson ({len(all_rows)} rows)")
 print(f"  - pole_connections.geojson ({len(geojson_pole_connections['features'])} row connections)")
+
+if SAVE_AS_NPZ or SAVE_AS_IMAGE_BACKGROUND or SAVE_AS_IMAGE_POLE or SAVE_AS_IMAGE_TRUNK or SAVE_AS_IMAGE_VINE_ROW:
+    print(f"\n📊 Prediction outputs saved to {PREDICTIONS_DIR}")
+    if SAVE_AS_NPZ:
+        print(f"  - {len(image_files)} × _probs.npz files (all class probabilities)")
+    
+    images_enabled = []
+    if SAVE_AS_IMAGE_BACKGROUND: images_enabled.append("background")
+    if SAVE_AS_IMAGE_POLE: images_enabled.append("pole")
+    if SAVE_AS_IMAGE_TRUNK: images_enabled.append("trunk")
+    if SAVE_AS_IMAGE_VINE_ROW: images_enabled.append("vine_row")
+    
+    if images_enabled:
+        print(f"  - {len(image_files) * len(images_enabled)} PNG images ({len(images_enabled)} per image: {', '.join(images_enabled)})")
+        print(f"    Each image is greyscale (0-255) representing probability values (0.0-1.0)")
+    
+    if SAVE_AS_NPZ:
+        print(f"\n💡 To load predictions:")
+        print(f"   Python: data = np.load('predictions/image_probs.npz'); probs = data['probabilities']")
+        print(f"   Class mapping: {dict(enumerate(CLASS_NAMES))}")

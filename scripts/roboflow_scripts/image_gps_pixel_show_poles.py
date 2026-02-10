@@ -1,4 +1,4 @@
-'''
+c'''
 This script extracts metadata from an image, GPS coordinates, altitude, and camera orientation, and then uses this data to calculate pixel locations for geographical points and draw circles on the image corresponding to these locations.
 
 Key components:
@@ -24,6 +24,9 @@ from PIL import Image, ImageDraw
 import math
 import piexif
 import mapbox_altitude
+
+# Toggle to use dynamic meters-per-degree scaling based on GPS latitude.
+USE_DYNAMIC_METERS_PER_DEGREE = True
 
 def extract_exif(image_path):
     try:
@@ -187,8 +190,16 @@ def get_gps_from_pixel(pixel_x, pixel_y, image_width, image_height,
     lat_change = -corrected_lon_change * math.sin(gimbal_radians) + corrected_lat_change * math.cos(gimbal_radians)
 
     # Convert the real-world displacements back to degrees
-    latitude = gps_lat_decimal + (lat_change / 111320)  # Convert meters to degrees for latitude
-    longitude = gps_lon_decimal + (lon_change / (40008000 * math.cos(math.radians(latitude)) / 360))  # Convert meters to degrees for longitude
+    if USE_DYNAMIC_METERS_PER_DEGREE:
+        meters_per_deg_lat = 111320.0
+        meters_per_deg_lon = 111320.0 * math.cos(math.radians(gps_lat_decimal))
+        latitude = gps_lat_decimal + (lat_change / meters_per_deg_lat)
+        longitude = gps_lon_decimal + (lon_change / meters_per_deg_lon)
+    else:
+        latitude = gps_lat_decimal + (lat_change / 111320)
+        longitude = gps_lon_decimal + (
+            lon_change / (40008000 * math.cos(math.radians(latitude)) / 360)
+        )
 
     return latitude, longitude
 
@@ -199,8 +210,16 @@ def get_pixel_from_gps(latitude, longitude, flight_degree, gimbal_degree,
                        gps_lat_decimal, gps_lon_decimal):
     
     # Calculate the real-world displacement in meters from the given lat/lon to the center point
-    lat_change = (latitude - gps_lat_decimal) * 111320  # Approximate conversion to meters for latitude
-    lon_change = (longitude - gps_lon_decimal) * (40008000 * math.cos(math.radians(latitude)) / 360)  # Conversion to meters for longitude
+    if USE_DYNAMIC_METERS_PER_DEGREE:
+        meters_per_deg_lat = 111320.0
+        meters_per_deg_lon = 111320.0 * math.cos(math.radians(gps_lat_decimal))
+        lat_change = (latitude - gps_lat_decimal) * meters_per_deg_lat
+        lon_change = (longitude - gps_lon_decimal) * meters_per_deg_lon
+    else:
+        lat_change = (latitude - gps_lat_decimal) * 111320
+        lon_change = (longitude - gps_lon_decimal) * (
+            40008000 * math.cos(math.radians(latitude)) / 360
+        )
 
     # Convert gimbal orientation to radians
     gimbal_radians = math.radians(float(gimbal_degree))
@@ -296,6 +315,14 @@ def process_image(image_path, gps_points):
     gps_altitude_num = extract_number(gps_altitude)
     fov_degrees_num = extract_number(fov_degrees)
     focal_length_mm = extract_number(focal_length_mm)
+
+    if USE_DYNAMIC_METERS_PER_DEGREE and gps_latitude is not None:
+        meters_per_deg_lat = 111320.0
+        meters_per_deg_lon = 111320.0 * math.cos(math.radians(gps_latitude))
+        print(
+            f"Meters per degree at {gps_latitude:.6f} lat: "
+            f"lat={meters_per_deg_lat:.2f}m, lon={meters_per_deg_lon:.2f}m"
+        )
 
     # print(f"Flight Degree: {flight_yaw_num}")
     # print(f"Flight Pitch Degree: {flight_pitch_num}")
