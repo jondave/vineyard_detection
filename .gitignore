@@ -31,3 +31,5 @@
 *.pt
 *.PH
 
+/scripts/gaussian_heatmap_resnet/gaussian_heatmap_hybrid/inference_results/hybrid_test
+/scripts/generate_topo_map/cache

@@ -1,0 +1,109 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.5243026366109068,
+            53.26807856345019
+          ],
+          [
+            -0.5243088665259373,
+            53.2681268070398
+          ]
+        ]
+      },
+      "properties": {
+        "row_id": 327,
+        "num_poles": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.5243323330570188,
+            53.26813889057056
+          ],
+          [
+            -0.524352456971307,
+            53.26819566894375
+          ]
+        ]
+      },
+      "properties": {
+        "row_id": 659,
+        "num_poles": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.5246001130707298,
+            53.2680135943744
+          ],
+          [
+            -0.5246089006534327,
+            53.26805916516383
+          ]
+        ]
+      },
+      "properties": {
+        "row_id": 693,
+        "num_poles": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.5246126051341404,
+            53.26815584902644
+          ],
+          [
+            -0.5246154114829129,
+            53.26817288374474
+          ]
+        ]
+      },
+      "properties": {
+        "row_id": 818,
+        "num_poles": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.5245593115581766,
+            53.26811201924163
+          ],
+          [
+            -0.5245741274496701,
+            53.268160425099545
+          ],
+          [
+            -0.5245805256772119,
+            53.26817866557072
+          ]
+        ]
+      },
+      "properties": {
+        "row_id": 819,
+        "num_poles": 3
+      }
+    }
+  ]
+}

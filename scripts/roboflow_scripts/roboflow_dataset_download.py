@@ -28,10 +28,10 @@ rf = Roboflow(api_key=ROBOFLOW_API_KEY)
 # project = rf.workspace().project("vineyard_test")
 # project = rf.workspace("vista-qsopb").project("vineyard_segmentation")
 project = rf.workspace("vineyarddetection").project("vineyard_segmentation_paper")
-version = project.version(57)
+version = project.version(2)
 
 # Download dataset in YOLO format
-dataset = version.download("yolov11")
+dataset = version.download("coco-segmentation")  # Options: "yolov5", "yolov8", "coco", "coco-segmentation", etc.
 
 # Print dataset location
 print(f"Dataset downloaded to: {dataset.location}")

@@ -1,0 +1,9 @@
+{
+  "completed": true,
+  "timestamp": "2026-02-16T17:21:02.255466",
+  "dataset": "/home/cheddar/code/vineyard_detection/data/datasets/datasets_coco/vineyard_segmentation_paper-2",
+  "dataset_name": "vineyard_segmentation_paper_2",
+  "run_name": "vineyard_segmentation_paper_2_l",
+  "output_directory": "runs/detect/vineyard_segmentation_paper_2_l",
+  "model_size": "l"
+}

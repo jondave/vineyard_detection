@@ -1,0 +1,811 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243638840833216,
+          53.26808155429702
+        ]
+      },
+      "properties": {
+        "pole_id": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244366203809161,
+          53.26807442468866
+        ]
+      },
+      "properties": {
+        "pole_id": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243289803393532,
+          53.26809430939185
+        ]
+      },
+      "properties": {
+        "pole_id": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244610515512921,
+          53.26802094168996
+        ]
+      },
+      "properties": {
+        "pole_id": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242482453167349,
+          53.26804851794435
+        ]
+      },
+      "properties": {
+        "pole_id": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243869990674821,
+          53.26818043079041
+        ]
+      },
+      "properties": {
+        "pole_id": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242734215528992,
+          53.26818975944448
+        ]
+      },
+      "properties": {
+        "pole_id": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524250660863884,
+          53.26809037775966
+        ]
+      },
+      "properties": {
+        "pole_id": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524260579968718,
+          53.26813929071652
+        ]
+      },
+      "properties": {
+        "pole_id": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245313734909564,
+          53.26813766454883
+        ]
+      },
+      "properties": {
+        "pole_id": 9
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245014068445567,
+          53.26817238520152
+        ]
+      },
+      "properties": {
+        "pole_id": 10
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245052793335253,
+          53.26804471071178
+        ]
+      },
+      "properties": {
+        "pole_id": 11
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243948758226011,
+          53.26805190921839
+        ]
+      },
+      "properties": {
+        "pole_id": 12
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244130662720018,
+          53.26812619120938
+        ]
+      },
+      "properties": {
+        "pole_id": 13
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244898989760212,
+          53.268140135776186
+        ]
+      },
+      "properties": {
+        "pole_id": 14
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524375244942213,
+          53.268129415042985
+        ]
+      },
+      "properties": {
+        "pole_id": 15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242991975170387,
+          53.26813732202915
+        ]
+      },
+      "properties": {
+        "pole_id": 16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242880196628403,
+          53.26808618990569
+        ]
+      },
+      "properties": {
+        "pole_id": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243502083849623,
+          53.26803095752407
+        ]
+      },
+      "properties": {
+        "pole_id": 18
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244262183978557,
+          53.26817779530517
+        ]
+      },
+      "properties": {
+        "pole_id": 19
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244635056110808,
+          53.26817438852465
+        ]
+      },
+      "properties": {
+        "pole_id": 20
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243368869074659,
+          53.26813188358295
+        ]
+      },
+      "properties": {
+        "pole_id": 21
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244969598461547,
+          53.268016997169596
+        ]
+      },
+      "properties": {
+        "pole_id": 22
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245084327312526,
+          53.26806646972989
+        ]
+      },
+      "properties": {
+        "pole_id": 23
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243122968794384,
+          53.268032380242175
+        ]
+      },
+      "properties": {
+        "pole_id": 24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243988378091236,
+          53.26807663311112
+        ]
+      },
+      "properties": {
+        "pole_id": 25
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524481187144229,
+          53.268118639334176
+        ]
+      },
+      "properties": {
+        "pole_id": 26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.52442439005636,
+          53.2680228710318
+        ]
+      },
+      "properties": {
+        "pole_id": 27
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244712238958085,
+          53.26806925111739
+        ]
+      },
+      "properties": {
+        "pole_id": 28
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524232035552998,
+          53.26803600205063
+        ]
+      },
+      "properties": {
+        "pole_id": 29
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242674023230545,
+          53.26811362269393
+        ]
+      },
+      "properties": {
+        "pole_id": 30
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243507423410215,
+          53.2681850283488
+        ]
+      },
+      "properties": {
+        "pole_id": 31
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245346268858126,
+          53.26801358355277
+        ]
+      },
+      "properties": {
+        "pole_id": 32
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524521569779903,
+          53.26811307182158
+        ]
+      },
+      "properties": {
+        "pole_id": 33
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245993150977805,
+          53.2681092940982
+        ]
+      },
+      "properties": {
+        "pole_id": 34
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245773495440851,
+          53.26816435074104
+        ]
+      },
+      "properties": {
+        "pole_id": 35
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524449812187735,
+          53.26812299544522
+        ]
+      },
+      "properties": {
+        "pole_id": 36
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245390785321473,
+          53.26816817946808
+        ]
+      },
+      "properties": {
+        "pole_id": 37
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243870502168062,
+          53.2680266826455
+        ]
+      },
+      "properties": {
+        "pole_id": 38
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524573052608777,
+          53.268010480605724
+        ]
+      },
+      "properties": {
+        "pole_id": 39
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5246152798315523,
+          53.26816202383467
+        ]
+      },
+      "properties": {
+        "pole_id": 40
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245193612931387,
+          53.268089106244595
+        ]
+      },
+      "properties": {
+        "pole_id": 41
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243109399031701,
+          53.26818756989605
+        ]
+      },
+      "properties": {
+        "pole_id": 42
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5246332924176352,
+          53.26825877378307
+        ]
+      },
+      "properties": {
+        "pole_id": 43
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242753169788095,
+          53.26803691675734
+        ]
+      },
+      "properties": {
+        "pole_id": 44
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245626541464481,
+          53.268114112283534
+        ]
+      },
+      "properties": {
+        "pole_id": 45
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243185598237368,
+          53.26807421588206
+        ]
+      },
+      "properties": {
+        "pole_id": 46
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243147468369251,
+          53.268282016443386
+        ]
+      },
+      "properties": {
+        "pole_id": 47
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243835855518122,
+          53.26815881363801
+        ]
+      },
+      "properties": {
+        "pole_id": 48
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524463849839396,
+          53.26804793223843
+        ]
+      },
+      "properties": {
+        "pole_id": 49
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243587757920463,
+          53.268103569313624
+        ]
+      },
+      "properties": {
+        "pole_id": 50
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243618382158591,
+          53.26805584045911
+        ]
+      },
+      "properties": {
+        "pole_id": 51
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243408528439414,
+          53.268152834442134
+        ]
+      },
+      "properties": {
+        "pole_id": 52
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245502470142946,
+          53.26805192682254
+        ]
+      },
+      "properties": {
+        "pole_id": 53
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242813578474941,
+          53.26805766502081
+        ]
+      },
+      "properties": {
+        "pole_id": 54
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524425899221586,
+          53.26804294162721
+        ]
+      },
+      "properties": {
+        "pole_id": 55
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244247023264852,
+          53.268144552518464
+        ]
+      },
+      "properties": {
+        "pole_id": 56
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243182624278362,
+          53.26805492382898
+        ]
+      },
+      "properties": {
+        "pole_id": 57
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245656461791719,
+          53.26814722374116
+        ]
+      },
+      "properties": {
+        "pole_id": 58
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245862931982667,
+          53.26828118501077
+        ]
+      },
+      "properties": {
+        "pole_id": 59
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244032517042612,
+          53.26809204023965
+        ]
+      },
+      "properties": {
+        "pole_id": 60
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5246000771458806,
+          53.26809403312967
+        ]
+      },
+      "properties": {
+        "pole_id": 61
+      }
+    }
+  ]
+}

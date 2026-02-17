@@ -21,8 +21,8 @@ import image_gps_pixel_show_poles
 # CONFIGURATION
 # ======================
 MODEL_PATH = "results_resnet/yolo_masks/vineyard_segmentation_paper_1/train_resnet101_20260203_135036/resnet101_vineyard_segmentation_paper_1_unet_image_size_1280x960_batch_size_2.pth"
-INPUT_DIR = "../../images/riseholme/march_2025/65_feet/"
-OUTPUT_DIR = "resnet_inference/vineyard_segmentation_paper_1/full_images_2_filtered/train_resnet101_20260203_135036/inference_results_full/march_2025/65_feet/"
+INPUT_DIR = "../../images/riseholme/july_2025/100_feet/"
+OUTPUT_DIR = "resnet_inference/vineyard_segmentation_paper_1/full_images_2_filtered/train_resnet101_20260203_135036/inference_results_full/july_2025/100_feet/"
 
 BACKBONE = "resnet101"
 

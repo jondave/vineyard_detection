@@ -1,0 +1,1385 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5246126051341404,
+          53.26815584902644
+        ]
+      },
+      "properties": {
+        "confidence": 0.9999736547470093,
+        "row_id": 818,
+        "image": "DJI_20250701153337_0046_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524345998599072,
+          53.26812259491128
+        ]
+      },
+      "properties": {
+        "confidence": 0.9999725818634033,
+        "row_id": 870,
+        "image": "DJI_20250701153137_0001_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242438906938091,
+          53.26813500478735
+        ]
+      },
+      "properties": {
+        "confidence": 0.9999589920043945,
+        "row_id": 149,
+        "image": "DJI_20250701153244_0026_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245317061368112,
+          53.26811116813666
+        ]
+      },
+      "properties": {
+        "confidence": 0.9999430179595947,
+        "row_id": 653,
+        "image": "DJI_20250701153334_0045_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243088665259373,
+          53.2681268070398
+        ]
+      },
+      "properties": {
+        "confidence": 0.9999334812164307,
+        "row_id": 327,
+        "image": "DJI_20250701153137_0001_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244884895340409,
+          53.268116438915264
+        ]
+      },
+      "properties": {
+        "confidence": 0.9999315738677979,
+        "row_id": 16,
+        "image": "DJI_20250701153340_0047_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242241146905834,
+          53.268025594837425
+        ]
+      },
+      "properties": {
+        "confidence": 0.9999278783798218,
+        "row_id": 589,
+        "image": "DJI_20250701153238_0024_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244662108736915,
+          53.268007133915305
+        ]
+      },
+      "properties": {
+        "confidence": 0.9999115467071533,
+        "row_id": 288,
+        "image": "DJI_20250701153331_0044_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242285394832215,
+          53.268086082416936
+        ]
+      },
+      "properties": {
+        "confidence": 0.9999048709869385,
+        "row_id": 887,
+        "image": "DJI_20250701153249_0028_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243842908031298,
+          53.268118006808294
+        ]
+      },
+      "properties": {
+        "confidence": 0.9998881816864014,
+        "row_id": 55,
+        "image": "DJI_20250701153137_0001_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243818166772408,
+          53.268192965513116
+        ]
+      },
+      "properties": {
+        "confidence": 0.9998849630355835,
+        "row_id": 121,
+        "image": "DJI_20250701153202_0010_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244026217451871,
+          53.26801393606341
+        ]
+      },
+      "properties": {
+        "confidence": 0.9998646974563599,
+        "row_id": 879,
+        "image": "DJI_20250701153148_0005_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243323330570188,
+          53.26813889057056
+        ]
+      },
+      "properties": {
+        "confidence": 0.9998562335968018,
+        "row_id": 659,
+        "image": "DJI_20250701153220_0017_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243780245957089,
+          53.26806919029864
+        ]
+      },
+      "properties": {
+        "confidence": 0.9998445510864258,
+        "row_id": 246,
+        "image": "DJI_20250701153145_0004_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245034757463062,
+          53.26816444231586
+        ]
+      },
+      "properties": {
+        "confidence": 0.9998332262039185,
+        "row_id": 655,
+        "image": "DJI_20250701153331_0044_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243394325530445,
+          53.26807325258125
+        ]
+      },
+      "properties": {
+        "confidence": 0.999796450138092,
+        "row_id": 248,
+        "image": "DJI_20250701153145_0004_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524324701126338,
+          53.2681825218126
+        ]
+      },
+      "properties": {
+        "confidence": 0.9997885823249817,
+        "row_id": 253,
+        "image": "DJI_20250701153148_0005_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243093550578515,
+          53.26819848529006
+        ]
+      },
+      "properties": {
+        "confidence": 0.9997698664665222,
+        "row_id": 23,
+        "image": "DJI_20250701153212_0014_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244304128882793,
+          53.26801181157359
+        ]
+      },
+      "properties": {
+        "confidence": 0.9997530579566956,
+        "row_id": 842,
+        "image": "DJI_20250701153334_0045_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245805256772119,
+          53.26817866557072
+        ]
+      },
+      "properties": {
+        "confidence": 0.9997393488883972,
+        "row_id": 819,
+        "image": "DJI_20250701153255_0030_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243283020608087,
+          53.26802176054279
+        ]
+      },
+      "properties": {
+        "confidence": 0.9997333884239197,
+        "row_id": 86,
+        "image": "DJI_20250701153151_0006_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245376584780613,
+          53.268164774845964
+        ]
+      },
+      "properties": {
+        "confidence": 0.9997231364250183,
+        "row_id": 848,
+        "image": "DJI_20250701153340_0047_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524283593376086,
+          53.26809268077111
+        ]
+      },
+      "properties": {
+        "confidence": 0.9997217059135437,
+        "row_id": 213,
+        "image": "DJI_20250701153218_0016_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244423621570088,
+          53.26817238137817
+        ]
+      },
+      "properties": {
+        "confidence": 0.9997145533561707,
+        "row_id": 575,
+        "image": "DJI_20250701153148_0005_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245741274496701,
+          53.268160425099545
+        ]
+      },
+      "properties": {
+        "confidence": 0.9996927976608276,
+        "row_id": 819,
+        "image": "DJI_20250701153340_0047_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242609081806395,
+          53.2681512504721
+        ]
+      },
+      "properties": {
+        "confidence": 0.9996603727340698,
+        "row_id": 448,
+        "image": "DJI_20250701153207_0012_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242757865395509,
+          53.268201868709035
+        ]
+      },
+      "properties": {
+        "confidence": 0.9995914101600647,
+        "row_id": 576,
+        "image": "DJI_20250701153207_0012_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5240915963036242,
+          53.26794501449519
+        ]
+      },
+      "properties": {
+        "confidence": 0.9995731711387634,
+        "row_id": null,
+        "image": "DJI_20250701153259_0032_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524352456971307,
+          53.26819566894375
+        ]
+      },
+      "properties": {
+        "confidence": 0.9995449185371399,
+        "row_id": 659,
+        "image": "DJI_20250701153207_0012_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245049855866095,
+          53.26800752292283
+        ]
+      },
+      "properties": {
+        "confidence": 0.9995142221450806,
+        "row_id": 289,
+        "image": "DJI_20250701153337_0046_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244338512531225,
+          53.26811882618959
+        ]
+      },
+      "properties": {
+        "confidence": 0.9994478821754456,
+        "row_id": 823,
+        "image": "DJI_20250701153151_0006_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242536893449561,
+          53.26810270878931
+        ]
+      },
+      "properties": {
+        "confidence": 0.9993354678153992,
+        "row_id": 258,
+        "image": "DJI_20250701153204_0011_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244203044865697,
+          53.26819121174354
+        ]
+      },
+      "properties": {
+        "confidence": 0.9993047714233398,
+        "row_id": 123,
+        "image": "DJI_20250701153202_0010_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244608134059149,
+          53.26806597138972
+        ]
+      },
+      "properties": {
+        "confidence": 0.9992944002151489,
+        "row_id": 347,
+        "image": "DJI_20250701153157_0008_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243482315370172,
+          53.2680333950509
+        ]
+      },
+      "properties": {
+        "confidence": 0.9992844462394714,
+        "row_id": 376,
+        "image": "DJI_20250701153215_0015_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242937368425613,
+          53.26818462639237
+        ]
+      },
+      "properties": {
+        "confidence": 0.9992424249649048,
+        "row_id": 503,
+        "image": "DJI_20250701153241_0025_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245348673072499,
+          53.268004571082905
+        ]
+      },
+      "properties": {
+        "confidence": 0.9992309808731079,
+        "row_id": 862,
+        "image": "DJI_20250701153244_0026_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242556526986114,
+          53.26818251317771
+        ]
+      },
+      "properties": {
+        "confidence": 0.9991945624351501,
+        "row_id": 499,
+        "image": "DJI_20250701153238_0024_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245735002018258,
+          53.268001361611596
+        ]
+      },
+      "properties": {
+        "confidence": 0.9990831613540649,
+        "row_id": 861,
+        "image": "DJI_20250701153241_0025_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242605675904064,
+          53.26802634093376
+        ]
+      },
+      "properties": {
+        "confidence": 0.999082088470459,
+        "row_id": 399,
+        "image": "DJI_20250701153244_0026_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242900099987491,
+          53.26814132571218
+        ]
+      },
+      "properties": {
+        "confidence": 0.9989551305770874,
+        "row_id": 10,
+        "image": "DJI_20250701153223_0018_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243632253225443,
+          53.26801788352754
+        ]
+      },
+      "properties": {
+        "confidence": 0.998916745185852,
+        "row_id": 88,
+        "image": "DJI_20250701153148_0005_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5248614515707637,
+          53.26819696539621
+        ]
+      },
+      "properties": {
+        "confidence": 0.9987998008728027,
+        "row_id": null,
+        "image": "DJI_20250701153145_0004_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243768549724219,
+          53.268140247348576
+        ]
+      },
+      "properties": {
+        "confidence": 0.9987584352493286,
+        "row_id": 214,
+        "image": "DJI_20250701153209_0013_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243076420628118,
+          53.26803772255768
+        ]
+      },
+      "properties": {
+        "confidence": 0.9987459182739258,
+        "row_id": 371,
+        "image": "DJI_20250701153218_0016_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244680266065666,
+          53.2681715191537
+        ]
+      },
+      "properties": {
+        "confidence": 0.9986841082572937,
+        "row_id": 197,
+        "image": "DJI_20250701153334_0045_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242347992428401,
+          53.268047831873034
+        ]
+      },
+      "properties": {
+        "confidence": 0.9986435770988464,
+        "row_id": 413,
+        "image": "DJI_20250701153218_0016_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245082827389885,
+          53.268192530509126
+        ]
+      },
+      "properties": {
+        "confidence": 0.9986349940299988,
+        "row_id": 171,
+        "image": "DJI_20250701153255_0030_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242728545845282,
+          53.26804448757679
+        ]
+      },
+      "properties": {
+        "confidence": 0.9985560774803162,
+        "row_id": 228,
+        "image": "DJI_20250701153209_0013_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243026366109068,
+          53.26807856345019
+        ]
+      },
+      "properties": {
+        "confidence": 0.998514711856842,
+        "row_id": 327,
+        "image": "DJI_20250701153140_0002_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244108597613538,
+          53.2681307039286
+        ]
+      },
+      "properties": {
+        "confidence": 0.9984363913536072,
+        "row_id": 657,
+        "image": "DJI_20250701153220_0017_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243636585042436,
+          53.26817934837915
+        ]
+      },
+      "properties": {
+        "confidence": 0.9983824491500854,
+        "row_id": 341,
+        "image": "DJI_20250701153148_0005_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244085044954088,
+          53.26817570030419
+        ]
+      },
+      "properties": {
+        "confidence": 0.9980989098548889,
+        "row_id": 824,
+        "image": "DJI_20250701153151_0006_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243599862881901,
+          53.26808448564289
+        ]
+      },
+      "properties": {
+        "confidence": 0.9980223178863525,
+        "row_id": 702,
+        "image": "DJI_20250701153218_0016_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5246384378988207,
+          53.26816528019971
+        ]
+      },
+      "properties": {
+        "confidence": 0.9966484904289246,
+        "row_id": 569,
+        "image": "DJI_20250701153302_0033_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242741899218278,
+          53.268073769685444
+        ]
+      },
+      "properties": {
+        "confidence": 0.9958577752113342,
+        "row_id": 161,
+        "image": "DJI_20250701153238_0024_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245593115581766,
+          53.26811201924163
+        ]
+      },
+      "properties": {
+        "confidence": 0.9952552914619446,
+        "row_id": 819,
+        "image": "DJI_20250701153345_0049_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244192410766481,
+          53.26806802749815
+        ]
+      },
+      "properties": {
+        "confidence": 0.9951658248901367,
+        "row_id": 351,
+        "image": "DJI_20250701153154_0007_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242986918143068,
+          53.26802326717678
+        ]
+      },
+      "properties": {
+        "confidence": 0.9947934746742249,
+        "row_id": 865,
+        "image": "DJI_20250701153241_0025_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5246089006534327,
+          53.26805916516383
+        ]
+      },
+      "properties": {
+        "confidence": 0.9923644065856934,
+        "row_id": 693,
+        "image": "DJI_20250701153305_0034_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245411440637656,
+          53.26802008993107
+        ]
+      },
+      "properties": {
+        "confidence": 0.9879839420318604,
+        "row_id": 774,
+        "image": "DJI_20250701153255_0030_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5247426561002706,
+          53.268256246361425
+        ]
+      },
+      "properties": {
+        "confidence": 0.987348198890686,
+        "row_id": null,
+        "image": "DJI_20250701153140_0002_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5248331334870884,
+          53.2681073231573
+        ]
+      },
+      "properties": {
+        "confidence": 0.9819258451461792,
+        "row_id": null,
+        "image": "DJI_20250701153148_0005_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243253182996231,
+          53.26809219936832
+        ]
+      },
+      "properties": {
+        "confidence": 0.9796609878540039,
+        "row_id": 414,
+        "image": "DJI_20250701153207_0012_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5246246708975632,
+          53.268118166619445
+        ]
+      },
+      "properties": {
+        "confidence": 0.9774491190910339,
+        "row_id": 700,
+        "image": "DJI_20250701153256_0031_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242022472187585,
+          53.26791507493492
+        ]
+      },
+      "properties": {
+        "confidence": 0.9749037623405457,
+        "row_id": null,
+        "image": "DJI_20250701153255_0030_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244275168081437,
+          53.26802904426752
+        ]
+      },
+      "properties": {
+        "confidence": 0.9740034937858582,
+        "row_id": 290,
+        "image": "DJI_20250701153209_0013_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.524388774667302,
+          53.26803291128769
+        ]
+      },
+      "properties": {
+        "confidence": 0.973655641078949,
+        "row_id": 372,
+        "image": "DJI_20250701153209_0013_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244025823975557,
+          53.268084481488785
+        ]
+      },
+      "properties": {
+        "confidence": 0.9595441818237305,
+        "row_id": 698,
+        "image": "DJI_20250701153207_0012_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245452222511668,
+          53.2680526640566
+        ]
+      },
+      "properties": {
+        "confidence": 0.9577807784080505,
+        "row_id": 330,
+        "image": "DJI_20250701153238_0024_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5246154114829129,
+          53.26817288374474
+        ]
+      },
+      "properties": {
+        "confidence": 0.9508533477783203,
+        "row_id": 818,
+        "image": "DJI_20250701153255_0030_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5246001130707298,
+          53.2680135943744
+        ]
+      },
+      "properties": {
+        "confidence": 0.9492965340614319,
+        "row_id": 693,
+        "image": "DJI_20250701153256_0031_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244993552793507,
+          53.268023154688116
+        ]
+      },
+      "properties": {
+        "confidence": 0.9490472674369812,
+        "row_id": 127,
+        "image": "DJI_20250701153255_0030_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5241710292195129,
+          53.267924968806405
+        ]
+      },
+      "properties": {
+        "confidence": 0.9485054612159729,
+        "row_id": null,
+        "image": "DJI_20250701153256_0031_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244697083190428,
+          53.26818945860148
+        ]
+      },
+      "properties": {
+        "confidence": 0.9343777298927307,
+        "row_id": 656,
+        "image": "DJI_20250701153209_0013_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5246037526466888,
+          53.268104866284894
+        ]
+      },
+      "properties": {
+        "confidence": 0.9226507544517517,
+        "row_id": 325,
+        "image": "DJI_20250701153334_0045_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245124291013223,
+          53.2680661753686
+        ]
+      },
+      "properties": {
+        "confidence": 0.9148264527320862,
+        "row_id": 475,
+        "image": "DJI_20250701153345_0049_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245484837886248,
+          53.268126061481375
+        ]
+      },
+      "properties": {
+        "confidence": 0.9144992828369141,
+        "row_id": 508,
+        "image": "DJI_20250701153256_0031_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244883249161514,
+          53.26805638910437
+        ]
+      },
+      "properties": {
+        "confidence": 0.9088728427886963,
+        "row_id": 718,
+        "image": "DJI_20250701153329_0043_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242757633471402,
+          53.268127994893185
+        ]
+      },
+      "properties": {
+        "confidence": 0.9043554067611694,
+        "row_id": 850,
+        "image": "DJI_20250701153228_0020_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244605454142274,
+          53.26802696634947
+        ]
+      },
+      "properties": {
+        "confidence": 0.8828272819519043,
+        "row_id": 858,
+        "image": "DJI_20250701153255_0030_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5241161440189885,
+          53.267921927920334
+        ]
+      },
+      "properties": {
+        "confidence": 0.8661137819290161,
+        "row_id": null,
+        "image": "DJI_20250701153345_0049_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245853798468009,
+          53.268121917869216
+        ]
+      },
+      "properties": {
+        "confidence": 0.8320587873458862,
+        "row_id": 456,
+        "image": "DJI_20250701153256_0031_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5249139416720306,
+          53.268168144087
+        ]
+      },
+      "properties": {
+        "confidence": 0.8162364959716797,
+        "row_id": null,
+        "image": "DJI_20250701153145_0004_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243000818310756,
+          53.26789620792494
+        ]
+      },
+      "properties": {
+        "confidence": 0.8079805374145508,
+        "row_id": null,
+        "image": "DJI_20250701153256_0031_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5245074042854643,
+          53.26812949615222
+        ]
+      },
+      "properties": {
+        "confidence": 0.8064165711402893,
+        "row_id": 439,
+        "image": "DJI_20250701153256_0031_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5241776595315397,
+          53.2678774532514
+        ]
+      },
+      "properties": {
+        "confidence": 0.793194055557251,
+        "row_id": null,
+        "image": "DJI_20250701153255_0030_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5242454781593328,
+          53.26790586607946
+        ]
+      },
+      "properties": {
+        "confidence": 0.7917644381523132,
+        "row_id": null,
+        "image": "DJI_20250701153255_0030_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243514794839405,
+          53.26784972858327
+        ]
+      },
+      "properties": {
+        "confidence": 0.7825972437858582,
+        "row_id": null,
+        "image": "DJI_20250701153255_0030_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5243394626996146,
+          53.267893150290085
+        ]
+      },
+      "properties": {
+        "confidence": 0.7557652592658997,
+        "row_id": null,
+        "image": "DJI_20250701153204_0011_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5244014980210231,
+          53.267861828745446
+        ]
+      },
+      "properties": {
+        "confidence": 0.7169668674468994,
+        "row_id": null,
+        "image": "DJI_20250701153255_0030_W.JPG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5248095399790471,
+          53.26828218661451
+        ]
+      },
+      "properties": {
+        "confidence": 0.715461015701294,
+        "row_id": null,
+        "image": "DJI_20250701153137_0001_W.JPG"
+      }
+    }
+  ]
+}
