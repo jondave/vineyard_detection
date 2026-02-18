@@ -3,7 +3,6 @@ import math
 from typing import Dict, List, Tuple
 
 import yaml
-from geopy.distance import geodesic
 import numpy as np
 
 
@@ -36,10 +35,11 @@ def find_centre(topo_map_point_list, topo_map_line_list):
     line_coords = [coord for line in topo_map_line_list for coord in line["coordinates"]]
     all_coords = point_coords + line_coords
     if not all_coords:
-        return (0, 0)
+        return (0.0, 0.0)
     latitudes = [coord[1] for coord in all_coords]
     longitudes = [coord[0] for coord in all_coords]
-    return (sum(latitudes) / len(latitudes), sum(longitudes) / len(longitudes))
+    # Return as (lon, lat) to match convert_to_meters and downstream consumers
+    return (sum(longitudes) / len(longitudes), sum(latitudes) / len(latitudes))
 
 
 def bearing(point1, point2):
@@ -57,6 +57,7 @@ def bearing(point1, point2):
 
 def interpolate_along_line(start_coord, end_coord, spacing_m):
     """Interpolate points along a line at regular spacing (in meters)."""
+    from geopy.distance import geodesic
     lat1, lon1 = start_coord[1], start_coord[0]
     lat2, lon2 = end_coord[1], end_coord[0]
     
@@ -78,6 +79,7 @@ def extend_row_endpoints(start_coord, end_coord, extend_distance_m):
     Extend a row line by extend_distance_m at both ends.
     Returns (new_start, new_end) in [lon, lat] format.
     """
+    from geopy.distance import geodesic
     lat1, lon1 = start_coord[1], start_coord[0]
     lat2, lon2 = end_coord[1], end_coord[0]
     
@@ -251,12 +253,100 @@ def _extend_point(start_p: List[float], end_p: List[float], dist_m: float) -> Li
     return [new_lon, new_lat]
 
 
+def _polygon_to_centerline(polygon_coords: List[List[float]], num_samples: int = 32) -> List[List[float]]:
+    """Approximate a polygon's centreline by sampling along its major axis.
+
+    Steps:
+    - Convert exterior ring to local XY about the polygon centroid
+    - Compute principal axis (PCA) of the polygon points
+    - For evenly spaced positions along the principal axis, find min/max
+      perpendicular offsets and take their midpoint
+    - Convert midpoints back to (lon, lat)
+
+    This is a heuristic but works well for narrow vine-row polygons.
+    """
+    if not polygon_coords:
+        return []
+
+    ring = polygon_coords[0]
+    arr = np.array(ring, dtype=np.float64)  # shape (N, 2) columns: lon, lat
+    if arr.shape[0] < 3:
+        return arr.tolist()
+
+    center_lon = float(arr[:, 0].mean())
+    center_lat = float(arr[:, 1].mean())
+
+    # to local meters
+    lat_to_m = 111111.0
+    lon_to_m = 111111.0 * math.cos(math.radians(center_lat))
+    xy = np.column_stack([ (arr[:, 0] - center_lon) * lon_to_m, (arr[:, 1] - center_lat) * lat_to_m ])
+
+    # PCA / dominant direction
+    cov = np.cov(xy.T)
+    eigvals, eigvecs = np.linalg.eig(cov)
+    dominant_idx = int(np.argmax(eigvals))
+    dominant = eigvecs[:, dominant_idx].astype(np.float64)
+    if np.linalg.norm(dominant) == 0:
+        dominant = np.array([1.0, 0.0])
+    dominant = dominant / np.linalg.norm(dominant)
+    perp = np.array([-dominant[1], dominant[0]])
+
+    projections = xy @ dominant
+    perp_offsets = xy @ perp
+
+    min_p, max_p = float(projections.min()), float(projections.max())
+    if max_p - min_p < 1e-6:
+        # degenerate -> return centroid
+        return [[float(center_lon), float(center_lat)]]
+
+    samples = np.linspace(min_p, max_p, num_samples)
+    centerline_xy = []
+    for s in samples:
+        # find points with nearest projection to s
+        idx = np.argsort(np.abs(projections - s))[:8]
+        sel_proj = projections[idx]
+        sel_perp = perp_offsets[idx]
+        min_perp = float(np.min(sel_perp))
+        max_perp = float(np.max(sel_perp))
+        mid_perp = 0.5 * (min_perp + max_perp)
+        pt_xy = dominant * s + perp * mid_perp
+        # back to lon/lat
+        lon = center_lon + (pt_xy[0] / lon_to_m)
+        lat = center_lat + (pt_xy[1] / lat_to_m)
+        centerline_xy.append([lon, lat])
+
+    # remove duplicates / near-duplicates
+    out = []
+    prev = None
+    for p in centerline_xy:
+        if prev is None or haversine(prev[1], prev[0], p[1], p[0]) > 0.01:
+            out.append(p)
+            prev = p
+    return out
+
+
 def generate_aisle_topology(vine_rows_geojson: Dict, node_spacing_m: float = 2.0, extend_distance_m: float = 3.0, cross_row_distance_m: float = 6.0):
     """
     Generate aisle (midline) topology between adjacent, sorted vine rows.
     Returns (nodes, edges) where nodes are dicts containing `topo_map_node_id` and `coordinates`.
     """
-    rows = [f for f in vine_rows_geojson.get("features", []) if f.get("geometry", {}).get("type") == "LineString"]
+    features = vine_rows_geojson.get("features", [])
+
+    # Accept both LineString rows and narrow Polygon rows (convert polygons -> centerline)
+    rows = []
+    for f in features:
+        geom = f.get("geometry", {})
+        gtype = geom.get("type")
+        coords = geom.get("coordinates")
+        if not coords:
+            continue
+        if gtype == "LineString":
+            rows.append({"type": "Feature", "geometry": {"type": "LineString", "coordinates": coords}})
+        elif gtype == "Polygon":
+            centerline = _polygon_to_centerline(coords)
+            if centerline and len(centerline) >= 2:
+                rows.append({"type": "Feature", "geometry": {"type": "LineString", "coordinates": centerline}})
+
     if len(rows) < 2:
         return [], []
 
@@ -369,6 +459,24 @@ def generate_aisle_topology(vine_rows_geojson: Dict, node_spacing_m: float = 2.0
                             if d <= cross_row_distance_m:
                                 edges.append({"from": a_id, "to": b_id, "type": "cross"})
 
+    # --- Ensure every edge has a reciprocal (reverse) edge for all edge types ---
+    # Build a set of (from,to,type) to detect duplicates and then add reverse entries.
+    seen = set()
+    new_edges = []
+    for e in edges:
+        key = (e.get("from"), e.get("to"), e.get("type"))
+        if key in seen:
+            continue
+        seen.add(key)
+        new_edges.append(e)
+        rev_key = (e.get("to"), e.get("from"), e.get("type"))
+        if rev_key not in seen:
+            # append a reversed copy
+            seen.add(rev_key)
+            new_edges.append({"from": e.get("to"), "to": e.get("from"), "type": e.get("type")})
+
+    edges = new_edges
+
     return nodes, edges
 
 
@@ -399,12 +507,49 @@ def build_topological_nodes_from_rows(
 
 
 def generate_datum_yaml(center_coordinates):
-    return yaml.dump({"datum_latitude": center_coordinates[0], "datum_longitude": center_coordinates[1]}, default_flow_style=False)
+    # center_coordinates is (lon, lat).  Coerce to plain Python floats to avoid
+    # YAML emitting numpy scalar objects.
+    lon, lat = center_coordinates
+    return yaml.dump({"datum_latitude": float(lat), "datum_longitude": float(lon)}, default_flow_style=False)
 
 
 def generate_topological_map(topo_map_point_list, last_updated, metric_map, name, center_coordinates, edges_list=None):
+    # Build a tmap2-style structure (matches Orion `TMapTemplates` top-level keys)
     topo_map_data = {
-        "meta": {"last_updated": last_updated, "metric_map": metric_map, "name": name},
+        "meta": {"last_updated": last_updated},
+        "metric_map": metric_map,
+        "name": name,
+        "pointset": name,
+        "transformation": {
+            "child": "topo_map",
+            "parent": "map",
+            "rotation": {"w": 1.0, "x": 0.0, "y": 0.0, "z": 0.0},
+            "translation": {"x": 0.0, "y": 0.0, "z": 0.0},
+        },
+        "verts": {
+            "verts": [
+                {"verts": [
+                    {"x": -0.13, "y":  0.213},
+                    {"x": -0.242, "y":  0.059},
+                    {"x": -0.213, "y": -0.13},
+                    {"x": -0.059, "y": -0.242},
+                    {"x":  0.13, "y": -0.213},
+                    {"x":  0.242, "y": -0.059},
+                    {"x":  0.213, "y":  0.13},
+                    {"x":  0.059, "y":  0.242},
+                ]},
+                {"verts": [
+                    {"x":  0.640, "y": -1.070},
+                    {"x":  0.875, "y": -0.355},
+                    {"x":  0.740, "y":  0.590},
+                    {"x":  0.305, "y":  1.205},
+                    {"x": -0.640, "y":  1.070},
+                    {"x": -0.875, "y":  0.355},
+                    {"x": -0.740, "y": -0.590},
+                    {"x": -0.305, "y": -1.205},
+                ]},
+            ]
+        },
         "nodes": [],
     }
     node_dict = {}
@@ -427,7 +572,10 @@ def generate_topological_map(topo_map_point_list, last_updated, metric_map, name
                 "properties": {"xy_goal_tolerance": 0.3, "yaw_goal_tolerance": 0.1},
                 "restrictions_planning": True,
                 "restrictions_runtime": "obstacleFree_1",
-                "verts": [{"x": lon_meters, "y": lat_meters}],
+                # Reference the predefined node shape (verts) from the top-level `verts` so
+                # YAML dumper emits an alias (e.g. `verts: *vert1`) instead of repeating
+                # per-node vert geometry.
+                "verts": topo_map_data["verts"]["verts"][1]["verts"],
             },
         }
         topo_map_data["nodes"].append(node_entry)
@@ -439,10 +587,23 @@ def generate_topological_map(topo_map_point_list, last_updated, metric_map, name
             from_node = edge.get("from")
             to_node = edge.get("to")
             if from_node in node_dict and to_node in node_dict:
+                # Use the richer edge structure used by Orion (includes action_type, goal template, etc.)
                 edge_entry = {
                     "action": "move_base",
+                    "action_type": "move_base_msgs/MoveBaseGoal",
+                    "config": [],
                     "edge_id": f"{from_node}_to_{to_node}",
+                    "fail_policy": "fail",
+                    "fluid_navigation": True,
+                    "goal": {
+                        "target_pose": {
+                            "header": {"frame_id": "$node.parent_frame"},
+                            "pose": "$node.pose",
+                        }
+                    },
                     "node": to_node,
+                    "recovery_behaviours_config": "",
+                    "restrictions_planning": True,
                     "restrictions_runtime": "obstacleFree_1",
                 }
                 for node_entry in topo_map_data["nodes"]:

@@ -341,7 +341,7 @@ def api_export_topo():
                 result={
                     "topo_yaml": topo_yaml,
                     "datum_yaml": datum_yaml,
-                    "topo_filename": f"{map_name}_topological_map.yaml",
+                    "topo_filename": f"{map_name}_topological_map.tmap2.yaml",
                     "datum_filename": f"{map_name}_datum.yaml",
                 },
             )
