@@ -284,17 +284,35 @@
         <div>
           <label for="confidenceSlider">Confidence Threshold</label>
           <div class="range-row">
-            <input type="range" id="confidenceSlider" min="0" max="1" step="0.01" value="0.4">
-            <div class="range-value" id="confidenceValue">0.40</div>
+            <input type="range" id="confidenceSlider" min="0" max="1" step="0.01" value="0.15">
+            <div class="range-value" id="confidenceValue">0.15</div>
           </div>
         </div>
 
         <div>
-          <label for="clusterSlider">Cluster Radius (meters)</label>
+          <label for="iouSlider">IoU Threshold (YOLO)</label>
           <div class="range-row">
-            <input type="range" id="clusterSlider" min="0.5" max="6" step="0.1" value="1.7">
-            <div class="range-value" id="clusterValue">1.7</div>
+            <input type="range" id="iouSlider" min="0.1" max="0.95" step="0.01" value="0.30">
+            <div class="range-value" id="iouValue">0.30</div>
           </div>
+        </div>
+
+        <div>
+          <label for="clusterSlider" id="clusterPrimaryLabel">Cluster Radius (meters)</label>
+          <div class="range-row">
+            <input type="range" id="clusterSlider" min="0.5" max="6" step="0.1" value="2.0">
+            <div class="range-value" id="clusterValue">2.0</div>
+          </div>
+        </div>
+
+        <div id="dbscanMinSamplesGroup" class="form-group" style="display:none;">
+          <label for="dbscanMinSamples">DBSCAN min samples</label>
+          <input type="number" id="dbscanMinSamples" min="1" step="1" value="3">
+        </div>
+
+        <div id="kmeansKGroup" class="form-group" style="display:none;">
+          <label for="kmeansK">KMeans k</label>
+          <input type="number" id="kmeansK" min="1" step="1" value="40">
         </div>
 
         <div>
@@ -309,6 +327,16 @@
         </div>
 
         <button id="applyFilter" class="secondary">Apply Filter</button>
+
+        <div class="form-group">
+          <label for="rowDirectionMode">Row Direction</label>
+          <select id="rowDirectionMode">
+            <option value="auto">Auto (vine rows/PCA)</option>
+            <option value="perpendicular_auto">Perpendicular to Auto (90 deg)</option>
+            <option value="north_south">General North-South</option>
+          </select>
+        </div>
+
         <button id="generateRows" class="ghost">Generate Rows</button>
 
         <div class="status" id="filterStatus"></div>
@@ -386,13 +414,21 @@
     const loadSessionButton = document.getElementById("loadSession");
     const applyButton = document.getElementById("applyFilter");
     const generateRowsButton = document.getElementById("generateRows");
+    const rowDirectionMode = document.getElementById("rowDirectionMode");
     const exportButton = document.getElementById("exportTopo");
     const updateTopoButton = document.getElementById("updateTopo");
     const saveGeoJSONButton = document.getElementById("saveGeoJSON");
 
     const confidenceSlider = document.getElementById("confidenceSlider");
+    const iouSlider = document.getElementById("iouSlider");
     const clusterSlider = document.getElementById("clusterSlider");
+    const clusterPrimaryLabel = document.getElementById("clusterPrimaryLabel");
+    const dbscanMinSamplesGroup = document.getElementById("dbscanMinSamplesGroup");
+    const dbscanMinSamples = document.getElementById("dbscanMinSamples");
+    const kmeansKGroup = document.getElementById("kmeansKGroup");
+    const kmeansK = document.getElementById("kmeansK");
     const confidenceValue = document.getElementById("confidenceValue");
+    const iouValue = document.getElementById("iouValue");
     const clusterValue = document.getElementById("clusterValue");
     const filterPanel = document.getElementById("filterPanel");
     const topoPanel = document.getElementById("topoPanel");
@@ -524,7 +560,64 @@
 
     function syncSliderText() {
       confidenceValue.textContent = Number(confidenceSlider.value).toFixed(2);
+      iouValue.textContent = Number(iouSlider.value).toFixed(2);
       clusterValue.textContent = Number(clusterSlider.value).toFixed(1);
+    }
+
+    function updateClusterParamUI() {
+      const algo = (clusterAlgo.value || "").toLowerCase();
+
+      dbscanMinSamplesGroup.style.display = "none";
+      kmeansKGroup.style.display = "none";
+      clusterSlider.style.display = "block";
+      clusterValue.style.display = "block";
+
+      if (algo === "agglomerative") {
+        clusterPrimaryLabel.textContent = "Agglomerative dist thresh (m)";
+        clusterSlider.min = "0.5";
+        clusterSlider.max = "6";
+        clusterSlider.step = "0.1";
+        clusterSlider.value = "2.0";
+      } else if (algo === "dbscan") {
+        clusterPrimaryLabel.textContent = "DBSCAN eps (m)";
+        clusterSlider.min = "0.2";
+        clusterSlider.max = "6";
+        clusterSlider.step = "0.05";
+        clusterSlider.value = "0.5";
+        dbscanMinSamples.value = "3";
+        dbscanMinSamplesGroup.style.display = "flex";
+      } else if (algo === "kmeans") {
+        clusterPrimaryLabel.textContent = "KMeans scale eps (m)";
+        clusterSlider.min = "0.2";
+        clusterSlider.max = "6";
+        clusterSlider.step = "0.1";
+        clusterSlider.value = "1.5";
+        kmeansK.value = "40";
+        kmeansKGroup.style.display = "flex";
+      } else if (algo === "hdbscan") {
+        clusterPrimaryLabel.textContent = "HDBSCAN scale eps (m)";
+        clusterSlider.min = "0.2";
+        clusterSlider.max = "6";
+        clusterSlider.step = "0.1";
+      } else {
+        clusterPrimaryLabel.textContent = "Clustering parameter";
+        clusterSlider.min = "0.2";
+        clusterSlider.max = "6";
+        clusterSlider.step = "0.1";
+      }
+
+      syncSliderText();
+    }
+
+    function isYoloModel(modelPath) {
+      if (!modelPath) return false;
+      const lower = modelPath.toLowerCase();
+      return lower.endsWith(".pt") || lower.includes("yolo");
+    }
+
+    function applyModelDefaults() {
+      iouSlider.value = isYoloModel(modelSelect.value) ? "0.30" : "0.60";
+      syncSliderText();
     }
 
     function ensureFeatureIds(collection) {
@@ -554,7 +647,8 @@
         ? `${stats.raw_poles} raw → ${stats.clustered_poles} clustered`
         : `${stats.raw_poles} raw poles`;
       const algo = stats.cluster_algo ? `, ${stats.cluster_algo}` : "";
-      return `${images}, ${poles}${algo}`;
+      const params = stats.cluster_params ? `, params ${JSON.stringify(stats.cluster_params)}` : "";
+      return `${images}, ${poles}${algo}${params}`;
     }
 
     function setProgress(progressEl, barEl, labelEl, percent, isActive) {
@@ -614,6 +708,7 @@
       const response = await fetch("/api/models");
       const data = await response.json();
       modelSelect.innerHTML = data.models.map(model => `<option value="${model.path}">${model.label}</option>`).join("");
+      applyModelDefaults();
     }
 
     async function loadSessions() {
@@ -654,6 +749,7 @@
         folder: folderSelect.value,
         model_path: modelSelect.value,
         confidence: Number(confidenceSlider.value),
+        iou_threshold: Number(iouSlider.value),
         cluster_radius: Number(clusterSlider.value),
         cluster_algo: clusterAlgo.value
       };
@@ -711,6 +807,10 @@
         confidence: Number(confidenceSlider.value),
         cluster_radius: Number(clusterSlider.value),
         cluster_algo: clusterAlgo.value,
+        cluster_params: {
+          dbscan_min_samples: Number(dbscanMinSamples.value),
+          kmeans_k: Number(kmeansK.value)
+        },
         rows: rowsGeojson,
         filter_vine_rows: filterVineRows ? filterVineRows.checked : true
       };
@@ -759,7 +859,8 @@
       
       const payload = {
         poles: polesForRows,
-        session_id: sessionId
+        session_id: sessionId,
+        row_direction_mode: rowDirectionMode ? rowDirectionMode.value : "auto"
       };
       
       const response = await fetch("/api/generate_rows", {
@@ -1137,13 +1238,17 @@
     saveGeoJSONButton.addEventListener("click", saveGeoJSON);
 
     confidenceSlider.addEventListener("input", syncSliderText);
+    iouSlider.addEventListener("input", syncSliderText);
     clusterSlider.addEventListener("input", syncSliderText);
+    modelSelect.addEventListener("change", applyModelDefaults);
+    clusterAlgo.addEventListener("change", updateClusterParamUI);
     toggleRaw.addEventListener("change", updatePoleVisibility);
     toggleClustered.addEventListener("change", updatePoleVisibility);
     toggleTopo.addEventListener("change", (e) => setTopoVisibility(e.target.checked));
     document.getElementById("topoEdgeDistance").addEventListener("input", updateTopoOnParameterChange);
 
     syncSliderText();
+    updateClusterParamUI();
     loadFolders();
     loadModels();
     loadSessions();

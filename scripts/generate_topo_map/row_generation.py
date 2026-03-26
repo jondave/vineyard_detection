@@ -3,6 +3,7 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 from sklearn.cluster import DBSCAN
+from sklearn.cluster import KMeans
 
 
 def _extract_vine_row_direction(
@@ -90,10 +91,24 @@ def _estimate_row_spacing(perp_coords: np.ndarray) -> float:
     return float(np.median(diffs))
 
 
-def generate_rows(poles_geojson: Dict, vine_rows_geojson: Dict | None = None) -> Dict:
+def _cluster_row_labels_dbscan(perp_coords: np.ndarray) -> np.ndarray:
+    row_spacing = _estimate_row_spacing(perp_coords)
+    eps = max(row_spacing * 0.75, 1.0)
+    clustering = DBSCAN(eps=eps, min_samples=2).fit(perp_coords.reshape(-1, 1))
+    return clustering.labels_
+
+
+def generate_rows(
+    poles_geojson: Dict,
+    vine_rows_geojson: Dict | None = None,
+    row_direction_mode: str = "auto",
+) -> Dict:
     """
     Generate vine rows (LineStrings) from clustered poles.
-    Optionally use vine_rows_geojson to guide row direction if provided.
+    Direction modes:
+    - auto: prefer vine_rows_geojson direction if available, else PCA from poles
+    - north_south: force a general north-south row direction
+    - perpendicular_auto: force 90 degrees to the auto direction
     """
     features = poles_geojson.get("features", [])
     if len(features) < 2:
@@ -110,23 +125,53 @@ def generate_rows(poles_geojson: Dict, vine_rows_geojson: Dict | None = None) ->
         for lon, lat in coords
     ], dtype=np.float64)
 
+    direction_mode = (row_direction_mode or "auto").lower()
     direction = None
-    used_vine_rows = False
-    if vine_rows_geojson:
-        direction, used_vine_rows = _extract_vine_row_direction(vine_rows_geojson)
+    direction_source = "pole_pca"
+    auto_direction = None
+    auto_row_count = None
 
-    if not used_vine_rows:
-        direction = _dominant_direction(xy)
+    if direction_mode == "north_south":
+        # Local-meter frame: +Y is geographic north.
+        direction = np.array([0.0, 1.0], dtype=np.float64)
+        direction_source = "manual_north_south"
+    else:
+        used_vine_rows = False
+        if vine_rows_geojson:
+            auto_direction, used_vine_rows = _extract_vine_row_direction(vine_rows_geojson)
+
+        if used_vine_rows:
+            direction_source = "vine_rows"
+        else:
+            auto_direction = _dominant_direction(xy)
+            direction_source = "pole_pca"
+
+        if direction_mode == "perpendicular_auto":
+            direction = np.array([-auto_direction[1], auto_direction[0]], dtype=np.float64)
+            if used_vine_rows:
+                direction_source = "perpendicular_vine_rows"
+            else:
+                direction_source = "perpendicular_pole_pca"
+
+            # Estimate how many perpendicular rows we should have by first
+            # counting the auto-oriented rows, then transposing the grid.
+            auto_perp = np.array([-auto_direction[1], auto_direction[0]])
+            auto_perp_coords = xy @ auto_perp
+            auto_labels = _cluster_row_labels_dbscan(auto_perp_coords)
+            auto_row_count = len({int(label) for label in auto_labels if int(label) != -1})
+        else:
+            direction = auto_direction
 
     perp = np.array([-direction[1], direction[0]])
     perp_coords = xy @ perp
     proj_coords = xy @ direction
 
-    row_spacing = _estimate_row_spacing(perp_coords)
-    eps = max(row_spacing * 0.75, 1.0)
-
-    clustering = DBSCAN(eps=eps, min_samples=2).fit(perp_coords.reshape(-1, 1))
-    labels = clustering.labels_
+    if direction_mode == "perpendicular_auto" and auto_row_count and auto_row_count > 0:
+        expected_rows = max(2, int(round(len(features) / auto_row_count)))
+        expected_rows = min(expected_rows, len(features))
+        labels = KMeans(n_clusters=expected_rows, n_init=20, random_state=42).fit_predict(perp_coords.reshape(-1, 1))
+    else:
+        labels = _cluster_row_labels_dbscan(perp_coords)
 
     line_features: List[Dict] = []
     for label in sorted(set(labels)):
@@ -135,12 +180,15 @@ def generate_rows(poles_geojson: Dict, vine_rows_geojson: Dict | None = None) ->
         indices = np.where(labels == label)[0]
         if indices.size < 2:
             continue
+
+        # Connect the actual pole positions in order along the chosen direction.
         order = indices[np.argsort(proj_coords[indices])]
         line_coords = coords[order].tolist()
+
         line_features.append({
             "type": "Feature",
             "geometry": {"type": "LineString", "coordinates": line_coords},
-            "properties": {"row_id": int(label), "direction_source": "vine_rows" if used_vine_rows else "pole_pca"},
+            "properties": {"row_id": int(label), "direction_source": direction_source},
         })
 
     return {"type": "FeatureCollection", "features": line_features}

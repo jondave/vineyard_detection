@@ -17,8 +17,16 @@ IMAGE_ROOT = os.path.join(BASE_DIR, "images", "riseholme")
 CACHE_ROOT = os.path.join(os.path.dirname(__file__), "cache")
 
 MODEL_ROOTS = [
+    # Original weights directory
     os.path.join(BASE_DIR, "weights"),
+    # Gaussian heatmap hybrid results
     os.path.join(BASE_DIR, "scripts", "gaussian_heatmap_resnet", "gaussian_heatmap_hybrid", "results_hybrid"),
+    # ResNet models (18, 50, 101)
+    os.path.join(BASE_DIR, "post_location_evaluation", "scripts", "resnet_models"),
+    # YOLO object detection models
+    os.path.join(BASE_DIR, "post_location_evaluation", "scripts", "yolo_object_detection_models"),
+    # YOLO segmentation models
+    os.path.join(BASE_DIR, "post_location_evaluation", "scripts", "yolo_segmentation_models"),
 ]
 
 os.makedirs(CACHE_ROOT, exist_ok=True)
@@ -92,6 +100,7 @@ def _list_models() -> List[Dict[str, str]]:
             continue
         for dirpath, _dirnames, filenames in os.walk(root):
             for fname in filenames:
+                # Support both .pth (ResNet) and .pt (YOLO) models
                 if fname.lower().endswith((".pth", ".pt")):
                     abs_path = os.path.join(dirpath, fname)
                     label = os.path.relpath(abs_path, BASE_DIR)
@@ -166,6 +175,8 @@ def api_run_inference():
     model_path = payload.get("model_path")
     image_size = payload.get("image_size", [1280, 960])
     confidence = float(payload.get("confidence", 0.4))
+    iou_threshold_raw = payload.get("iou_threshold", None)
+    iou_threshold = float(iou_threshold_raw) if iou_threshold_raw is not None else None
     cluster_radius = float(payload.get("cluster_radius", 1.5))
     cluster_algo = payload.get("cluster_algo", "dbscan")
     backbone = payload.get("backbone", "resnet101")
@@ -202,6 +213,7 @@ def api_run_inference():
                 image_size=(int(image_size[0]), int(image_size[1])),
                 backbone=backbone,
                 confidence_threshold=confidence,
+                iou_threshold=iou_threshold,
                 cluster_eps_m=cluster_radius,
                 cluster_algo=cluster_algo,
                 progress_callback=progress_cb,
@@ -228,6 +240,7 @@ def api_apply_filter():
     confidence = float(payload.get("confidence", 0.4))
     cluster_radius = float(payload.get("cluster_radius", 1.5))
     cluster_algo = payload.get("cluster_algo", "dbscan")
+    cluster_params = payload.get("cluster_params", {})
     filter_vine_rows = bool(payload.get("filter_vine_rows", True))
 
     if not session_id:
@@ -248,6 +261,7 @@ def api_apply_filter():
                 confidence_threshold=confidence,
                 cluster_eps_m=cluster_radius,
                 cluster_algo=cluster_algo,
+                cluster_params=cluster_params,
                 rows_geojson=rows_geojson,
                 filter_by_vine_rows=filter_vine_rows,
                 progress_callback=progress_cb,
@@ -271,6 +285,7 @@ def api_generate_rows():
     payload = request.get_json(force=True)
     poles_geojson = payload.get("poles")
     session_id = payload.get("session_id")
+    row_direction_mode = payload.get("row_direction_mode", "auto")
     vine_rows_geojson = None
     
     if not poles_geojson:
@@ -288,7 +303,11 @@ def api_generate_rows():
     def worker():
         try:
             _update_job(job_id, progress=10, message="Grouping poles")
-            rows_geojson = generate_rows(poles_geojson, vine_rows_geojson=vine_rows_geojson)
+            rows_geojson = generate_rows(
+                poles_geojson,
+                vine_rows_geojson=vine_rows_geojson,
+                row_direction_mode=row_direction_mode,
+            )
             _update_job(
                 job_id,
                 status="done",

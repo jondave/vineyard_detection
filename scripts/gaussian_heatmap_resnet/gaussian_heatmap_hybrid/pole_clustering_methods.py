@@ -7,6 +7,11 @@ from typing import List, Tuple
 
 import numpy as np
 
+try:  # pragma: no cover - optional dependency
+    from tqdm.auto import tqdm
+except Exception:
+    tqdm = None
+
 try:
     from sklearn.cluster import DBSCAN, AgglomerativeClustering, KMeans
 except Exception as exc:  # pragma: no cover - optional dependency
@@ -54,10 +59,22 @@ def haversine_distance_m(lat1, lon1, lat2, lon2) -> float:
     return r * c
 
 
-def pairwise_haversine_m(coords: np.ndarray) -> np.ndarray:
+def iter_with_progress(iterable, *, enabled: bool, total: int | None = None, desc: str = ""):
+    if enabled and tqdm is not None:
+        return tqdm(iterable, total=total, desc=desc)
+    return iterable
+
+
+def pairwise_haversine_m(coords: np.ndarray, show_progress: bool = False) -> np.ndarray:
     n = coords.shape[0]
     dists = np.zeros((n, n), dtype=float)
-    for i in range(n):
+    row_iter = iter_with_progress(
+        range(n),
+        enabled=show_progress,
+        total=n,
+        desc="Pairwise distances",
+    )
+    for i in row_iter:
         lat1, lon1 = coords[i]
         for j in range(i + 1, n):
             lat2, lon2 = coords[j]
@@ -67,14 +84,18 @@ def pairwise_haversine_m(coords: np.ndarray) -> np.ndarray:
     return dists
 
 
-def cluster_dbscan(coords: np.ndarray, eps_m: float, min_samples: int) -> np.ndarray:
-    dists = pairwise_haversine_m(coords)
+def cluster_dbscan(
+    coords: np.ndarray, eps_m: float, min_samples: int, show_progress: bool = False
+) -> np.ndarray:
+    dists = pairwise_haversine_m(coords, show_progress=show_progress)
     model = DBSCAN(eps=eps_m, min_samples=min_samples, metric="precomputed")
     return model.fit_predict(dists)
 
 
-def cluster_agglomerative(coords: np.ndarray, distance_threshold_m: float) -> np.ndarray:
-    dists = pairwise_haversine_m(coords)
+def cluster_agglomerative(
+    coords: np.ndarray, distance_threshold_m: float, show_progress: bool = False
+) -> np.ndarray:
+    dists = pairwise_haversine_m(coords, show_progress=show_progress)
     model = AgglomerativeClustering(
         n_clusters=None,
         distance_threshold=distance_threshold_m,
@@ -99,10 +120,15 @@ def cluster_kmeans(coords: np.ndarray, k: int, reference_lat: float | None = Non
     return model.fit_predict(xy)
 
 
-def cluster_hdbscan(coords: np.ndarray, min_cluster_size: int, min_samples: int) -> np.ndarray:
+def cluster_hdbscan(
+    coords: np.ndarray,
+    min_cluster_size: int,
+    min_samples: int,
+    show_progress: bool = False,
+) -> np.ndarray:
     if hdbscan is None:
         raise SystemExit("hdbscan is not installed. Install with: pip install hdbscan")
-    dists = pairwise_haversine_m(coords)
+    dists = pairwise_haversine_m(coords, show_progress=show_progress)
     model = hdbscan.HDBSCAN(
         metric="precomputed",
         min_cluster_size=min_cluster_size,
@@ -289,7 +315,11 @@ def min_distance_to_rows_m(
 
 
 def filter_points_within_vinerows(
-    coords: np.ndarray, props: List[dict], vine_rows_path: str, proximity_m: float
+    coords: np.ndarray,
+    props: List[dict],
+    vine_rows_path: str,
+    proximity_m: float,
+    show_progress: bool = False,
 ) -> Tuple[np.ndarray, List[dict]]:
 
     rows, polygons = load_geojson_lines(vine_rows_path)
@@ -309,7 +339,13 @@ def filter_points_within_vinerows(
     ref_lat = float(np.mean(all_lats)) if all_lats else float(np.mean(coords[:, 0]))
 
     keep_idx = []
-    for i, (lat, lon) in enumerate(coords):
+    coord_iter = iter_with_progress(
+        enumerate(coords),
+        enabled=show_progress,
+        total=coords.shape[0],
+        desc="Filtering poles",
+    )
+    for i, (lat, lon) in coord_iter:
         d = min_distance_to_rows_m((lat, lon), rows, polygons, ref_lat)
         if d <= proximity_m:
             keep_idx.append(i)
@@ -381,6 +417,11 @@ def main(argv: list[str] | None = None) -> None:
         default=None,
         help="Reference latitude for KMeans meters conversion (default: mean of pole coords)",
     )
+    parser.add_argument(
+        "--no-progress",
+        action="store_true",
+        help="Disable progress bars",
+    )
 
     if argv is None:
         if len(sys.argv) == 1:
@@ -393,6 +434,11 @@ def main(argv: list[str] | None = None) -> None:
 
     os.makedirs(args.output_dir, exist_ok=True)
     coords, props = load_geojson_points(args.input)
+    show_progress = not args.no_progress
+
+    if show_progress and tqdm is None:
+        print("tqdm not installed; running without progress bars. Install with: pip install tqdm")
+        show_progress = False
 
     if coords.shape[0] == 0:
         raise SystemExit("No points found in input GeoJSON.")
@@ -409,7 +455,11 @@ def main(argv: list[str] | None = None) -> None:
             print("No polygon features found in vine rows; skipping polygon-based filtering and using all pole detections for clustering.")
         else:
             filtered_coords, filtered_props = filter_points_within_vinerows(
-                coords, props, args.vine_rows, args.vine_proximity_m
+                coords,
+                props,
+                args.vine_rows,
+                args.vine_proximity_m,
+                show_progress=show_progress,
             )
             removed = coords.shape[0] - filtered_coords.shape[0]
             print(f"Filtered out {removed} pole detections not within {args.vine_proximity_m} m of a vine row")
@@ -417,9 +467,18 @@ def main(argv: list[str] | None = None) -> None:
 
     def run_method(method: str) -> None:
         if method == "dbscan":
-            labels = cluster_dbscan(coords, args.eps_m, args.min_samples)
+            labels = cluster_dbscan(
+                coords,
+                args.eps_m,
+                args.min_samples,
+                show_progress=show_progress,
+            )
         elif method == "agglomerative":
-            labels = cluster_agglomerative(coords, args.distance_threshold_m)
+            labels = cluster_agglomerative(
+                coords,
+                args.distance_threshold_m,
+                show_progress=show_progress,
+            )
         elif method == "kmeans":
             ref_lat = args.reference_lat if args.reference_lat is not None else float(np.mean(coords[:, 0]))
             meters_per_deg_lat = 111320.0
@@ -428,7 +487,12 @@ def main(argv: list[str] | None = None) -> None:
             print(f"    Meters per degree: lat={meters_per_deg_lat:.2f}m, lon={meters_per_deg_lon:.2f}m")
             labels = cluster_kmeans(coords, args.k, reference_lat=args.reference_lat)
         else:
-            labels = cluster_hdbscan(coords, args.min_cluster_size, args.min_samples)
+            labels = cluster_hdbscan(
+                coords,
+                args.min_cluster_size,
+                args.min_samples,
+                show_progress=show_progress,
+            )
 
         base = os.path.splitext(os.path.basename(args.input))[0]
         clustered_path = os.path.join(
@@ -454,7 +518,13 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.run_all:
         methods = ["dbscan", "agglomerative", "kmeans", "hdbscan"]
-        for method in methods:
+        method_iter = iter_with_progress(
+            methods,
+            enabled=show_progress,
+            total=len(methods),
+            desc="Clustering methods",
+        )
+        for method in method_iter:
             run_method(method)
     else:
         run_method(args.method)
@@ -469,9 +539,11 @@ if __name__ == "__main__":
     #   --min-samples 2
     default_args = [
         "--input",
-        "inference_results/hybrid_test/resnet101_20260210_163952/august_2024/65_feet/image_size_1280x960/poles.geojson",
+        # "inference_results/hybrid_test/resnet101_20260210_163952/august_2024/65_feet/image_size_1280x960/poles.geojson",
+        "inference_results/hybrid_test/hybrid_train_resnet101_20260211_120756/jojo/riccardo/DJI_202507301828_028_jojo2/image_size_1280x960/poles.geojson",
         "--output-dir",
-        "inference_results/hybrid_test/resnet101_20260210_163952/august_2024/65_feet/image_size_1280x960/clustered_poles",
+        #"inference_results/hybrid_test/resnet101_20260210_163952/august_2024/65_feet/image_size_1280x960/clustered_poles",
+        "inference_results/hybrid_test/hybrid_train_resnet101_20260211_120756/jojo/riccardo/DJI_202507301828_028_jojo2/image_size_1280x960/clustered_poles",
         "--method",
         "dbscan",
         "--eps-m", # Adjust this based on expected pole spacing and GPS noise. Too small may split poles; too large may merge nearby poles.
@@ -485,7 +557,8 @@ if __name__ == "__main__":
         "--min-cluster-size", # HDBSCAN
         "5", # HDBSCAN
         "--vine-rows",
-        "inference_results/hybrid_test/resnet101_20260210_163952/august_2024/65_feet/image_size_1280x960/vine_rows.geojson",
+        #"inference_results/hybrid_test/resnet101_20260210_163952/august_2024/65_feet/image_size_1280x960/vine_rows.geojson",
+        "inference_results/hybrid_test/hybrid_train_resnet101_20260211_120756/jojo/riccardo/DJI_202507301828_028_jojo2/image_size_1280x960/vine_rows.geojson",
         "--vine-proximity-m",
         "0.5", # Maximum distance in metres from a vine row to keep a detected pole (adjust based on expected GPS noise and row width)
         "--run-all", # Run all methods with the above parameters (comment out to run just one method)

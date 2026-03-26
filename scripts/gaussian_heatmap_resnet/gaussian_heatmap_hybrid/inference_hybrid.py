@@ -24,7 +24,8 @@ MODEL = "hybrid_train_resnet101_20260211_120756"
 MODEL_PATH = f"results_hybrid/{MODEL}/best_hybrid_model.pth"
 IMAGE_DATE = "august_2024"
 ALTITUDE = 39
-INPUT_DIR = f"../../../images/riseholme/{IMAGE_DATE}/{ALTITUDE}_feet/"
+# INPUT_DIR = f"../../../images/riseholme/{IMAGE_DATE}/{ALTITUDE}_feet/"
+INPUT_DIR = f"../../../images/jojo/riccardo/DJI_202507301828_028_jojo2"
 
 BACKBONE = "resnet101" # Options: "resnet50", "resnet101"
 
@@ -35,11 +36,12 @@ IMAGE_SIZE = (1280, 960)
 # IMAGE_SIZE = (676, 506)
 # IMAGE_SIZE = (640, 480) # For testing on CPU or smaller GPU, but expect worse separation and GPS accuracy
 
-SAVE_OVERLAY_IMAGES = False
-SAVE_HEATMAP_IMAGES = False
+SAVE_OVERLAY_IMAGES = True
+SAVE_HEATMAP_IMAGES = True
 SAVE_NPZ = True  # Save raw heatmaps/probability maps for later thresholding
 
-OUTPUT_DIR = f"inference_results/hybrid_test/{MODEL}/{IMAGE_DATE}/{ALTITUDE}_feet/image_size_{IMAGE_SIZE[0]}x{IMAGE_SIZE[1]}"
+# OUTPUT_DIR = f"inference_results/hybrid_test/{MODEL}/{IMAGE_DATE}/{ALTITUDE}_feet/image_size_{IMAGE_SIZE[0]}x{IMAGE_SIZE[1]}"
+OUTPUT_DIR = f"inference_results/hybrid_test/{MODEL}/jojo/riccardo/DJI_202507301828_028_jojo2/image_size_{IMAGE_SIZE[0]}x{IMAGE_SIZE[1]}"
 
 # Full Resolution (for scaling GPS coordinates back)
 # Note: Code will auto-detect this from the image, but good to know
@@ -180,11 +182,13 @@ for file in tqdm(image_files):
     if gimbal_yaw_num == 0.0 or gimbal_yaw_num is None: gimbal_yaw_num = flight_yaw_num
     gps_alt_num = image_gps_pixel_show_poles.extract_number(gps_alt) if gps_alt else 0.0
 
+    # --- 4. GPS Conversion Function ---
     def to_gps(px, py):
+        # FIXED: Use the actual img_w and img_h from the EXIF data, 
+        # NOT the IMAGE_SIZE used for YOLO downsampling!
         return image_gps_pixel_show_poles.get_gps_from_pixel(
-            px, py, original_w, original_h, 
-            flight_yaw_num, gimbal_yaw_num, 
-            gps_lat, gps_lon, gps_alt_num, 
+            px, py, img_w, img_h, 
+            flight_yaw_num, gimbal_yaw_num, gps_lat, gps_lon, gps_alt_num, 
             FOCAL_LENGTH_MM, SENSOR_WIDTH_MM, SENSOR_HEIGHT_MM
         )
     
